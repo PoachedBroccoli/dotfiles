@@ -7,6 +7,6 @@
 ```sh
 git clone https://github.com/PoachedBroccoli/dotfiles.git
 cd dotfiles
-chmod +x ./script/install.sh
+chmod +x ./script/install.sh && ./script/install.sh
 ```
 
