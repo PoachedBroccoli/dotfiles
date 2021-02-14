@@ -8,10 +8,12 @@ NORMAL="$(tput sgr0)"
 
 exectime=$(date "+%Y-%m-%d_%H-%M-%S")
 
+
 BackupOldDotfiles() {
     dotfiles="
     .vimrc
     .ideavimrc
+    .zshrc
     "
     for c in ${dotfiles}; do
         echo -e "start backup ${c}: \c"
@@ -33,3 +35,6 @@ cp ../vim/colors/heshui.vim  ${HOME}/.vim/colors
 
 # .ideavimrc
 cp ../idea/ideavimrc  ${HOME}/.ideavimrc
+
+# .zshrc
+cp ../zshrc/zshrc  ${HOME}/.zshrc

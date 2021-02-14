@@ -1,0 +1,26 @@
+#export LC_ALL=en_US.UTF-8
+#export LANG=en_US.UTF-8
+
+export NODE_HOME=$HOME/Documents/sw/node
+
+export GOPATH=$HOME/Documents/gopath
+export GOROOT=$HOME/Documents/sw/go
+
+export JAVA_HOME=$HOME/Documents/sw/jdk8u272-b10-AdoptOpenJDK8-HotSpot/Contents/Home
+
+export MAVEN_HOME=$HOME/Documents/sw/apache-maven-3.6.3
+
+path=(
+    /usr/local/opt/ruby/bin
+    $NODE_HOME/bin
+    $GOPATH/bin
+    $GOROOT/bin
+    $JAVA_HOME/bin
+    $MAVEN_HOME/bin
+    $PATH
+  )
+export PATH=":$PATH"
+
+#PS1="%B%F{203}%n@%m %1~ %#%f%b "
+PS1="%B%F{203}%n@%d %1~ %#%f%b "
+
