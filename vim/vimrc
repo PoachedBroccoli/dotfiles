@@ -78,6 +78,18 @@ function! SynGroup()
 endfun
 nnoremap <leader>sb :call SynGroup()<CR>
 
+function! SynStackN()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+nnoremap <leader>sn :call SynStackN()<CR>
+
+map <F5> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
 " ========================================================================
 " 滚动配置
 " ========================================================================
@@ -119,7 +131,7 @@ set matchtime=1 " 匹配括号高亮的时间（单位是十分之一秒）
 " ========================================================================
 " 状态栏配置
 " ========================================================================
-set laststatus=2    " vim 显示状态
+set laststatus=2    " vim 永远显示状态
 
 " ========================================================================
 " 缩进配置
@@ -154,9 +166,9 @@ set backspace=eol,start,indent  " 修正 vim 删除/退格键行为
 " ========================================================================
 " 编码设置
 " ========================================================================
-set enc=utf-8                                              " 编码设置，vim内部使用的字符编码，用于缓存的文本、寄存器、Vim 脚本文件
+set encoding=utf-8                                              " 编码设置，vim内部使用的字符编码，用于缓存的文本、寄存器、Vim 脚本文件
 " vim 启动的时候会依次使用本配置中的编码对文件内容进行解码
-set fencs=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936,shift-jis " 编码设置，字符编码的列表，检测文件编码时的备选字符编码列表
+set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936,shift-jis " 编码设置，字符编码的列表，检测文件编码时的备选字符编码列表
 set termencoding=utf-8                                     " 用于输出到终端时采用的编码类型
 set fileformats=unix,dos,mac                               " 换行符
 
@@ -232,7 +244,10 @@ Plug 'iamcco/mathjax-support-for-mkdp'
 Plug 'iamcco/markdown-preview.vim'
 
 " 缩进可视
-Plug 'nathanaelkane/vim-indent-guides'
+Plug 'Yggdroot/indentLine'
+
+" 颜色
+Plug 'gko/vim-coloresque'
 
 call plug#end()
 
@@ -341,7 +356,7 @@ let g:godef_split=2
 
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
 
-"" 直接通过 go run 执行当前文件
+" 直接通过 go run 执行当前文件
 autocmd FileType go nmap <leader>r :GoRun %<CR>
 
 " ========================================================================
@@ -410,19 +425,22 @@ set t_Co=256
 set background=light
 colorscheme heshui
 
-
 " ========================================================================
 " markdown配置
 " ========================================================================
 autocmd BufRead,BufNew *.md,*.mkd,*.markdown set filetype=markdown.mkd
 
 " ========================================================================
-" indent-guides 插件
+" indentLine 插件
 " ========================================================================
-" 随 vim 自启动
-let g:indent_guides_enable_on_vim_startup=1
-" 从第二层开始可视化显示缩进
-let g:indent_guides_start_level=2
-" 色块宽度
-let g:indent_guides_guide_size=1
+"let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+let g:indentLine_char = '┊'
+
+" ========================================================================
+" sh文件配置
+" ========================================================================
+autocmd BufNewFile *.sh   exec ":call SHHeader()"
+func SHHeader()
+    call setline(1,"#!/usr/bin/env bash")
+endfunc
 
