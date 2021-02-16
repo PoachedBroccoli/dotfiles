@@ -11,7 +11,11 @@ set incsearch
 set ignorecase
 set smartcase
 
+set scrolloff=5
+
 inoremap jk <esc>
+
+inoremap <C-b> <esc>bi
 
 nmap <silent> to o<Esc>
 nmap <silent> tO O<Esc>
@@ -27,23 +31,6 @@ inoremap <C-l> <RIGHT>
 inoremap <C-a> <Home>
 inoremap <C-e> <End>
 
-if has('win32')
-    nnoremap <A-j> :m .+1<CR>==
-    nnoremap <A-k> :m .-2<CR>==
-    inoremap <A-j> <Esc>:m .+1<CR>==gi
-    inoremap <A-k> <Esc>:m .-2<CR>==gi
-    vnoremap <A-j> :m '>+1<CR>gv=gv
-    vnoremap <A-k> :m '<-2<CR>gv=gv
-"elseif has('unix')
-elseif has('mac')
-    nnoremap ∆ :m .+1<CR>==
-    nnoremap ˚ :m .-2<CR>==
-    inoremap ∆ <Esc>:m .+1<CR>==gi
-    inoremap ˚ <Esc>:m .-2<CR>==gi
-    vnoremap ∆ :m '>+1<CR>gv=gv
-    vnoremap ˚ :m '<-2<CR>gv=gv
-endif
-
 noremap <Leader>y "*y
 noremap <Leader>p "*p
 noremap <Leader>P "0p
@@ -54,6 +41,8 @@ set number relativenumber
 nnoremap <leader>zh :action RecentChangedFiles<CR>
 nnoremap <leader>zp :action ActivateProjectToolWindow<CR>
 noremap <leader>ha :action HideAllWindows<CR>
+
+nnoremap <leader>ve :e ~/.ideavimrc<CR>
 
 " idea自带的搜索配置
 nnoremap <leader>/ :action Find<CR>
@@ -93,3 +82,6 @@ vnoremap <Leader>em :action ExtractMethod<CR>
 nnoremap <leader>om :action OverrideMethods<CR>
 nnoremap <leader>im :action ImplementMethods<CR>
 nnoremap <Leader>th :action TypeHierarchy<CR>
+
+vnoremap <A-j> :action MoveStatementDown<CR>
+vnoremap <A-k> :action MoveStatementUp<CR>
