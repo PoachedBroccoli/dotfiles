@@ -50,7 +50,6 @@ elseif has('mac')
     vnoremap ˚ :m '<-2<CR>gv=gv
 endif
 
-
 " ========================================================================
 " 其他
 " ========================================================================
@@ -98,9 +97,12 @@ set scrolloff=5 " 最上最下留5行
 " ========================================================================
 " 剪贴板配置
 " ========================================================================
-vnoremap <Leader>y "+y  " 将文本块复制至系统剪贴板
-nmap <Leader>p "+p  " 将系统剪贴板内容粘贴至vim
-"set clipboard+=unnamed  " 连接 vim 和系统的剪贴板
+" 将文本块复制至系统剪贴板
+noremap <Leader>y "*y
+" 将系统剪贴板内容粘贴至vim
+noremap <Leader>p "*p
+noremap <Leader>P "0p
+set clipboard+=unnamed  " 连接 vim 和系统的剪贴板
 
 " ========================================================================
 " 显示配置
@@ -180,6 +182,9 @@ call plug#begin('~/.vim/plugged')
 " 可以快速对齐的插件，支持的分隔符: <Space> = : . | & # ,
 Plug 'junegunn/vim-easy-align'
 
+" 注释
+Plug 'preservim/nerdcommenter'
+
 " 方便加对称符号
 Plug 'tpope/vim-surround'
 
@@ -246,10 +251,13 @@ Plug 'iamcco/markdown-preview.vim'
 " 缩进可视
 Plug 'Yggdroot/indentLine'
 
-" 颜色
-Plug 'gko/vim-coloresque'
-
 call plug#end()
+
+
+" ========================================================================
+" nerdcommenter 插件
+" ========================================================================
+let g:NERDSpaceDelims = 1
 
 " ========================================================================
 " vim-easy-align 插件
