@@ -1,7 +1,16 @@
 let mapleader = ","
 let g:mapleader = ","
 
+nnoremap <leader>ve :e ~/.ideavimrc<CR>
+nnoremap <Leader>sv :action IdeaVim.ReloadVimRc.reload<CR>
+
 set surround
+set multiple-cursors
+
+map <C-n> <A-n>
+map <C-P> <A-P>
+map <C-X> <A-X>
+map g<C-N> g<A-N>
 
 set keep-english-in-normal-and-restore-in-insert
 
@@ -11,11 +20,11 @@ set incsearch
 set ignorecase
 set smartcase
 
-set scrolloff=5
+set scrolloff=4
+
+set number relativenumber
 
 inoremap jk <esc>
-
-inoremap <C-b> <esc>bi
 
 nmap <silent> to o<Esc>
 nmap <silent> tO O<Esc>
@@ -30,19 +39,23 @@ inoremap <C-k> <UP>
 inoremap <C-l> <RIGHT>
 inoremap <C-a> <Home>
 inoremap <C-e> <End>
+nnoremap <Leader>H 0
+nnoremap <Leader>hh ^
+nnoremap <Leader>L $
+nnoremap <Leader>l g_
 
 noremap <Leader>y "*y
 noremap <Leader>p "*p
 noremap <Leader>P "0p
+noremap <Leader>d "_d
+noremap <Leader>D "_D
+noremap <Leader>dd "_dd
 set clipboard+=unnamed
 
-set number relativenumber
 
 nnoremap <leader>zh :action RecentChangedFiles<CR>
 nnoremap <leader>zp :action ActivateProjectToolWindow<CR>
 noremap <leader>ha :action HideAllWindows<CR>
-
-nnoremap <leader>ve :e ~/.ideavimrc<CR>
 
 " idea自带的搜索配置
 nnoremap <leader>/ :action Find<CR>
@@ -59,11 +72,11 @@ nnoremap gd :action GotoDeclaration<CR>
 nnoremap gi :action GotoImplementation<CR>
 nnoremap gj :action GotoNextError<CR>
 nnoremap gk :action GotoPreviousError<CR>
-nnoremap gh :action Back<CR>
-nnoremap gl :action Forward<CR>
+nnoremap <C-h> :action Back<CR>
+nnoremap <C-l> :action Forward<CR>
 
 " 显示类信息
-nnoremap gf :action FiletructurePopup<CR>
+nnoremap gf :action FileStructurePopup<CR>
 
 " 重命名
 nnoremap gr :action RenameElement<CR>
@@ -82,6 +95,19 @@ vnoremap <Leader>em :action ExtractMethod<CR>
 nnoremap <leader>om :action OverrideMethods<CR>
 nnoremap <leader>im :action ImplementMethods<CR>
 nnoremap <Leader>th :action TypeHierarchy<CR>
+nnoremap <Leader>sw :action SurroundWith<CR>
 
+nnoremap <A-j> :action MoveLineDown<CR>
+nnoremap <A-k> :action MoveLineUp<CR>
 vnoremap <A-j> :action MoveStatementDown<CR>
 vnoremap <A-k> :action MoveStatementUp<CR>
+
+nnoremap [[ :<C-u>action MethodUp<CR>
+nnoremap ]] :<C-u>action MethodDown<CR>
+
+nnoremap <leader>hu :action HighlightUsagesInFile<CR>
+
+nnoremap <leader>ti :action ExpressionTypeInfo<CR>
+
+nnoremap <leader>oi :action OptimizeImports<CR>
+
