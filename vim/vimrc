@@ -27,6 +27,10 @@ inoremap <C-k> <UP>
 inoremap <C-l> <RIGHT>
 inoremap <C-a> <Home>
 inoremap <C-e> <End>
+nnoremap <Leader>H 0
+nnoremap <Leader>hh ^
+nnoremap <Leader>L $
+nnoremap <Leader>l g_
 
 " 普通模式下插入空行
 nmap <silent> to :call append('.', '')<CR>j
@@ -55,6 +59,8 @@ endif
 " ========================================================================
 set nocompatible    " 关闭兼容模式
 
+set nobackup    " 禁止生成临时文件
+set nowb
 set noswapfile
 
 autocmd BufWritePre * :%s/\s\+$//e " 删除行尾空格和tab
@@ -89,6 +95,11 @@ map <F5> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
+map <F4> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") .
+            \ "> trans<" . synIDattr(synID(line("."),col("."),0),"name") .
+            \ "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") .
+            \ "> fg:" .synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
+
 " ========================================================================
 " 滚动配置
 " ========================================================================
@@ -102,7 +113,12 @@ noremap <Leader>y "*y
 " 将系统剪贴板内容粘贴至vim
 noremap <Leader>p "*p
 noremap <Leader>P "0p
+
+noremap <Leader>d "_d
+noremap <Leader>D "_D
+noremap <Leader>dd "_dd
 set clipboard+=unnamed  " 连接 vim 和系统的剪贴板
+
 
 " ========================================================================
 " 显示配置
@@ -138,8 +154,9 @@ set laststatus=2    " vim 永远显示状态
 " ========================================================================
 " 缩进配置
 " ========================================================================
-set tabstop=4             " tab字符显示宽度，不修改tab键行为，4个空格作为一个tab
-set softtabstop=4         " 修改tab键行为，不修改tab字符显示宽度，一个tab视为输入4个空格
+" 全局设置
+set tabstop=4             " tab字符显示宽度，不修改tab键行为，4个空格作为一个tab,(一个tab显示多少个空格)
+set softtabstop=4         " 修改tab键行为，不修改tab字符显示宽度，按下一个tab视为输入4个空格
 set shiftwidth=4          " 换行，普通模式下的<< >>，输入模式下的CTRL+D｜CTRL+T，进行缩进为4个空格
 set expandtab             " 将制表符替换为空格：插入模式下tab都是空格。
 set autoindent            " 继承前一行的缩进方式，适用于多行注释
@@ -197,17 +214,10 @@ Plug 'jistr/vim-nerdtree-tabs'
 " 可以在导航目录中看到 git 版本信息
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
-" 查看当前代码文件中的变量和函数列表的插件，
-" 可以切换和跳转到代码中对应的变量和函数的位置
-" 大纲式导航, Go 需要 https://github.com/jstemmer/gotags 支持
-" go get -u github.com/jstemmer/gotags
 Plug 'majutsushi/tagbar'
 
 " Vim状态栏插件，包括显示行号，列号，文件类型，文件名，以及Git状态
 Plug 'vim-airline/vim-airline'
-
-" 代码自动完成，安装完插件还需要额外配置才可以使用
-Plug 'Valloric/YouCompleteMe'
 
 " 可以在文档中显示 git 信息
 Plug 'airblade/vim-gitgutter'
@@ -223,36 +233,10 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 " go 中的代码追踪，输入 gd 就可以自动跳转
 Plug 'dgryski/vim-godef'
 
-" html
-Plug 'hail2u/vim-css3-syntax'
-Plug 'gko/vim-coloresque'
-Plug 'tpope/vim-haml'
-Plug 'mattn/emmet-vim'
-
-" javascript
-Plug 'jelera/vim-javascript-syntax'
-
-" typescript
-Plug 'leafgarland/typescript-vim'
-Plug 'HerringtonDarkholme/yats.vim'
-
-" vuejs
-Plug 'posva/vim-vue'
-Plug 'leafOfTree/vim-vue-plugin'
-
-" python
-Plug 'davidhalter/jedi-vim'
-Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
-
-" markdown 插件
-Plug 'iamcco/mathjax-support-for-mkdp'
-Plug 'iamcco/markdown-preview.vim'
-
 " 缩进可视
 Plug 'Yggdroot/indentLine'
 
 call plug#end()
-
 
 " ========================================================================
 " nerdcommenter 插件
@@ -362,7 +346,7 @@ let g:go_highlight_generate_tags = 1
 let g:go_highlight_extra_types = 1
 let g:godef_split=2
 
-autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
+autocmd FileType go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
 
 " 直接通过 go run 执行当前文件
 autocmd FileType go nmap <leader>r :GoRun %<CR>
@@ -370,53 +354,47 @@ autocmd FileType go nmap <leader>r :GoRun %<CR>
 " ========================================================================
 " html
 " ========================================================================
-autocmd Filetype html setlocal ts=2 sw=2 expandtab
+autocmd Filetype html setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+
+" ========================================================================
+" CSS
+" ========================================================================
+autocmd Filetype css setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 
 " ========================================================================
 " javascript
 " ========================================================================
-let g:javascript_enable_domhtmlcss = 1
-autocmd FileType javascript setl tabstop=4|setl shiftwidth=4|setl expandtab softtabstop=4
+autocmd FileType javascript setlocal expandtab tabstop=2 shiftwidth=2  softtabstop=2
 
 " ========================================================================
 " typescript
 " ========================================================================
-let g:yats_host_keyword = 1
+autocmd FileType javascript setlocal expandtab tabstop=4 shiftwidth=4  softtabstop=4
 
 " ========================================================================
-" vue
+" json
 " ========================================================================
-let g:vue_disable_pre_processors=1
-let g:vim_vue_plugin_load_full_syntax = 1
+autocmd FileType json setlocal expandtab tabstop=2 shiftwidth=2  softtabstop=2
+
+" ========================================================================
+" Protobuf
+" ========================================================================
+autocmd FileType proto setlocal expandtab tabstop=2 shiftwidth=2  softtabstop=2
+
+" ========================================================================
+" YAML
+" ========================================================================
+autocmd FileType yaml setlocal expandtab tabstop=2 shiftwidth=2  softtabstop=2
+
+" ========================================================================
+" SQL
+" ========================================================================
+autocmd FileType sql setlocal expandtab tabstop=2 shiftwidth=2  softtabstop=2
 
 " ========================================================================
 " python
 " ========================================================================
-autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8 colorcolumn=79
-      \ formatoptions+=croq softtabstop=4
-      \ cinwords=if,elif,else,for,while,try,except,finally,def,class,with
-
-let g:jedi#popup_on_dot = 0
-let g:jedi#goto_assignments_command = "<leader>g"
-let g:jedi#goto_definitions_command = "<leader>d"
-let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "<leader>n"
-let g:jedi#rename_command = "<leader>r"
-let g:jedi#show_call_signatures = "0"
-let g:jedi#completions_command = "<C-Space>"
-let g:jedi#smart_auto_mappings = 0
-
-let python_highlight_all = 1
-
-" ========================================================================
-" youcompleteme 插件
-" ========================================================================
-nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
-nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
-nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
-let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
+autocmd FileType python setlocal expandtab tabstop=4 shiftwidth=4  softtabstop=4
 
 " ========================================================================
 " Snip 插件
@@ -443,6 +421,8 @@ autocmd BufRead,BufNew *.md,*.mkd,*.markdown set filetype=markdown.mkd
 " ========================================================================
 "let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 let g:indentLine_char = '┊'
+let g:indentLine_bgcolor_term = 231
+let g:indentLine_bgcolor_gui = '#FFFFFF'
 
 " ========================================================================
 " sh文件配置
@@ -451,4 +431,3 @@ autocmd BufNewFile *.sh   exec ":call SHHeader()"
 func SHHeader()
     call setline(1,"#!/usr/bin/env bash")
 endfunc
-
