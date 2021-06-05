@@ -1,46 +1,57 @@
 let mapleader = ","
 let g:mapleader = ","
 
-nnoremap <leader>ve :e ~/.ideavimrc<CR>
+inoremap jk <esc>
+
+nnoremap <leader>ev :e ~/.ideavimrc<CR>
 nnoremap <Leader>sv :action IdeaVim.ReloadVimRc.reload<CR>
 
+" 插件
 set surround
 set multiple-cursors
 
+" multiple-cursors
 map <C-n> <A-n>
 map <C-P> <A-P>
 map <C-X> <A-X>
 map g<C-N> g<A-N>
 
-set keep-english-in-normal-and-restore-in-insert
+" AceAction
+nnoremap <Leader>f :action AceAction<CR>
+nnoremap <Leader>F :action AceLineAction<CR>
 
 " 搜索配置
 set hlsearch
 set incsearch
 set ignorecase
 set smartcase
-
-set scrolloff=4
-
-set number relativenumber
-
-inoremap jk <esc>
-
-nmap <silent> to o<Esc>
-nmap <silent> tO O<Esc>
-
+" 关闭高亮
 nnoremap <silent> <BS> :nohlsearch<CR>
 
+" 保持行数
+set scrolloff=4
+
+" 相对行号
+set number relativenumber
+
+" 保持和别的编辑器统一
+nmap <CR> o<Esc>
+nmap <S-CR> O<Esc>
+
+" 退格
 inoremap <C-x> <BS>
 
+" 编辑模式下上下左右
 inoremap <C-h> <LEFT>
 inoremap <C-j> <DOWN>
 inoremap <C-k> <UP>
 inoremap <C-l> <RIGHT>
 inoremap <C-a> <Home>
 inoremap <C-e> <End>
+" 行首行尾
 nnoremap <Leader>H 0
 nnoremap <Leader>hh ^
+" 行首行尾非空白
 nnoremap <Leader>L $
 nnoremap <Leader>l g_
 
@@ -51,7 +62,6 @@ noremap <Leader>d "_d
 noremap <Leader>D "_D
 noremap <Leader>dd "_dd
 set clipboard+=unnamed
-
 
 nnoremap <leader>zh :action RecentChangedFiles<CR>
 nnoremap <leader>zp :action ActivateProjectToolWindow<CR>
@@ -74,12 +84,13 @@ nnoremap gj :action GotoNextError<CR>
 nnoremap gk :action GotoPreviousError<CR>
 nnoremap <C-h> :action Back<CR>
 nnoremap <C-l> :action Forward<CR>
+nnoremap <leader>rl :action RecentLocations<cr>
 
 " 显示类信息
 nnoremap gf :action FileStructurePopup<CR>
 
 " 重命名
-nnoremap gr :action RenameElement<CR>
+nnoremap <Leader>rn :action RenameElement<CR>
 
 " 代码相关
 nnoremap <Leader>su :action ShowUsages<CR>
@@ -96,6 +107,7 @@ nnoremap <leader>om :action OverrideMethods<CR>
 nnoremap <leader>im :action ImplementMethods<CR>
 nnoremap <Leader>th :action TypeHierarchy<CR>
 nnoremap <Leader>sw :action SurroundWith<CR>
+vnoremap <Leader>sw :action SurroundWith<CR>
 
 nnoremap <A-j> :action MoveLineDown<CR>
 nnoremap <A-k> :action MoveLineUp<CR>
@@ -105,9 +117,17 @@ vnoremap <A-k> :action MoveStatementUp<CR>
 nnoremap [[ :<C-u>action MethodUp<CR>
 nnoremap ]] :<C-u>action MethodDown<CR>
 
-nnoremap <leader>hu :action HighlightUsagesInFile<CR>
+nnoremap <Leader>hu :action HighlightUsagesInFile<CR>
 
-nnoremap <leader>ti :action ExpressionTypeInfo<CR>
+nnoremap <Leader>ti :action ExpressionTypeInfo<CR>
 
-nnoremap <leader>oi :action OptimizeImports<CR>
+nnoremap <Leader>oi :action OptimizeImports<CR>
 
+nnoremap <Leader>iv :action IntroduceVariable<CR>
+
+nnoremap <Leader>ic :action InspectCode<CR>
+
+nnoremap <Leader>mr :action Maven.Reimport<CR>
+
+"nnoremap <C-j> :action FindNext<CR>
+"nnoremap <C-k> :action FindPrevious<CR>
