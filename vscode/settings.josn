@@ -1,0 +1,227 @@
+{
+  "vim.easymotion": true,
+  "vim.incsearch": true,
+  "vim.useSystemClipboard": true,
+  "vim.useCtrlKeys": true,
+  "vim.hlsearch": true,
+  "vim.smartRelativeLine": false,
+  "vim.showcmd": true,
+  "vim.insertModeKeyBindings": [
+    {
+      "before": ["j", "k"],
+      "after": ["<Esc>"]
+    },
+    {
+      "before": ["<C-x>"],
+      "after": ["BS"]
+    },
+    {
+      "before": ["<C-l>"],
+      "after": ["RIGHT"]
+    },
+    {
+      "before": ["<C-k>"],
+      "after": ["UP"]
+    },
+    {
+      "before": ["<C-j>"],
+      "after": ["DOWN"]
+    },
+    {
+      "before": ["<C-h>"],
+      "after": ["LEFT"]
+    },
+    {
+      "before": ["<C-a>"],
+      "commands": ["cursorHome"]
+    },
+    {
+      "before": ["<C-e>"],
+      "commands": ["cursorEnd"]
+    }
+  ],
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<C-n>"],
+      "after": ["g", "b"]
+    },
+    {
+      "before": ["<leader>", "d"],
+      "after": ["\"", "_", "d"]
+    },
+    {
+      "before": ["<leader>", "D"],
+      "after": ["\"", "_", "D"]
+    },
+    {
+      "before": ["<leader>", "d", "d"],
+      "after": ["\"", "_", "d", "d"]
+    },
+    {
+      "before": ["<leader>", "x"],
+      "after": ["\"", "_", "x"]
+    },
+    {
+      "before": ["g", "n"],
+      "after": ["g", "t"]
+    },
+    {
+      "before": ["g", "p"],
+      "after": ["g", "T"]
+    },
+    {
+      "before": ["<leader>", "H"],
+      "after": ["0"]
+    },
+    {
+      "before": ["<leader>", "h"],
+      "after": ["^"]
+    },
+    {
+      "before": ["<leader>", "L"],
+      "after": ["$"]
+    },
+    {
+      "before": ["<leader>", "l"],
+      "after": ["g", "_"]
+    },
+    {
+      "before": ["<leader>", "f"],
+      "after": ["<leader>", "<leader>", "s"]
+    },
+    {
+      "before": ["<leader>", "s"],
+      "after": ["<leader>", "<leader>", "<leader>", "b", "d", "w"]
+    },
+    {
+      "before": ["<leader>", "e"],
+      "after": ["<leader>", "<leader>", "<leader>", "b", "d", "e"]
+    },
+    {
+      "before": ["<leader>", "F"],
+      "after": ["<leader>", "<leader>", "<leader>", "b", "d", "j", "k"]
+    },
+    {
+      "before": ["<leader>", "w"],
+      "commands": ["workbench.action.files.save"]
+    },
+    {
+      "before": ["<leader>", "q"],
+      "commands": [":q"]
+    },
+    {
+      "before": ["<leader>", "Q"],
+      "commands": [":q!"]
+    },
+    {
+      "before": ["<leader>", "n", "f"],
+      "commands": ["workbench.action.files.newUntitledFile"]
+    },
+    {
+      "before": ["<C-h>"],
+      "commands": ["workbench.action.navigateBack"]
+    },
+    {
+      "before": ["<C-l>"],
+      "commands": ["workbench.action.navigateForward"]
+    },
+    {
+      "before": ["<CR>"],
+      "after": ["o", "Esc"]
+    },
+    {
+      "before": ["<S-CR>"],
+      "after": ["O", "Esc"]
+    },
+    {
+      "before": ["<BS>"],
+      "commands": [":nohl"]
+    },
+    {
+      "before": ["<C-a>"],
+      "after": ["g", "g", "v", "G"]
+    },
+    {
+      "before": ["=", "="],
+      "commands": ["editor.action.format"]
+    },
+    {
+      "before": ["<leader>", "c", "c"],
+      "commands": ["editor.action.addCommentLine"]
+    },
+    {
+      "before": ["<leader>", "c", "u"],
+      "commands": ["editor.action.removeCommentLine"]
+    },
+    {
+      "before": ["∆"],
+      "after": ["d", "d", "p"]
+    },
+    {
+      "before": ["˚"],
+      "after": ["d", "d", "k", "P"]
+    }
+  ],
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<C-n>"],
+      "after": ["g", "b"]
+    },
+    {
+      "before": ["<leader>", "c", "c"],
+      "commands": ["editor.action.addCommentLine"]
+    },
+    {
+      "before": ["<leader>", "c", "u"],
+      "commands": ["editor.action.removeCommentLine"]
+    },
+    {
+      "before": ["∆"],
+      "commands": ["editor.action.moveLinesDownAction"]
+    },
+    {
+      "before": ["˚"],
+      "commands": ["editor.action.moveLinesUpAction"]
+    }
+  ],
+  "vim.leader": ",",
+  "vim.handleKeys": {
+    // "<C-a>": false,
+    "<C-f>": true
+  },
+  "workbench.colorTheme": "Atom One Light",
+  "editor.fontFamily": "'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
+  "editor.minimap.enabled": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "workbench.editor.enablePreview": false,
+  "window.zoomLevel": -1,
+  "editor.fontSize": 13,
+  // "[jsonc]": {
+  //   "editor.defaultFormatter": "vscode.json-language-features"
+  // },
+  // "[json]": {
+  //   "editor.defaultFormatter": "vscode.json-language-features"
+  // },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "octref.vetur"
+  },
+  "vetur.format.defaultFormatterOptions": {
+    "prettier": {
+      "semi": false,
+      "singleQuote": true
+    }
+  },
+  "prettier.singleQuote": true,
+  "prettier.semi": false,
+  "prettier.trailingComma": "none",
+  "prettier.useTabs": false,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
