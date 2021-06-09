@@ -8,7 +8,6 @@ NORMAL="$(tput sgr0)"
 
 exectime=$(date "+%Y-%m-%d_%H-%M-%S")
 
-
 BackupOldDotfiles() {
     dotfiles="
     .vimrc
@@ -24,17 +23,13 @@ BackupOldDotfiles() {
 
 BackupOldDotfiles
 
-# 不使用软连接
+# without symbolic link
 
-# .vimrc
-cp ../vim/vimrc  ${HOME}/.vimrc
+cp ../.vimrc  ${HOME}/.vimrc
 
-# colors
 mkdir -p ${HOME}/.vim/colors
-cp ../vim/colors/heshui.vim  ${HOME}/.vim/colors
+cp ../.vim/colors/heshui.vim  ${HOME}/.vim/colors
 
-# .ideavimrc
-cp ../idea/ideavimrc  ${HOME}/.ideavimrc
+cp ../.ideavimrc  ${HOME}/.ideavimrc
 
-# .zshrc
-cp ../zshrc/zshrc  ${HOME}/.zshrc
+cp ../.zshrc  ${HOME}/.zshrc
