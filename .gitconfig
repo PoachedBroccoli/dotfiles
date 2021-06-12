@@ -3,6 +3,12 @@
 	# View abbreviated SHA, description, and history graph of the latest 20 commits
 	l = log --pretty=oneline -n 20 --graph --abbrev-commit
 
+	lg=log --color --graph --format=format:'%C(bold blue)%h%C(reset): %C(bold green)(%ad)%C(reset) %C(bold yellow)<%an>%C(reset)%C(bold red)%d%C(reset)%n'' %C(reset)%s%C(reset)' --date=iso8601 --abbrev-commit
+
+	lgg=log --pretty=format:\"%C(auto)%h %C(bold magenta)<%ad> %C(bold yellow)%<(8,trunc)[%an] %C(blue normal bold)| %C(reset)%s%C(auto)%d\" --graph --date=iso8601
+
+	lggg=log --graph --pretty=format:'%C(bold yellow)%h%C(reset) -%C(reset) %<(40,trunc)%s %C(bold cyan)%d%  %C(green)(%an, %cr, %ad)' --date=iso8601 --abbrev-commit
+
 	# View the current working tree status using the short format
 	s = status -s
 
