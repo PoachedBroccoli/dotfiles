@@ -9,6 +9,8 @@ nnoremap <Leader>sv :action IdeaVim.ReloadVimRc.reload<CR>
 " 插件
 set surround
 set multiple-cursors
+set ideajoin
+set keep-english-in-normal
 
 " multiple-cursors
 map <C-n> <A-n>
