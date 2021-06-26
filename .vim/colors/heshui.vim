@@ -36,13 +36,13 @@ function! s:Link (group, point)
 endfunction
 
 let s:green4  = ['#008700', '28']
-let s:slateblue3 = ['#5f5faf', '62']
+let s:slateblue3 = ['#5f5faf', '61']
 let s:royalblue1 = ['#5f5fff', '63']
 let s:steelblue3 = ['#5f87d7', '68']
 let s:cornflowerblue = ['#5f87ff', '69']
 let s:chartreuse2 = ['#5fff00', '82']
 let s:seagreen1 = ['#5fff87', '84']
-let s:purple1 = ['#8700ff', '93']
+let s:purple93 = ['#8700ff', '93']
 let s:grey53 = ['#878787', '102']
 let s:lightgreen = ['#87ff87', '120']
 let s:purple = ['#af00ff', '129']
@@ -73,8 +73,8 @@ call s:Color("Float", s:white, s:purple, "NONE")
 
 call s:Color("Error", s:white, s:red1, "underline")
 
-call s:Color("Identifier", s:white, s:purple1, "bold")
-call s:Color("Function", s:white, s:purple1, "bold")
+call s:Color("Identifier", s:white, s:purple93, "bold")
+call s:Color("Function", s:white, s:purple93, "bold")
 
 "call s:Color("Ignore", "", "", "")
 call s:Color("Normal", s:white, s:grey15, "NONE")
@@ -85,12 +85,12 @@ call s:Color("Define", s:white, s:hotpink3, "bold")
 call s:Color("Macro", s:white, s:hotpink3, "bold")
 call s:Color("PreCondit", s:white, s:hotpink3, "bold")
 
-call s:Color("Special", s:white, s:purple1, "bold")
-call s:Color("SpecialChar", s:white, s:purple1, "bold")
-call s:Color("Tag", s:white, s:purple1, "bold")
-call s:Color("Delimiter", s:white, s:purple1, "bold")
-call s:Color("SpecialComment", s:white, s:purple1, "bold")
-call s:Color("Debug", s:white, s:purple1, "bold")
+call s:Color("Special", s:white, s:purple93, "bold")
+call s:Color("SpecialChar", s:white, s:purple93, "bold")
+call s:Color("Tag", s:white, s:purple93, "bold")
+call s:Color("Delimiter", s:white, s:purple93, "bold")
+call s:Color("SpecialComment", s:white, s:purple93, "bold")
+call s:Color("Debug", s:white, s:purple93, "bold")
 
 call s:Color("Statement", s:white, s:hotpink3, "bold")
 call s:Color("Conditional", s:white, s:hotpink3, "bold")
@@ -116,17 +116,19 @@ call s:Color("CursorLine", "", "", "underline")
 call s:Color("CursorLineNr", "", s:hotpink3, "bold")
 call s:Color("LineNr", "", s:grey50, "NONE")
 
-call s:Color("SpecialKey", s:white, s:purple1, "bold")
+call s:Color("SpecialKey", s:white, s:purple93, "bold")
 call s:Color("NonText", s:white, s:grey53, "bold")
 "call s:Color("StatusLine", s:, s:, "bold")
 "call s:Color("StatusLineNC", s:, s:, "")
 "call s:Color("StatusLineTerm", s:, s:, "")
 "call s:Color("StatusLineTermNC", s:, s:, "")
 call s:Color("Visual", s:slateblue3, s:white, "NONE")
-call s:Color("Directory", s:white, s:purple1, "bold")
+call s:Color("Directory", s:white, s:purple93, "bold")
 call s:Color("ErrorMsg", s:red1, s:white, "bold")
-call s:Color("IncSearch", s:gold1, "", "bold")
-call s:Color("Search", s:gold1, "", "bold")
+"call s:Color("IncSearch", s:gold1, "", "bold")
+call s:Color("IncSearch", s:gold1, s:grey15, "bold")
+"call s:Color("Search", s:gold1, "", "bold")
+call s:Color("Search", s:gold1, s:grey15, "bold")
 call s:Color("MoreMsg", s:white, s:green4, "bold")
 call s:Color("ModeMsg", s:darkolivegreen1, s:grey15, "bold")
 call s:Color("Question", s:darkolivegreen1, s:grey15, "bold")

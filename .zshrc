@@ -1,7 +1,7 @@
 #export LC_ALL=en_US.UTF-8
 #export LANG=en_US.UTF-8
 
-export VSCODE_HOME="/Applications/Visual Studio Code.app/Contents/Resources/app" 
+export VSCODE_HOME="/Applications/Visual Studio Code.app/Contents/Resources/app"
 
 export GOPATH=$HOME/Documents/env/go
 
@@ -19,7 +19,8 @@ path=(
 export PATH=":$PATH"
 
 #PS1="%B%F{203}%n@%m %1~ %#%f%b "
-PS1="%B%F{203}%n@%d %1~ %#%f%b "
+#PS1="%B%F{203}%n@%d %1~ %#%f%b "
+PS1="%B%F{green}%d %1~ %#%f%b "
 
 fpath=(~/.zsh/completion $fpath)
 autoload -U compinit
