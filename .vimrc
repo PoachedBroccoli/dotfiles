@@ -6,20 +6,9 @@ set fileencodings=ucs-bom,utf-8,cp936,gb18030,gbk,gb2312,big5,shift-jis,latin1
 
 set fileformats=unix,dos,mac
 
-syntax enable
 syntax on
 
-filetype on
-filetype plugin on
-filetype indent on
 filetype plugin indent on
-
-" ========================================================================
-" theme
-" ========================================================================
-set t_Co=256
-set background=light
-colorscheme heshui
 
 " ========================================================================
 " mapping
@@ -140,6 +129,7 @@ set ruler
 "set relativenumber
 set cursorline
 "set cursorcolumn
+set colorcolumn=120
 set wrap
 set showcmd
 set showmode
@@ -169,6 +159,7 @@ set laststatus=2
 set expandtab             " 改变tab键行为，tab->space
 
 set tabstop=4             " tab字符显示宽度，不修改tab键行为，4个空格作为一个tab(一个tab显示多少个空格)
+
 set softtabstop=4         " 修改tab键行为，不修改tab字符显示宽度，按下一个tab视为输入4个空格
 
 set shiftwidth=4          " 换行的缩进列数，普通模式下的<< >>，输入模式下的CTRL+D｜CTRL+T，进行缩进为4个空格
@@ -177,12 +168,12 @@ set autoindent            " 继承前一行的缩进方式，适用于多行注�
 set copyindent            " 复制粘贴时保留原有的缩进
 
 "" ========================================================================
-"" two space
+"" two spaces wide
 "" ========================================================================
 autocmd Filetype javascript,html,css,xml,yaml,json,proto,sql setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 
 "" ========================================================================
-"" four space
+"" four spaces wide
 "" ========================================================================
 autocmd FileType javascript,python,java setlocal expandtab tabstop=4 shiftwidth=4  softtabstop=4
 
@@ -197,10 +188,8 @@ autocmd FileType javascript,python,java setlocal expandtab tabstop=4 shiftwidth=
 " ========================================================================
 set backspace=eol,start,indent
 
-set spell
-
 " ========================================================================
-" 插件配置
+" plugins
 " ========================================================================
 "call plug#begin('~/.vim/plugged')
 "
@@ -381,3 +370,20 @@ autocmd BufNewFile *.sh   exec ":call SHHeader()"
 func SHHeader()
     call setline(1,"#!/usr/bin/env bash")
 endfunc
+
+" ========================================================================
+" theme
+" ========================================================================
+set t_Co=256
+set background=light
+colorscheme heshui
+
+"let java_highlight_java_lang_ids = 1
+"let java_highlight_functions = 1
+"let java_highlight_all = 1
+"let java_comment_strings = 1
+"let java_mark_braces_in_parens_as_errors = 1
+"let java_highlight_debug = 1
+"let java_javascript = 1
+"let java_css = 1
+"let java_vb = 1

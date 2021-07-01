@@ -35,161 +35,210 @@ function! s:Link (group, point)
     exec sLink
 endfunction
 
-let s:green4  = ['#008700', '28']
-let s:slateblue3 = ['#5f5faf', '61']
-let s:royalblue1 = ['#5f5fff', '63']
-let s:steelblue3 = ['#5f87d7', '68']
-let s:cornflowerblue = ['#5f87ff', '69']
-let s:chartreuse2 = ['#5fff00', '82']
-let s:seagreen1 = ['#5fff87', '84']
-let s:purple93 = ['#8700ff', '93']
-let s:grey53 = ['#878787', '102']
-let s:lightgreen = ['#87ff87', '120']
-let s:purple = ['#af00ff', '129']
-let s:darkorange3 = ['#d75f00', '166']
-let s:hotpink3 = ['#d75f87', '168']
-let s:lightsalmon3 = ['#d78700', '172']
-let s:darkolivegreen1 = ['#d7ff5f', '191']
-let s:red1 = ['#ff0000', '196']
-let s:deeppink2 = ['#ff005f', '197']
-let s:lightPink1 = ['#ffafaf', '217']
-let s:lightgoldenrod2 = ['#ffd75f', '221']
-let s:thistle1 = ['#ffd7ff', '225']
-let s:gold1 = ['#ffd700', '220']
+
+let s:slatebluedark = ['#5f5faf', '61']
+let s:slatebluelight = ['875fff', '99'] " not use
+
+let s:steelbluedark = ['#5f87d7', '68']
+
+let s:green = ['#87af5f', '107']
+let s:greenlight = ['#d7ff5f', '191']
+
+let s:purple = ['#8700ff', '93']
+let s:purplemedium = ['#af5fd7', '134']
+let s:purplelight = ['#8787d7', '104']
+
+let s:browndark = ['#af8700', '136']
+
+let s:reddark = ['#d70000', '160']
+let s:redlight = ['#ff0000', '196']
+
+let s:pinkdark = ['#d75f87', '168']
+let s:pinklight = ['#ffafaf', '217']
+let s:pinkdelete = ['#ffd7ff', '224']
+
+let s:orangedark = ['#ff8700', '208']
+
+let s:gold = ['#ffd700', '220']
+
 let s:white = ['#ffffff', '231']
-let s:grey15 = ['#262626', '235']
-let s:grey50 = ['#808080', '244']
-let s:grey89 = ['#e4e4e4', '254']
-let s:grey93 = ['#eeeeee', '255']
+let s:black = ['#262626', '235']
 
-call s:Color("Comment", s:white, s:grey50, "NONE")
+let s:greydark = ['#444444', '238']
+let s:greycomment = ['#808080', '244']
+let s:greylight = ['#e4e4e4', '254']
+let s:greylightest = ['#eeeeee', '255']
 
-call s:Color("Constant", s:white, s:purple, "bold")
-call s:Color("String", s:white, s:green4, "NONE")
-call s:Color("Character", s:white, s:purple, "NONE")
-call s:Color("Number", s:white, s:purple, "NONE")
-call s:Color("Boolean", s:white, s:purple, "NONE")
-call s:Color("Float", s:white, s:purple, "NONE")
+let s:yellowlight = ['#ffffd7', '230']
 
-call s:Color("Error", s:white, s:red1, "underline")
 
-call s:Color("Identifier", s:white, s:purple93, "bold")
-call s:Color("Function", s:white, s:purple93, "bold")
+call s:Color("Normal", s:yellowlight, s:greydark, "NONE")
 
-"call s:Color("Ignore", "", "", "")
-call s:Color("Normal", s:white, s:grey15, "NONE")
 
-call s:Color("PreProc", s:white, s:hotpink3, "bold")
-call s:Color("Include", s:white, s:hotpink3, "bold")
-call s:Color("Define", s:white, s:hotpink3, "bold")
-call s:Color("Macro", s:white, s:hotpink3, "bold")
-call s:Color("PreCondit", s:white, s:hotpink3, "bold")
+call s:Color("Define", "", s:pinkdark, "bold")
 
-call s:Color("Special", s:white, s:purple93, "bold")
-call s:Color("SpecialChar", s:white, s:purple93, "bold")
-call s:Color("Tag", s:white, s:purple93, "bold")
-call s:Color("Delimiter", s:white, s:purple93, "bold")
-call s:Color("SpecialComment", s:white, s:purple93, "bold")
-call s:Color("Debug", s:white, s:purple93, "bold")
+call s:Color("Comment", "", s:greycomment, "NONE")
 
-call s:Color("Statement", s:white, s:hotpink3, "bold")
-call s:Color("Conditional", s:white, s:hotpink3, "bold")
-call s:Color("Repeat", s:white, s:hotpink3, "bold")
-call s:Color("Label", s:white, s:hotpink3, "bold")
-call s:Color("Operator", s:white, s:hotpink3, "bold")
-call s:Color("Keyword", s:white, s:hotpink3, "bold")
-call s:Color("Exception", s:white, s:hotpink3, "bold")
+call s:Color("Conditional", "", s:purplemedium, "bold")
 
-call s:Color("Type", s:white, s:hotpink3, "bold")
-call s:Color("StorageClass", s:white, s:hotpink3, "bold")
-call s:Color("Structure", s:white, s:hotpink3, "bold")
-call s:Color("Typedef", s:white, s:hotpink3, "bold")
+call s:Color("Constant", "", s:orangedark, "bold")
 
-call s:Color("Underlined", s:white, s:purple, "underline")
+call s:Color("Function", "", s:purple, "bold")
 
-call s:Color("Todo", s:darkolivegreen1, s:grey15, "bold")
+call s:Color("Identifier", "", s:purple, "bold")
 
-call s:Color("ClassName", s:white, s:royalblue1, "bold")
+call s:Color("Include", "", s:pinkdark, "bold")
 
-call s:Color("Cursor", s:grey15, s:white, "NONE")
-call s:Color("CursorLine", "", "", "underline")
-call s:Color("CursorLineNr", "", s:hotpink3, "bold")
-call s:Color("LineNr", "", s:grey50, "NONE")
+call s:Color("Keyword", "", s:orangedark, "bold")
 
-call s:Color("SpecialKey", s:white, s:purple93, "bold")
-call s:Color("NonText", s:white, s:grey53, "bold")
-"call s:Color("StatusLine", s:, s:, "bold")
-"call s:Color("StatusLineNC", s:, s:, "")
-"call s:Color("StatusLineTerm", s:, s:, "")
-"call s:Color("StatusLineTermNC", s:, s:, "")
-call s:Color("Visual", s:slateblue3, s:white, "NONE")
-call s:Color("Directory", s:white, s:purple93, "bold")
-call s:Color("ErrorMsg", s:red1, s:white, "bold")
-"call s:Color("IncSearch", s:gold1, "", "bold")
-call s:Color("IncSearch", s:gold1, s:grey15, "bold")
-"call s:Color("Search", s:gold1, "", "bold")
-call s:Color("Search", s:gold1, s:grey15, "bold")
-call s:Color("MoreMsg", s:white, s:green4, "bold")
-call s:Color("ModeMsg", s:darkolivegreen1, s:grey15, "bold")
-call s:Color("Question", s:darkolivegreen1, s:grey15, "bold")
-call s:Color("VertSplit", "", "", "reverse")
-call s:Color("Title", s:white, s:hotpink3, "bold")
-call s:Color("VisualNOS", "", s:grey15, "bold,underline")
-call s:Color("WarningMsg", "", s:red1, "bold")
-call s:Color("WildMenu", s:darkolivegreen1, s:grey15, "bold")
-call s:Color("Folded", s:grey50, s:grey15, "NONE")
-call s:Color("FoldColumn", s:grey50, s:grey15, "NONE")
-call s:Color("DiffAdd", "", s:lightgreen, "NONE")
-call s:Color("DiffChange", "", s:lightgreen, "NONE")
-call s:Color("DiffDelete", "", s:thistle1, "NONE")
-call s:Color("DiffText", "", s:chartreuse2, "NONE")
-call s:Color("Conceal", s:grey50, s:white, "NONE")
-call s:Color("Pmenu", s:grey93, s:grey15, "NONE")
-call s:Color("PmenuSel", s:grey93, s:grey15, "NONE")
-call s:Color("PmenuSbar", s:grey93, s:grey15, "NONE")
-call s:Color("PmenuThumb", s:grey50, "", "NONE")
-call s:Color("TabLine", s:grey89, "", "NONE")
-call s:Color("TabLineFill", s:grey89, "", "NONE")
-call s:Color("TabLineSel", s:grey15, s:white, "NONE")
-call s:Color("MatchParen", s:lightPink1, "", "NONE")
-call s:Color("SpellBad", s:grey50, s:grey93, "underline")
-call s:Color("SpellCap", s:grey50, s:grey93, "underline")
-call s:Color("SpellLocal", s:grey50, s:grey93, "underline")
-call s:Color("SpellRare", s:grey50, s:grey93, "underline")
+call s:Color("Operator", "", s:pinkdark, "bold")
+
+call s:Color("PreProc", "", s:pinkdark, "bold")
+
+call s:Color("Repeat", "", s:purplemedium, "bold")
+
+call s:Color("Special", "", s:purple, "bold")
+
+call s:Color("Statement", "", s:purplemedium, "bold")
+
+call s:Color("String", "", s:green, "bold")
+call s:Link("Character", "String")
+
+call s:Color("Structure", s:white, s:pinkdark, "bold")
+
+call s:Color("Title", "", s:pinkdark, "bold")
+
+call s:Color("Todo", s:greenlight, s:black, "bold")
+
+call s:Color("Type", "", s:pinkdark, "bold")
+
+
+call s:Color("Number", "", s:orangedark, "bold")
+call s:Color("Boolean", "", s:orangedark, "bold")
+call s:Color("Float", "", s:orangedark, "bold")
+
+
+"call s:Color("Macro", s:white, s:pinkdark, "bold")
+"call s:Color("PreCondit", s:white, s:pinkdark, "bold")
+
+"call s:Color("Tag", s:white, s:purple, "bold")
+"call s:Color("Delimiter", "", s:purple, "bold")
+"call s:Color("SpecialComment", "", s:purple, "bold")
+"call s:Color("Debug", s:white, s:purple, "bold")
+
+"call s:Color("Exception", s:white, s:pinkdark, "bold")
+
+"call s:Color("StorageClass", s:white, s:pinkdark, "bold")
+"call s:Color("Typedef", s:white, s:pinkdark, "bold")
+
+
+call s:Color("Cursor", s:black, s:white, "NONE")
+call s:Color("CursorLine", s:greylightest, "", "bold")
+
+call s:Color("LineNr", s:yellowlight, s:greycomment, "NONE")
+call s:Color("CursorLineNr", "", s:pinkdark, "bold")
+
+"call s:Color("SpecialKey", s:white, s:purple, "bold")
+"call s:Color("NonText", "", s:greycomment, "NONE")
+
+call s:Color("Visual", s:slatebluedark, s:white, "NONE")
+"call s:Color("VisualNOS", s:slatebluedark, s:white,"bold,underline")
+
+"call s:Color("Directory", s:white, s:purple, "bold")
+"call s:Color("Conceal", s:greycomment, s:white, "NONE")
+"call s:Color("VertSplit", "", "", "reverse")
+
+call s:Color("IncSearch", s:gold, s:black, "bold")
+call s:Color("Search", s:gold, s:black, "bold")
+
+call s:Color("WildMenu", s:greenlight, s:black, "bold")
+
+"call s:Color("Folded", s:white, s:black, "NONE")
+"call s:Color("FoldColumn", s:white, "", "NONE")
+
+"call s:Color("DiffAdd", s:green, "", "NONE")
+"call s:Color("DiffChange", s:green, "", "NONE")
+"call s:Color("DiffDelete", "", s:pinkdelete, "NONE")
+"call s:Color("DiffText", "", s:green, "bold")
+
+"call s:Color("Pmenu", s:greylightest, s:black, "NONE")
+"call s:Color("PmenuSel", s:greylightest, s:black, "NONE")
+"call s:Color("PmenuSbar", s:greylightest, s:black, "NONE")
+"call s:Color("PmenuThumb", s:greycomment, "", "NONE")
+
+""call s:Color("StatusLine", s:, s:, "bold")
+""call s:Color("StatusLineNC", s:, s:, "")
+""call s:Color("StatusLineTerm", s:, s:, "")
+""call s:Color("StatusLineTermNC", s:, s:, "")
+"call s:Color("TabLine", s:greylight, "", "NONE")
+"call s:Color("TabLineFill", s:greylight, "", "NONE")
+"call s:Color("TabLineSel", s:black, s:white, "bold")
+
+"call s:Color("MatchParen", s:pinklight, s:white, "NONE")
 
 " vim-go
 call s:Link("goTypeName", "ClassName")
 call s:Link("goReceiverType", "ClassName")
 call s:Link("goFunctionCall", "Function")
-call s:Color("goTypeConstructor", "", s:grey15, "NONE")
-call s:Color("goField", "", s:darkorange3, "NONE")
+call s:Color("goTypeConstructor", "", s:black, "NONE")
+call s:Color("goField", "", s:orangedark, "NONE")
 
 " html
-call s:Color("htmlArg", "", s:lightsalmon3, "NONE")
-call s:Color("javaScript", "", s:grey15, "NONE")
+call s:Color("htmlArg", "", s:browndark, "NONE")
+call s:Color("htmlTag", "", s:reddark, "NONE")
+call s:Color("htmlEndTag", "", s:reddark, "NONE")
+call s:Color("htmlTagName", "", s:reddark, "NONE")
+call s:Color("htmlScriptTag", "", s:reddark, "NONE")
+call s:Color("htmlSpecialTagName", "", s:reddark, "NONE")
 
 " javascript
-call s:Color("javaScriptBraces", "", s:grey15, "NONE")
-call s:Color("javaScriptParens", "", s:grey15, "NONE")
-call s:Color("javaScriptDOMObjects", "", s:grey15, "NONE")
-call s:Color("javaScriptDOMMethods", "", s:cornflowerblue, "bold")
-call s:Color("javaScriptAjaxObjects", "", s:cornflowerblue, "bold")
-call s:Color("javaScriptAjaxMethods", "", s:cornflowerblue, "bold")
-call s:Color("javaScriptFuncDef", "", s:cornflowerblue, "bold")
-call s:Color("javaScriptFuncExp", "", s:cornflowerblue, "bold")
-call s:Color("javaScriptHtmlEvents", "", s:cornflowerblue, "bold")
-call s:Color("javaScriptHtmlElemAttrs", "", s:darkorange3, "bold")
-call s:Color("javaScriptAjaxProperties", "", s:darkorange3, "bold")
-call s:Color("javaScriptMessage", "", s:cornflowerblue, "bold")
-call s:Color("javaScriptFuncArg", "", s:grey15, "NONE")
-call s:Color("javaScriptBrowserObjects", "", s:grey15, "NONE")
-call s:Color("javaScriptEndColons", "", s:grey15, "NONE")
+call s:Color("javaScript", "", s:black, "NONE")
+call s:Color("javaScriptIdentifier", "", s:purplemedium, "bold")
+call s:Color("javaScriptBraces", "", s:black, "NONE")
+call s:Color("javaScriptNumber", "", s:purplelight, "bold")
+call s:Color("javaScriptMember", "", s:orangedark, "bold")
+call s:Color("javaScriptNull", "", s:orangedark, "NONE")
+call s:Color("javaScriptFunction", "", s:purplemedium, "bold")
+call s:Color("javaScriptConditional", "", s:purplemedium, "bold")
+call s:Color("javaScriptRepeat", "", s:purplemedium, "bold")
+call s:Color("javaScriptReserved", "", s:purplemedium, "bold")
+call s:Color("javaScriptGlobal", "", s:steelbluedark, "NONE")
+call s:Color("javaScriptStatement", "", s:reddark, "bold")
+"call s:Color("javaScriptParens", "", s:black, "NONE")
+"call s:Color("javaScriptDOMObjects", "", s:black, "NONE")
+"call s:Color("javaScriptDOMMethods", "", s:cornflowerblue, "bold")
+"call s:Color("javaScriptAjaxObjects", "", s:cornflowerblue, "bold")
+"call s:Color("javaScriptAjaxMethods", "", s:cornflowerblue, "bold")
+"call s:Color("javaScriptFuncDef", "", s:cornflowerblue, "bold")
+"call s:Color("javaScriptFuncExp", "", s:cornflowerblue, "bold")
+"call s:Color("javaScriptHtmlEvents", "", s:cornflowerblue, "bold")
+"call s:Color("javaScriptHtmlElemAttrs", "", s:orangedark, "bold")
+"call s:Color("javaScriptAjaxProperties", "", s:orangedark, "bold")
+"call s:Color("javaScriptMessage", "", s:cornflowerblue, "bold")
+"call s:Color("javaScriptFuncArg", "", s:black, "NONE")
+"call s:Color("javaScriptBrowserObjects", "", s:black, "NONE")
+"call s:Color("javaScriptEndColons", "", s:black, "NONE")
 
 " css
-call s:Color("StorageClass", "", s:steelblue3, "bold")
-call s:Color("cssBraces", "", s:grey15, "NONE")
+call s:Color("StorageClass", "", s:steelbluedark, "bold")
+call s:Color("cssBraces", "", s:black, "NONE")
 
 " java
-call s:Color("javaClassDecl", "", s:hotpink3, "bold")
-call s:Color("javaScopeDecl", "", s:hotpink3, "bold")
-call s:Color("javaStorageClass", "", s:hotpink3, "bold")
+call s:Color("javaAccessKeyword", "", s:purplemedium, "bold")
+call s:Color("javaStructure", "", s:purplemedium, "bold")
+call s:Color("javaBraces", "", s:purplemedium, "bold")
+call s:Color("javaParenT", "", s:purplemedium, "bold")
+call s:Color("javaInParen", "", s:purplemedium, "bold")
+call s:Color("javaIdentifier", "", s:greydark, "NONE")
+call s:Color("javaExternal", "", s:purplemedium, "bold")
+call s:Color("javaClassDecl", "", s:purplemedium, "bold")
+call s:Color("javaScopeDecl", "", s:purplemedium, "bold")
+call s:Color("javaStatement", "", s:reddark, "bold")
+call s:Color("javaFuncDef", "", s:pinkdark, "bold")
+call s:Color("javaFunction", "", s:pinkdark, "bold")
+call s:Color("javaStorageClass", "", s:purplemedium, "bold")
+call s:Color("javaC_JavaLang", "", s:steelbluedark, "bold")
+call s:Color("javaType", "", s:steelbluedark, "bold")
+call s:Color("javaString", "", s:green, "bold")
+call s:Link("javaCharacter", "javaString")
+
