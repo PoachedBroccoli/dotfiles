@@ -79,7 +79,8 @@ set nowritebackup  " Only in case you don't want a backup file while editing
 
 autocmd BufWritePre * :%s/\s\+$//e " Delete trailing space or tab before write file
 
-autocmd BufWritePost $MYVIMRC source $MYVIMRC  " Real time reload
+"autocmd BufWritePost $MYVIMRC source $MYVIMRC  " Real time reload
+map <leader>r :source $MYVIMRC<CR>  " Real time reload
 
 " ========================================================================
 " style
@@ -138,6 +139,9 @@ set wildmode=longest:list,full
 set list
 set listchars=tab:»-,trail:-,eol:$,extends:»,precedes:«,nbsp:%
 
+" Duplicate words
+map <leader>fd /\(\<\w\+\>\)\_s*\1
+
 " ========================================================================
 " search
 " ========================================================================
@@ -152,6 +156,7 @@ set matchtime=1
 " status
 " ========================================================================
 set laststatus=2
+"set statusline=%F%m%r%h%w%=\ [filetype=%Y]\ %{\"[fenc=\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\"+\":\"\").\"]\"}\ [ff=%{&ff}]\ [asc=%03.3b]\ [hex=%02.2B]\ [pos=%04l,%04v][%p%%]\ [len=%L]
 
 " ========================================================================
 " indentation
@@ -187,6 +192,36 @@ autocmd FileType javascript,python,java setlocal expandtab tabstop=4 shiftwidth=
 " edit
 " ========================================================================
 set backspace=eol,start,indent
+
+" last edit
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" placeholder
+map <leader><Space> <Esc>/<---><CR>:nohlsearch<CR>c5l
+
+" figlet
+map <leader>tx :r !figlet
+
+" ========================================================================
+" window
+" ========================================================================
+map <leader>zl :set nosplitright<CR>:vsplit<CR>
+map <leader>zr :set splitright<CR>:vsplit<CR>
+
+map <leader>zt :set nosplitbelow<CR>:split<CR>
+map <leader>zd :set splitbelow<CR>:split<CR>
+
+map <up> :res +5<CR>
+map <down> :res -5<CR>
+map <left> :vertical resize-5<CR>
+map <right> :vertical resize+5<CR>
+
+" ========================================================================
+" plugins
+" ========================================================================
+map <leader>tab :tabedit<CR>
+map <leader>. :+tabnext<CR>
+map <leader>m :-tabnext<CR>
 
 " ========================================================================
 " plugins
@@ -232,7 +267,12 @@ set backspace=eol,start,indent
 "
 "" 缩进可视
 "Plug 'Yggdroot/indentLine'
-"
+
+"" Markdown
+"Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
+"Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
+"Plug 'vimwiki/vimwiki'
+
 "call plug#end()
 "
 "" ========================================================================
@@ -387,3 +427,4 @@ colorscheme heshui
 "let java_javascript = 1
 "let java_css = 1
 "let java_vb = 1
+
