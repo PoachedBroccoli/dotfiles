@@ -1,0 +1,110 @@
+snippet javadebug "java debug"
+{
+  "adapters": {
+    "java-debug-server": {
+      "name": "vscode-java",
+      "port": "${AdapterPort}"
+    }
+  },
+  "configurations": {
+    "Java Attach": {
+      "default": true,
+      "adapter": "java-debug-server",
+      "configuration": {
+        "request": "attach",
+        "host": "127.0.0.1",
+        "port": "5005"
+      },
+      "breakpoints": {
+        "exception": {
+          "caught": "N",
+          "uncaught": "N"
+        }
+      }
+    }
+  }
+}
+endsnippet
+
+snippet godebug "go debug"
+{
+  "configurations": {
+    "run": {
+      "adapter": "vscode-go",
+      "configuration": {
+        "request": "launch",
+        "program": "${fileDirname}",
+        "mode": "debug",
+        "dlvToolPath": "$HOME/go/bin/dlv"
+      }
+    }
+  }
+}
+endsnippet
+
+snippet pythondebug "python debug"
+{
+  "adapters": {
+    "debugpy": {
+      "command": ["python", "-m", "debugpy.adapter"],
+      "name": "debugpy",
+      "configuration": {
+        "python": "python"
+      }
+    }
+  },
+  "configurations": {
+    "run - debugpy": {
+      "adapter": "debugpy",
+      "configuration": {
+        "request": "launch",
+        "type": "python",
+        "cwd": "${workspaceRoot}",
+        "program": "${file}",
+        "stopOnEntry": true,
+        "console": "integratedTerminal"
+      },
+      "breakpoints": {
+        "exception": {
+          "raised": "N",
+          "uncaught": ""
+        }
+      }
+    }
+  }
+}
+endsnippet
+
+snippet rustdebug "rust debug"
+{
+  "configurations": {
+    "launch": {
+      "adapter": "CodeLLDB",
+      "configuration": {
+        "request": "launch",
+        "program": "${workspaceRoot}/target/debug/${filename}"
+      }
+    }
+  }
+}
+endsnippet
+
+snippet shelldebug "shell debug"
+{
+  "configurations": {
+    "run": {
+      "adapter": "vscode-bash",
+      "configuration": {
+        "type": "shell",
+        "request": "launch",
+        "cwd": "${workspaceRoot}",
+        "program": "${file}",
+        "stopOnEntry": true,
+        "console": "integratedTerminal"
+      }
+    }
+  }
+}
+endsnippet
+
+
