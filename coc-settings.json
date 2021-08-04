@@ -1,0 +1,209 @@
+{
+  "coc.preferences.enableFloatHighlight": true,
+  "coc.preferences.extensionUpdateCheck": "daily",
+  "coc.preferences.snippetStatusText": "ⓢ ",
+  "coc.preferences.formatOnSaveFiletypes": [
+    "json",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "typescript.tsx",
+    "graphql",
+    "xml",
+    "css",
+    "json",
+    "python",
+    "vue",
+    "c",
+    "java",
+    "kotlin",
+    "scala"
+  ],
+
+  "coc-actions.hideCursor": false,
+  "coc-actions.showActionKind": true,
+
+  "codeLens.enable": true,
+
+  "diagnostic.checkCurrentLine": true,
+  "diagnostic.errorSign": "\uf467",
+  "diagnostic.hintSign": "\uf864",
+  "diagnostic.infoSign": "\uf129",
+  "diagnostic.refreshOnInsertMode": false,
+  "diagnostic.signPriority": 1,
+  "diagnostic.virtualText": true,
+  "diagnostic.virtualTextCurrentLineOnly": false,
+  "diagnostic.virtualTextPrefix": " ❯❯❯ ",
+  "diagnostic.warningSign": "\uf071",
+
+  "eslint.autoFixOnSave": false,
+
+  "explorer.file.git.showUntrackedFiles": true,
+  "explorer.file.showHiddenFiles": true,
+  "explorer.icon.enableNerdfont": true,
+  "explorer.width": 38,
+
+  "go.checkForUpdates": "install",
+
+  "html.format.enable": true,
+  "html.autoClosingTags": true,
+
+  "html-css-support.enabledLanguages": ["html", "vue", "blade", "htmldjango", "typescriptreact", "javascriptreact"],
+
+  "json.format.enable": true,
+
+  "java.completion.guessMethodArguments": true,
+  "java.implementationsCodeLens.enabled": true,
+  "java.maven.downloadSources": true,
+  "java.referencesCodeLens.enabled": true,
+  "java.saveActions.organizeImports": true,
+  "java.autobuild.enabled": true,
+  "java.trace.server": "verbose",
+  "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
+
+  //"metals.enable": false,
+
+  "leetcode.language": "java",
+
+  "importCost.bundleSizeDecoration": "both",
+  "importCost.typescriptExtensions": ["\\.tsx?$"],
+  "importCost.javascriptExtensions": ["\\.jsx?$"],
+  "importCost.showCalculatingDecoration": true,
+  "importCost.debug": false,
+
+  "suggest.autoTrigger": "always",
+  "suggest.triggerAfterInsertEnter": true,
+  "suggest.noselect": true,
+  "suggest.enablePreselect": false,
+  "suggest.timeout": 5000,
+  "suggest.snippetIndicator": " ►",
+  "suggest.floatEnable": true,
+  "suggest.detailField": "preview",
+  "suggest.enablePreview": true,
+  "suggest.echodocSupport": true,
+  "suggest.completionItemKindLabels": {
+    "class": "\uf0e8",
+    "color": "\ue22b",
+    "constant": "\uf8fe",
+    "default": "\uf29c",
+    "enum": "\uf435",
+    "enumMember": "\uf02b",
+    "event": "\ufacd",
+    "field": "\uf93d",
+    "file": "\uf723",
+    "folder": "\uf115",
+    "function": "\u0192",
+    "interface": "\uf417",
+    "keyword": "\uf1de",
+    "method": "\uf6a6",
+    "module": "\uf40d",
+    "operator": "\uf915",
+    "property": "\ue624",
+    "reference": "\ufa46",
+    "snippet": "\ue60b",
+    "struct": "\ufb44",
+    "text": "\ue612",
+    "typeParameter": "\uf728",
+    "unit": "\uf475",
+    "value": "\uf89f",
+    "variable": "\ue71b"
+  },
+
+  "tsserver.enable": true,
+  "tsserver.enableJavascript": true,
+
+  "typescript.format.enabled": true,
+  "typescript.suggest.enabled": true,
+  "typescript.validate.enable": true,
+  "typescript.format.placeOpenBraceOnNewLineForFunctions": true,
+  "typescript.suggest.completeFunctionCalls": true,
+  "typescript.suggest.paths": true,
+  "typescript.suggest.autoImports": true,
+  "typescript.updateImportsOnFileMove.enable": true,
+  "typescript.showUnused": true,
+  "typescript.format.semicolons": "insert",
+  "typescript.preferences.quoteStyle": "single",
+
+  "yaml.format.enable": true,
+
+  "emmet.includeLanguages": {
+    "vue-html": "html",
+    "javascript": "javascriptreact"
+  },
+
+  "javascript.referencesCodeLens.enable": true,
+  "javascript.showUnused": true,
+  "javascript.suggest.autoImports": true,
+  "javascript.suggest.names": true,
+  "javascript.suggestionActions.enabled": true,
+  "javascript.suggest.completeFunctionCalls": true,
+  "javascript.updateImportsOnFileMove.enable": true,
+
+  "prettier.printWidth": 120,
+  "prettier.formatterPriority": 1,
+  "prettier.useTabs": false,
+  "prettier.trailingComma": "all",
+  "prettier.singleQuote": false,
+  "prettier.eslintIntegration": true,
+  "prettier.tslintIntegration": true,
+  "prettier.stylelintIntegration": true,
+
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.autoComplete.addBrackets": true,
+  "python.jediEnabled": false,
+  "python.formatting.provider": "yapf",
+  "python.formatting.yapfArgs": ["--style", "{spaces_around_power_operator: true, spaces_before_comment: 1}"],
+
+  "snippets.ultisnips.directories": [
+    "ultisnips",
+    "$home/.config/nvim/ultisnips/",
+    "$home/.config/nvim/plugged/vim-snippets/ultisnips/"
+  ],
+
+  "languageserver": {
+    "dockerfile": {
+      "command": "docker-langserver",
+      "filetypes": ["dockerfile"],
+      "args": ["--stdio"]
+    },
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod", ".git"],
+      "filetypes": ["go"],
+      "initializationOptions": {
+        "gocodecompletionenbled": true,
+        "diagnosticsenabled": true,
+        "linttool": "golint"
+      }
+    },
+    "bash": {
+      "command": "bash-language-server",
+      "args": ["start"],
+      "filetypes": ["sh"],
+      "ignoredRootPaths": []
+    },
+    "vue": {
+      "command": "vls",
+      "filetypes": ["vue"]
+    },
+    "clangd": {
+      "command": "clangd",
+      "filetypes": ["c", "cpp", "objc", "objcpp"]
+    },
+    "sql": {
+      "command": "sql-language-server",
+      "args": ["up", "--method", "stdio"],
+      "filetypes": ["sql", "mysql"]
+    },
+    "lua": {
+      "command": "lua-lsp",
+      "filetypes": ["lua"]
+    },
+    "erlang": {
+      "command": "erlang_ls",
+      "filetypes": ["erlang"]
+    }
+  }
+}
