@@ -1,7 +1,10 @@
-"    |                 |
-"    |---. ,---. ,---. |---. .   . .
-"    |   | |---' `---. |   | |   | |
-"    '   ' `---' `---' '   ' `---' '
+" ____              _   _      ____      ____  _           _
+"|  _ \ _   _  ___ | | | | ___|  _ \ ___/ ___|| |__  _   _(_)
+"| | | | | | |/ _ \| |_| |/ _ \ |_) / _ \___ \| '_ \| | | | |
+"| |_| | |_| | (_) |  _  |  __/  _ <  __/___) | | | | |_| | |
+"|____/ \__,_|\___/|_| |_|\___|_| \_\___|____/|_| |_|\__,_|_|
+
+
 
 
 highlight clear
@@ -69,6 +72,7 @@ let s:greycomment = ['#808080', '244']
 let s:greylight = ['#e4e4e4', '254']
 let s:greylightest = ['#eeeeee', '255']
 
+let s:yellowmedium = ['#ffffaf', '229']
 let s:yellowlight = ['#ffffd7', '230']
 
 
@@ -161,10 +165,18 @@ call s:Color("WildMenu", s:greenlight, s:black, "bold")
 "call s:Color("DiffDelete", "", s:pinkdelete, "NONE")
 "call s:Color("DiffText", "", s:green, "bold")
 
-"call s:Color("Pmenu", s:greylightest, s:black, "NONE")
-"call s:Color("PmenuSel", s:greylightest, s:black, "NONE")
-"call s:Color("PmenuSbar", s:greylightest, s:black, "NONE")
-"call s:Color("PmenuThumb", s:greycomment, "", "NONE")
+call s:Color("Pmenu", s:yellowmedium, s:greydark, "NONE")
+call s:Color("PmenuSel", s:greylightest, s:purplemedium, "bold")
+call s:Color("PmenuSbar", s:yellowmedium, s:black, "NONE")
+call s:Color("PmenuThumb", s:greycomment, "", "NONE")
+
+" call s:Color("Pmenu", s:greydark, s:white, "NONE")
+" call s:Color("PmenuSel", s:greylightest, s:purplemedium, "bold")
+" call s:Color("PmenuSbar", s:greydark, s:white, "NONE")
+" call s:Color("PmenuThumb", s:greycomment, "", "NONE")
+
+
+call s:Color("SignColumn", s:yellowlight, s:greylight, "bold")
 
 ""call s:Color("StatusLine", s:, s:, "bold")
 ""call s:Color("StatusLineNC", s:, s:, "")
@@ -174,7 +186,7 @@ call s:Color("WildMenu", s:greenlight, s:black, "bold")
 "call s:Color("TabLineFill", s:greylight, "", "NONE")
 "call s:Color("TabLineSel", s:black, s:white, "bold")
 
-"call s:Color("MatchParen", s:pinklight, s:white, "NONE")
+call s:Color("MatchParen", s:pinklight, s:white, "NONE")
 
 " vim-go
 call s:Link("goTypeName", "ClassName")
