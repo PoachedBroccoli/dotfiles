@@ -43,6 +43,7 @@
     "activityBar.background": "#FEFBEC"
 
     // "editor.background": "#ffffd7"
+    // "editor.background": "#FEFBEC"
   },
 
   // "workbench.colorCustomizations": {
@@ -275,7 +276,7 @@
   "filesize.useDecimal": true,
   "filesize.showGzipInStatusBar": true,
 
-  "native-ascii-converter.auto-conversion-on-activate": true,
+  // "native-ascii-converter.auto-conversion-on-activate": true,
   // "native-ascii-converter.auto-conversion-on-save": true,
 
   "sonarlint.ls.javaHome": "/Users/dou/Developer/env/jdk11/Contents/Home",
@@ -392,8 +393,16 @@
       "commands": ["workbench.action.terminal.toggleTerminal"]
     },
     {
+      "before": ["<space>", "f", "t"],
+      "commands": ["workbench.action.terminal.focus"]
+    },
+    {
       "before": ["<space>", "k", "t"],
       "commands": ["workbench.action.terminal.kill"]
+    },
+    {
+      "before": ["<space>", "s", "r"],
+      "commands": ["rest-client.request"]
     },
     {
       "before": ["<space>", "r", "c"],
@@ -476,7 +485,7 @@
     //   "commands": ["explorer.newFile"]
     // },
     {
-      "before": ["<space>", "g", "s"],
+      "before": ["<space>", "f", "s"],
       "commands": ["workbench.action.focusSideBar"]
     },
     {
@@ -519,6 +528,10 @@
       "before": ["space", "f", "m"],
       "commands": ["editor.action.formatDocument"]
       // "commands": ["editor.action.format"]
+    },
+    {
+      "before": ["<leader>", "c", "b"],
+      "commands": ["editor.action.blockComment"]
     },
     {
       "before": ["<leader>", "c", "c"],
@@ -568,6 +581,10 @@
     {
       "before": ["<C-n>"],
       "after": ["g", "b"]
+    },
+    {
+      "before": ["<leader>", "c", "b"],
+      "commands": ["editor.action.blockComment"]
     },
     {
       "before": ["<leader>", "c", "c"],
@@ -631,6 +648,7 @@
   "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -javaagent:\"/Users/dou/.vscode/extensions/gabrielbb.vscode-lombok-1.0.1/server/lombok.jar\"",
   "java.signatureHelp.enabled": true,
   "java.debug.settings.showStaticVariables": true,
+  "java.debug.settings.hotCodeReplace": "auto",
 
   "editor.linkedEditing": true,
 
@@ -659,6 +677,8 @@
     "vscode-kubernetes.kubectl-path.mac": "/Users/dou/.vs-kubernetes/tools/kubectl/kubectl",
     "vscode-kubernetes.minikube-path.mac": "/Users/dou/.vs-kubernetes/tools/minikube/darwin-amd64/minikube",
     "vscode-kubernetes.helm-path.mac": "/Users/dou/.vs-kubernetes/tools/helm/darwin-amd64/helm"
-  }
+  },
+  "markdown-preview-enhanced.liveUpdate": false
 }
+
 
