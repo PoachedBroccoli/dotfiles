@@ -3,14 +3,18 @@ let g:mapleader = ","
 
 inoremap jk <esc>
 
-nnoremap <leader>ev :e ~/.ideavimrc<CR>
+nnoremap <Leader>ev :e ~/.ideavimrc<CR>
 nnoremap <Leader>sv :action IdeaVim.ReloadVimRc.reload<CR>
 
 " 插件
+set NERDTree
 set surround
 set multiple-cursors
 set ideajoin
 set keep-english-in-normal
+set highlightedyank
+
+nnoremap <Space>1 :NERDTree<CR>
 
 " multiple-cursors
 map <C-n> <A-n>
@@ -21,6 +25,10 @@ map g<C-N> g<A-N>
 " AceAction
 nnoremap <Leader>f :action AceAction<CR>
 nnoremap <Leader>F :action AceLineAction<CR>
+
+let g:highlightedyank_highlight_duration = "1000"
+
+set showmode
 
 " 搜索配置
 set hlsearch
@@ -34,14 +42,14 @@ nnoremap <silent> <BS> :nohlsearch<CR>
 set scrolloff=4
 
 " 相对行号
-set number relativenumber
+" set number relativenumber
 
-" 保持和别的编辑器统一
-nmap <CR> o<Esc>
-nmap <S-CR> O<Esc>
+" 保持和别的编辑器统一 ... 放弃
+" nmap <CR> o<Esc>
+" nmap <S-CR> O<Esc>
 
 " 退格
-inoremap <C-x> <BS>
+" inoremap <C-x> <BS>
 
 " 编辑模式下上下左右
 inoremap <C-h> <LEFT>
@@ -52,9 +60,9 @@ inoremap <C-a> <Home>
 inoremap <C-e> <End>
 " 行首行尾
 nnoremap <Leader>H 0
-nnoremap <Leader>hh ^
-" 行首行尾非空白
 nnoremap <Leader>L $
+" 行首行尾非空白
+nnoremap <Leader>hh ^
 nnoremap <Leader>l g_
 
 noremap <Leader>y "*y
@@ -65,9 +73,11 @@ noremap <Leader>D "_D
 noremap <Leader>dd "_dd
 set clipboard+=unnamed
 
-nnoremap <leader>zh :action RecentChangedFiles<CR>
-nnoremap <leader>zp :action ActivateProjectToolWindow<CR>
-noremap <leader>ha :action HideAllWindows<CR>
+
+nnoremap <Leader>zh :action RecentChangedFiles<CR>
+" 用NERDTree代替
+" nnoremap <Leader>zp :action ActivateProjectToolWindow<CR>
+nnoremap <Leader>ha :action HideAllWindows<CR>
 
 " idea自带的搜索配置
 nnoremap <leader>/ :action Find<CR>
@@ -77,25 +87,36 @@ nnoremap gn gt
 nnoremap gp gT
 nnoremap <leader>qq :q<CR>
 nnoremap <leader>qa :action CloseAllEditors<CR>
-
-" 跳转配置
-nnoremap gs :action GotoSuperMethod<CR>
-nnoremap gd :action GotoDeclaration<CR>
-nnoremap gi :action GotoImplementation<CR>
-nnoremap gj :action GotoNextError<CR>
-nnoremap gk :action GotoPreviousError<CR>
-nnoremap <C-h> :action Back<CR>
-nnoremap <C-l> :action Forward<CR>
-nnoremap <leader>rl :action RecentLocations<cr>
+nnoremap <C-w>o :action CloseAllEditorsButActive<CR>
 
 " 显示类信息
-nnoremap gf :action FileStructurePopup<CR>
-
+nnoremap <Space>ot :action FileStructurePopup<CR>
+nnoremap <Space>gs :action GotoSuperMethod<CR>
+nnoremap <Space>gd :action GotoDeclaration<CR>
+nnoremap <Space>gi :action GotoImplementation<CR>
+nnoremap <Space>gr :action ShowUsages<CR>
+" :action CodeMenu<CR>
+" assign an additional shortcut to that action in your Keymap, exit IDE and check IDE config files
+" /Users/${username}/Library/Application Support/JetBrains
+nnoremap <Space>qf :action ShowIntentionActions<CR>
+nnoremap <Space>ll :action IntroduceActionsGroup<CR>
+nnoremap <Space>rf :action Refactorings.QuickListPopupAction<CR>
+vnoremap <Space>rf :action Refactorings.QuickListPopupAction<CR>
 " 重命名
-nnoremap <Leader>rn :action RenameElement<CR>
+nnoremap <Space>rn :action RenameElement<CR>
+nnoremap <Space>ge :action Generate<CR>
+vnoremap <Space>em :action ExtractMethod<CR>
+nnoremap <Space>om :action OverrideMethods<CR>
+nnoremap <Space>im :action ImplementMethods<CR>
+nnoremap <Space>oi :action OptimizeImports<CR>
 
-" 代码相关
-nnoremap <Leader>su :action ShowUsages<CR>
+nnoremap [e :action GotoPreviousError<cr>
+nnoremap ]e :action GotoNextError<cr>
+nnoremap <C-h> :action Back<CR>
+nnoremap <C-l> :action Forward<CR>
+nnoremap <Leader>rl :action RecentLocations<cr>
+
+
 nnoremap <Leader>se :action ShowErrorDescription<CR>
 nnoremap == :action ReformatCode<CR>
 nnoremap <Leader>rc :action Run<CR>
@@ -103,10 +124,6 @@ nnoremap <Leader>rm :action RunClass<CR>
 nnoremap <Leader>cc :action CommentByLineComment<CR>
 vnoremap <Leader>cc :action CommentByBlockComment<CR>
 nnoremap <Leader>nc :action NewClass<CR>
-nnoremap <leader>ge :action Generate<CR>
-vnoremap <Leader>em :action ExtractMethod<CR>
-nnoremap <leader>om :action OverrideMethods<CR>
-nnoremap <leader>im :action ImplementMethods<CR>
 nnoremap <Leader>th :action TypeHierarchy<CR>
 nnoremap <Leader>sw :action SurroundWith<CR>
 vnoremap <Leader>sw :action SurroundWith<CR>
@@ -123,7 +140,6 @@ nnoremap <Leader>hu :action HighlightUsagesInFile<CR>
 
 nnoremap <Leader>ti :action ExpressionTypeInfo<CR>
 
-nnoremap <Leader>oi :action OptimizeImports<CR>
 
 nnoremap <Leader>iv :action IntroduceVariable<CR>
 
@@ -132,4 +148,5 @@ nnoremap <Leader>ic :action InspectCode<CR>
 nnoremap <Leader>mr :action Maven.Reimport<CR>
 
 "nnoremap <C-j> :action FindNext<CR>
-"nnoremap <C-k> :action FindPrevious<CR>
+"nnoremap <C-k> :action FindPrevious<CR>m
+
