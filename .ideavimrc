@@ -13,6 +13,7 @@ set multiple-cursors
 set ideajoin
 set keep-english-in-normal
 set highlightedyank
+set ReplaceWithRegister
 
 nnoremap <Space>1 :NERDTree<CR>
 
@@ -27,6 +28,9 @@ nnoremap <Leader>f :action AceAction<CR>
 nnoremap <Leader>F :action AceLineAction<CR>
 
 let g:highlightedyank_highlight_duration = "1000"
+
+" ReplaceWithRegister
+map _ gr  
 
 set showmode
 
