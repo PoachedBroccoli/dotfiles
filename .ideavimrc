@@ -105,7 +105,7 @@ nnoremap <leader>/ :action Find<CR>
 nnoremap gn gt
 nnoremap gp gT
 nnoremap <leader>qq :q<CR>
-nnoremap <leader>qa :action CloseAllEditors<CR>
+nnoremap <C-w>a :action CloseAllEditors<CR>
 nnoremap <C-w>o :action CloseAllEditorsButActive<CR>
 
 " 显示类信息
@@ -114,6 +114,7 @@ nnoremap <Space>gs :action GotoSuperMethod<CR>
 nnoremap <Space>gd :action GotoDeclaration<CR>
 nnoremap <Space>gi :action GotoImplementation<CR>
 nnoremap <Space>gr :action ShowUsages<CR>
+nnoremap <Space>fu :action FindUsages<CR>
 nnoremap <Space>hu :action HighlightUsagesInFile<CR>
 " :action CodeMenu<CR>
 " assign an additional shortcut to that action in your Keymap, exit IDE and check IDE config files
@@ -169,4 +170,8 @@ nnoremap <Leader>mr :action Maven.Reimport<CR>
 nnoremap <C-j> :action GotoNextElementUnderCaretUsage<CR>
 nnoremap <C-k> :action GotoPrevElementUnderCaretUsage<CR>
 
+nnoremap <Space>fi :action FindInPath<CR>
 
+nnoremap <Space>cr :action CopyReferencePopupGroup<CR>
+
+nnoremap <Space>cm :MethodHierarchy <CR>
