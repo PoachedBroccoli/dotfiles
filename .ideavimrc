@@ -6,6 +6,43 @@ inoremap jk <Esc>
 nnoremap <Leader>ev :e ~/.ideavimrc<CR>
 nnoremap <Leader>sv :action IdeaVim.ReloadVimRc.reload<CR>
 
+" behavior
+set showmode
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set scrolloff=4
+nnoremap <silent> <BS> :nohlsearch<CR>
+
+inoremap <C-h> <LEFT>
+inoremap <C-j> <DOWN>
+inoremap <C-k> <UP>
+inoremap <C-l> <RIGHT>
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
+
+nnoremap <Space><Space>a 0
+nnoremap <Space><Space>; $
+
+nnoremap <Space><Space>s ^
+nnoremap <Space><Space>l g_
+
+set clipboard+=unnamed
+noremap <Leader>y "*y
+noremap <Leader>p "*p
+noremap <Leader>P "0p
+noremap <Leader>d "_d
+noremap <Leader>D "_D
+noremap <Leader>dd "_dd
+
+" 保持和别的编辑器统一 ... 放弃
+" nmap <CR> o<Esc>
+" nmap <S-CR> O<Esc>
+
+" 退格 ... 放弃
+" inoremap <C-x> <BS>
+
 " plugin
 set NERDTree
 set ReplaceWithRegister
@@ -16,23 +53,23 @@ set multiple-cursors
 set surround
 set commentary
 
-" NERDTree
-nnoremap <Space>1 :NERDTree<CR>
+" plugin: NERDTree
+nnoremap <Space><Space><Space> :NERDTree<CR>
 
-" ReplaceWithRegister
+" plugin: ReplaceWithRegister
 map _ gr
 
-" highlightedyank
+" plugin: highlightedyank
 let g:highlightedyank_highlight_duration = "2000"
 "let g:highlightedyank_highlight_color = "rgba(255, 215, 0, 1)"
 
-" multiple-cursors
+" plugin: multiple-cursors
 map <C-n> <A-n>
 map <C-P> <A-P>
 map <C-X> <A-X>
 map g<C-N> g<A-N>
 
-" AceAction
+" plugin: AceAction
 nnoremap <Leader>f :action AceAction<CR>
 nnoremap <Leader>F :action AceLineAction<CR>
 
@@ -42,80 +79,48 @@ nnoremap <Leader>ss :action osmedile.intellij.stringmanip.PopupChoiceAction<CR>
 " plugin: Translation
 nnoremap <Leader>tl :action TranslationPopupMenu<CR>
 
-set showmode
+" tab
+nmap <Leader>1 :action GoToTab1<CR>
+nmap <Leader>2 :action GoToTab2<CR>
+nmap <Leader>3 :action GoToTab3<CR>
+nmap <Leader>4 :action GoToTab4<CR>
+nmap <Leader>5 :action GoToTab5<CR>
+nmap <Leader>6 :action GoToTab6<CR>
+nmap <Leader>7 :action GoToTab7<CR>
+nmap <Leader>8 :action GoToTab8<CR>
+nmap <Leader>9 :action GoToTab9<CR>
 
-" 搜索配置
-set hlsearch
-set incsearch
-set ignorecase
-set smartcase
-" 关闭高亮
-nnoremap <silent> <BS> :nohlsearch<CR>
+nnoremap gn gt
+nnoremap gp gT
+nnoremap <Leader>qq :q<CR>
+nnoremap <Leader>qa :action CloseAllEditors<CR>
+nnoremap <Leader>qo :action CloseAllEditorsButActive<CR>
 
-" 保持行数
-set scrolloff=4
-
-" 相对行号
-" set number relativenumber
-
-" 保持和别的编辑器统一 ... 放弃
-" nmap <CR> o<Esc>
-" nmap <S-CR> O<Esc>
-
-" 退格
-" inoremap <C-x> <BS>
-
-" 编辑模式下上下左右
-inoremap <C-h> <LEFT>
-inoremap <C-j> <DOWN>
-inoremap <C-k> <UP>
-inoremap <C-l> <RIGHT>
-inoremap <C-a> <Home>
-inoremap <C-e> <End>
-
-" 行首行尾
-nnoremap <Leader>H 0
-nnoremap <Leader>L $
-" 行首行尾非空白
-nnoremap <Leader>hh ^
-nnoremap <Leader>l g_
-
-" yank
-set clipboard+=unnamed
-noremap <Leader>y "*y
-noremap <Leader>p "*p
-noremap <Leader>P "0p
-noremap <Leader>d "_d
-noremap <Leader>D "_D
-noremap <Leader>dd "_dd
-
-" window
-nnoremap <Leader>zh :action RecentChangedFiles<CR>
 " 用NERDTree代替
 " nnoremap <Leader>zp :action ActivateProjectToolWindow<CR>
 nnoremap <Space>ha :action HideAllWindows<CR>
-nnoremap <Space>si :action SelectInProjectView<CR>
-"nnoremap <Space>sb :action ActivateProjectToolWindow<CR>
 nnoremap <Space>sb :action HideActiveWindow<CR>
+
+nnoremap <Space>si :action SelectInProjectView<CR>
+nnoremap <Leader>si :action ActivateProjectToolWindow<CR>
 
 " idea自带的搜索配置
 nnoremap <leader>/ :action Find<CR>
+nnoremap <Space>fi :action FindInPath<CR>
+nnoremap <Space>fu :action FindUsages<CR>
 
-" tab
-nnoremap gn gt
-nnoremap gp gT
-nnoremap <leader>qq :q<CR>
-nnoremap <C-w>a :action CloseAllEditors<CR>
-nnoremap <C-w>o :action CloseAllEditorsButActive<CR>
+" outline
+nnoremap <Space>ol :action FileStructurePopup<CR>
+nnoremap <Leader>ol :action ActivateStructureToolWindow<CR>
 
-" 显示类信息
-nnoremap <Space>ot :action FileStructurePopup<CR>
 nnoremap <Space>gs :action GotoSuperMethod<CR>
 nnoremap <Space>gd :action GotoDeclaration<CR>
 nnoremap <Space>gi :action GotoImplementation<CR>
+nnoremap <Space>gt :action GotoTest<CR>
 nnoremap <Space>gr :action ShowUsages<CR>
-nnoremap <Space>fu :action FindUsages<CR>
 nnoremap <Space>hu :action HighlightUsagesInFile<CR>
+" get return type
+nnoremap <Space>rt :action ExpressionTypeInfo<CR>
 " :action CodeMenu<CR>
 " assign an additional shortcut to that action in your Keymap, exit IDE and check IDE config files
 " /Users/${username}/Library/Application Support/JetBrains
@@ -124,6 +129,7 @@ nnoremap <Space>ll :action IntroduceActionsGroup<CR>
 nnoremap <Leader>iv :action IntroduceVariable<CR>
 nnoremap <Space>rf :action Refactorings.QuickListPopupAction<CR>
 vnoremap <Space>rf :action Refactorings.QuickListPopupAction<CR>
+nnoremap <Space>rm :action RefactoringMenu<CR>
 " 重命名
 nnoremap <Space>rn :action RenameElement<CR>
 nnoremap <Space>ge :action Generate<CR>
@@ -132,6 +138,9 @@ nnoremap <Space>om :action OverrideMethods<CR>
 nnoremap <Space>im :action ImplementMethods<CR>
 nnoremap <Space>oi :action OptimizeImports<CR>
 
+" history
+nnoremap <Leader>cf :action RecentChangedFiles<CR>
+nnoremap <Leader>lh :action LocalHistory.ShowHistory<CR>
 
 nnoremap [e :action GotoPreviousError<cr>
 nnoremap ]e :action GotoNextError<cr>
@@ -142,13 +151,15 @@ nnoremap <Leader>rl :action RecentLocations<cr>
 nnoremap <Space>se :action ShowErrorDescription<CR>
 nnoremap == :action ReformatCode<CR>
 nnoremap <Space>fm :action ReformatCode<CR>
+
 nnoremap <Leader>rc :action Run<CR>
 nnoremap <Leader>rm :action RunClass<CR>
+nnoremap <Leader>cr :action ChooseRunConfiguration<CR>
+
 nnoremap <Leader>cc :action CommentByLineComment<CR>
 vnoremap <Leader>cc :action CommentByLineComment<CR>
 vnoremap <Leader>cc :action CommentByBlockComment<CR>
 nnoremap <Leader>nc :action NewClass<CR>
-nnoremap <Leader>th :action TypeHierarchy<CR>
 nnoremap <Leader>sw :action SurroundWith<CR>
 vnoremap <Leader>sw :action SurroundWith<CR>
 
@@ -170,8 +181,11 @@ nnoremap <Leader>mr :action Maven.Reimport<CR>
 nnoremap <C-j> :action GotoNextElementUnderCaretUsage<CR>
 nnoremap <C-k> :action GotoPrevElementUnderCaretUsage<CR>
 
-nnoremap <Space>fi :action FindInPath<CR>
-
 nnoremap <Space>cr :action CopyReferencePopupGroup<CR>
 
-nnoremap <Space>cm :MethodHierarchy <CR>
+nnoremap \pi :action ParameterInfo<CR>
+nnoremap \mh :action MethodHierarchy<CR>
+nnoremap \th :action TypeHierarchy<CR>
+nnoremap \ch :action CallHierarchy<CR>
+
+nnoremap <Leader>jd :action QuickJavaDoc<CR>
