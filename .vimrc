@@ -1,6 +1,4 @@
 " file {{{
-set encoding=utf-8                                                                    " 内部使用的编码方式
-set fileencoding=utf-8                                                                " 多子节文本的文件编码
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,gbk,gb2312,big5,euc-jp,shift-jis,latin1 " 打开文件时自动尝试的顺序
 set fileformats=unix,dos,mac                                                          " 参与自动检测的 'fileformat' 的格式
 " }}} file
@@ -11,7 +9,6 @@ set fileformats=unix,dos,mac                                                    
 let g:python3_host_prog = '/usr/bin/python3'
 let g:python_host_prog = '/usr/bin/python'
 " :checkhealth
-
 " }}} python path
 
 
@@ -26,7 +23,7 @@ let mapleader = ","
 let g:mapleader = ","
 nnoremap <leader>w :w<cr>
 nnoremap <leader>q :q<cr>
-nnoremap <leader>q :q!<cr>
+nnoremap <leader>Q :q!<cr>
 nnoremap <silent> <bs> :nohlsearch<cr>
 inoremap jk <esc>
 inoremap <c-h> <left>
@@ -61,7 +58,6 @@ endif
 " }}} mapping
 
 
-
 " base {{{
 set splitright
 set splitbelow
@@ -72,10 +68,9 @@ set lazyredraw                              " 执行宏时不重画
 set mouse=a
 set signcolumn=yes                          " 侧边栏
 set showtabline=2                           " 显示标签页行
-set errorformat+=[%f:%l]\ ->\ %m,[%f:%l]:%m " 错误文件行格式的描述
 set path+=**                                " gf 等命令搜索用的目录列表
 set hidden                                  " 当缓冲区被放弃 ( abandon ) 时不卸载之
-set updatetime=300                          " 刷新交换文件所需的毫秒数
+set updatetime=200                          " 刷新交换文件所需的毫秒数
 set backspace=eol,start,indent              " 回删
 set scrolloff=5                             " 上下保留5行
 set nobackup                                " no backup files
@@ -85,7 +80,6 @@ set shortmess+=c                            " 缩短消息长度的标志位列�
 set clipboard+=unnamed                      " clipboard
 set number                                  " 行号
 set ruler                                   " 标尺信息
-"set rulerformat=%55(%{strftime('%a\ %b\ %e\ %i:%m\ %p')}\ %5l,%-6(%c%v%)\ %p%)
 set cursorline                              " 高亮当前行
 set colorcolumn=120
 set nowrap                                  " 关闭自动换行
@@ -105,7 +99,7 @@ set smartcase                               " 智能大小写
 set showmatch                               " 插入括号时短暂跳转到匹配的括号
 set matchtime=1                             " 显示匹配括号的时间 (以十分之一秒计)
 set laststatus=2                            " 两行状态栏
-set statusline=%f\ %{webdeviconsgetfiletypesymbol()}\ %h%w%m%r\ %=%(%y\ %{&fileformat}\ %{(&fenc==\"\"?&enc:&fenc).(&bomb?\",bom\":\"\")}\ #%n\ %o\ %l/%l,%c%v\ [asc=%03.3b]\ [hex=%02.2b]\ %=\ %p%)
+set statusline=%F\ %{WebDevIconsGetFileTypeSymbol()}\ %h%w%m%r\ %=%(%y\ %{&ff}\ %{(&fenc==''?&enc:&fenc).(&bomb?\",bom\":\"\")}\ #%n\ %o\ %l/%L\ [asc=%03.3b]\ [hex=%02B]\ %=\ %p%%%)
 set expandtab                               " 改变tab键行为，tab->space
 set tabstop=4                               " tab字符显示宽度，不修改tab键行为，4个空格作为一个tab(一个tab显示多少个空格)
 set softtabstop=4                           " 修改tab键行为，不修改tab字符显示宽度，按下一个tab视为输入4个空格
@@ -142,7 +136,7 @@ autocmd filetype go,python,java,kotlin,scala setlocal expandtab tabstop=4 shiftw
 
 " compile function
 noremap <leader>run :call compilerungcc()<cr>
-func! compilerungcc()
+func! s:compilerungcc()
     exec "w"
     if &filetype == 'c'
         exec "!g++ % -o %<"
@@ -198,7 +192,7 @@ map <right> :vertical resize+2<cr>
 tnoremap <esc> <c-\><c-n>
 
 
-function! openterminal(name)
+function! Openterminal(name)
     set splitbelow
     let l:exist = bufexists(a:name)
     if l:exist
@@ -209,7 +203,7 @@ function! openterminal(name)
     exec "file " . a:name
 endfunction
 
-nnoremap <silent><leader>tt :call openterminal('z')<cr>
+nnoremap <silent><leader>tt :call Openterminal('z')<cr>
 
 " }}} terminal
 
@@ -233,29 +227,31 @@ map <leader><leader>. :bnext<cr>
 " plugins {{{
 call plug#begin('~/.vim/plugged')
 
-plug 'fatih/vim-go', { 'do': ':goupdatebinaries' }
+Plug 'fatih/vim-go', { 'do': ':goupdatebinaries' }
 
-plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " taglist
-plug 'liuchengxu/vista.vim'
+Plug 'liuchengxu/vista.vim'
 
-plug 'airblade/vim-rooter'
+Plug 'airblade/vim-rooter'
 
 " coc-java-dependency need
-plug 'uzxmx/vim-widgets'
+Plug 'uzxmx/vim-widgets'
+
+Plug 'udalov/kotlin-vim'
 
 "plug 'artur-shaik/vim-javacomplete2'
 
-plug 'preservim/nerdcommenter'
+Plug 'preservim/nerdcommenter'
 
-plug 'mhinz/vim-startify'
+Plug 'mhinz/vim-startify'
 
-plug 'ap/vim-css-color'
+Plug 'ap/vim-css-color'
 
-plug 'ryanoasis/vim-devicons'
+Plug 'ryanoasis/vim-devicons'
 
-plug 'mg979/vim-visual-multi'
+Plug 'mg979/vim-visual-multi'
 
 " 文件跳转
 "plug 'junegunn/fzf', {'dir': '~/.fzf','do': './install --all'}
@@ -268,11 +264,9 @@ plug 'mg979/vim-visual-multi'
 
 "plug 'puremourning/vimspector'
 
-
 "plug 'christoomey/vim-tmux-navigator'
 
 "plug 'chiel92/vim-autoformat'
-
 
 "plug 'luochen1990/rainbow'
 
@@ -282,12 +276,9 @@ plug 'mg979/vim-visual-multi'
 
 "plug 'easymotion/vim-easymotion'
 
-
 " combine the following two plugins will be more quickly
 "plug 'gcmt/wildfire.vim'
 "plug 'tpope/vim-surround'
-
-
 
 " db
 "plug 'tpope/vim-dadbod'
@@ -301,6 +292,8 @@ plug 'mg979/vim-visual-multi'
 
 " show change
 "plug 'airblade/vim-gitgutter'
+" git log
+"plug 'junegunn/gv.vim'
 " git
 "plug 'tpope/vim-fugitive'
 
@@ -311,7 +304,6 @@ plug 'mg979/vim-visual-multi'
 "plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
 "plug 'dhruvasagar/vim-table-mode', { 'on': 'tablemodetoggle' }
 "plug 'vimwiki/vimwiki'
-
 
 "plug 'turbio/bracey.vim'
 "plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
@@ -335,8 +327,8 @@ let g:rooter_patterns = ['.git', '_darcs', '.hg', '.bzr', '.svn', 'makefile', 'p
 
 " coc.nvim {{{
 
-highlight cocerrorsign ctermfg=15 ctermbg=196 cterm=bold
-highlight cocwarningsign ctermfg=0 ctermbg=172
+highlight CocErrorSign ctermfg=15 ctermbg=196 cterm=bold
+highlight CocWarningSign ctermfg=0 ctermbg=172
 
 " find something  :coclist
 " search coc_extensions :coclist marketplace
@@ -418,7 +410,8 @@ let g:coc_global_extensions = [
     \ 'coc-xml',
     \ 'coc-yaml',
     \ 'coc-yank',
-    \ 'https://github.com/rodrigore/coc-tailwind-intellisense']
+    \ 'https://github.com/rodrigore/coc-tailwind-intellisense'
+    \]
 
     " \ 'coc-metals',
 
@@ -441,7 +434,7 @@ inoremap <silent><expr> <c-q> coc#refresh()
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<c-g>u\<cr>\<c-r>=coc#on_enter()\<cr>"
 
-autocmd user cocjumpplaceholder call cocactionasync('showsignaturehelp')
+autocmd user CocJumpPlaceHolder call CocActionAsync('showSignatureHelp')
 
 " jump to error
 " use `:cocdiagnostics` to get all diagnostics of current buffer in location list.
@@ -469,12 +462,9 @@ xmap <space>fc <plug>(coc-format-selected)
 nmap <space>fc <plug>(coc-format-selected)
 
 " add `:format` command to format current buffer.
-command! -nargs=0 format :call cocaction('format')
+command! -nargs=0 Format :call CocAction('format')
 
-" 打开当前光标所在单词的vim帮助文档
-nnoremap <silent><space>hw :execute ":help " . expand("<cword>")<cr>
-
-nmap <silent><space>hh :call cocaction('dohover')<cr>
+nmap <silent><space>hh :call CocAction('doHover')<cr>
 
 " use <leader>k to show documentation in preview window.
 nnoremap <silent><space>hd :call <sid>show_documentation()<cr>
@@ -482,7 +472,7 @@ function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
   elseif (coc#rpc#ready())
-    call cocactionasync('dohover')
+    call CocActionAsync('doHover')
   else
     execute '!' . &keywordprg . " " . expand('<cword>')
   endif
@@ -544,11 +534,11 @@ let g:coc_explorer_global_presets = {
             \   }
             \ }
             "\     'root-strategies': 'keep'
-nnoremap <space>fs :coccommand explorer --sources buffer+,file+<cr>
-"nnoremap <space>e :coccommand explorer<cr>
-nnoremap <space>fs :coccommand explorer --preset floating<cr>
-"nnoremap <space>e :coccommand explorer --preset simplify<cr>
-"nnoremap <space>e :coccommand explorer --preset tab<cr>
+nnoremap <space>fs :CocCommand explorer --sources buffer+,file+<cr>
+"nnoremap <space>e :CocCommand explorer<cr>
+nnoremap <space>FS :CocCommand explorer --preset floating<cr>
+"nnoremap <space>e :CocCommand explorer --preset simplify<cr>
+"nnoremap <space>e :CocCommand explorer --preset tab<cr>
 " list all presets
 nnoremap <space><space>l :coclist explpresets<cr>
 " 当coc-explorer是最后一个buf的时候，自动关闭
@@ -616,9 +606,15 @@ let g:ycm_java_hotcodereplace_mode = 'always'
 autocmd bufnewfile,bufreadpre *.java nmap <leader>rn :!javac %<cr>:!java %:r<cr>
 " }}} java
 
+" kotlin {{{
+autocmd BufReadPost *.kt setlocal filetype=kotlin
+let g:LanguageClient_serverCommands = {
+    \ 'kotlin': ["kotlin-language-server"],
+    \ }
+" }}} kotlin
 
 " coc-prettier {{{
-command! -nargs=0 prettier :coccommand prettier.formatfile
+command! -nargs=0 Prettier :coccommand prettier.formatfile
 " }}} coc-prettier
 
 
@@ -705,12 +701,12 @@ function! s:read_template_into_buffer(template)
     " has to be a function to avoid the extra space fzf#run insers otherwise
     execute '0r ~/.config/nvim/vimspector/'.a:template
 endfunction
-command! -bang -nargs=* loadvimspectorjsontemplate call fzf#run({
+command! -bang -nargs=* Loadvimspectorjsontemplate call fzf#run({
             \   'source': 'ls -1 ~/.config/nvim/vimspector',
             \   'down': 20,
             \   'sink': function('<sid>read_template_into_buffer')
             \ })
-noremap <leader>vs :tabe .vimspector.json<cr>:loadvimspectorjsontemplate<cr>
+noremap <leader>vs :tabe .vimspector.json<cr>:Loadvimspectorjsontemplate<cr>
 sign define vimspectorbp text=🛑 texthl=normal
 sign define vimspectorbpdisabled text=🚫 texthl=normal
 sign define vimspectorpc text=👉 texthl=spellbad
@@ -891,8 +887,9 @@ autocmd filetype json let g:indentline_setconceal = 0
 
 
 " sh {{{
-autocmd bufnewfile *.sh exec ":call setline(1,'#!/usr/bin/env bash')"
-" autocmd bufnewfile *.sh exec ":0put='#!/usr/bin/env bash'"
+"autocmd bufnewfile *.sh exec ":call setline(1,'#!/usr/bin/env bash')"
+"autocmd bufnewfile *.sh exec ":0put='#!/usr/bin/env bash'"
+autocmd bufnewfile *.sh :0put='#!/usr/bin/env bash'
 " }}} sh
 
 
@@ -915,42 +912,43 @@ colorscheme heshui
 
 " style {{{
 " get style
-function! <sid>synstack()
-    echo map(synstack(line('.'),col('.')),'synidattr(v:val, "name")')
+function! <sid>Synstack()
+    echo map(synstack(line('.'), col('.')),'synIDattr(v:val, "name")')
 endfunc
-nnoremap <leader>c1 :call <sid>synstack()<cr>
+nnoremap <leader>c1 :call <sid>Synstack()<cr>
 
 " get style in current and parent
-function! syngroup()
-    let l:s = synid(line('.'), col('.'), 1)
-    echo synidattr(l:s, 'name') . ' -> ' . synidattr(synidtrans(l:s), 'name')
+function! Syngroup()
+    let l:s = synID(line('.'), col('.'), 1)
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
 endfun
-nnoremap <leader>c2 :call syngroup()<cr>
+nnoremap <leader>c2 :call Syngroup()<cr>
 
 " get style in current and parent
-function! synstackn()
+function! Synstackn()
   if !exists("*synstack")
     return
   endif
-  echo map(synstack(line('.'), col('.')), 'synidattr(v:val, "name")')
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
-nnoremap <leader>c3 :call synstackn()<cr>
+nnoremap <leader>c3 :call Synstackn()<cr>
 
-nnoremap <leader>c4 :echo synidattr(synid(line('.'), col('.'), 0), 'name')<cr>
-nnoremap <leader>c5 :echo ("hi<" . synidattr(synid(line("."),col("."),1),"name") . '> trans<'
-\ . synidattr(synid(line("."),col("."),0),"name") . "> lo<"
-\ . synidattr(synidtrans(synid(line("."),col("."),1)),"name") . ">")<cr>
-nnoremap <leader>c6 :echo map(synstack(line('.'), col('.')), 'synidattr(v:val, "name")')<cr>
-nnoremap <leader>c7 :exec 'syn list '.synidattr(synid(line('.'), col('.'), 0), 'name')<cr>
+nnoremap <leader>c4 :echo synIDattr(synID(line('.'), col('.'), 0), 'name')<cr>
+nnoremap <leader>c5 :echo
+            \ ("hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+            \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+            \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">")<cr>
+nnoremap <leader>c6 :echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')<cr>
+nnoremap <leader>c7 :exec 'syn list '.synIDattr(synID(line('.'), col('.'), 0), 'name')<cr>
 
-map <leader>c8 :echo "hi<" . synidattr(synid(line("."),col("."),1),"name") . '> trans<'
-\ . synidattr(synid(line("."),col("."),0),"name") . "> lo<"
-\ . synidattr(synidtrans(synid(line("."),col("."),1)),"name") . ">"<cr>
+map <leader>c8 :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<cr>
 
-map <leader>c9 :echo "hi<" . synidattr(synid(line("."),col("."),1),"name") .
-            \ "> trans<" . synidattr(synid(line("."),col("."),0),"name") .
-            \ "> lo<" . synidattr(synidtrans(synid(line("."),col("."),1)),"name") .
-            \ "> fg:" .synidattr(synidtrans(synid(line("."),col("."),1)),"fg#")<cr>
+map <leader>c9 :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") .
+            \ "> trans<" . synIDattr(synID(line("."),col("."),0),"name") .
+            \ "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") .
+            \ "> fg:" .synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<cr>
 " }}} style
 
 
@@ -984,5 +982,3 @@ map <leader>c9 :echo "hi<" . synidattr(synid(line("."),col("."),1),"name") .
 ":cocupdate                          " update coc
 ":cocdisable                         " disable coc
 ":cocenable                          " enable coc
-
-
