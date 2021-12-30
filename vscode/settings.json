@@ -1,96 +1,46 @@
 {
   "window.title": "${dirty}${activeEditorMedium}${separator}${rootName}",
 
-  // "workbench.colorTheme": "Solarized Light Alternate",
-  "workbench.colorTheme": "Solarized Light Alternate",
+  "workbench.colorTheme": "Better Solarized Light",
   "workbench.editor.enablePreview": false,
   "workbench.editor.showTabs": true,
   "workbench.editor.wrapTabs": true,
   "workbench.iconTheme": "vscode-icons",
-  "workbench.tree.indent": 10,
   "workbench.colorCustomizations": {
-    "terminal.background": "#FEFBEC",
-    "terminal.foreground": "#6E6B5E",
-    "terminalCursor.background": "#6E6B5E",
-    "terminalCursor.foreground": "#6E6B5E",
-    "terminal.ansiBlack": "#FEFBEC",
-    "terminal.ansiBlue": "#6684E1",
-    "terminal.ansiBrightBlack": "#999580",
-    "terminal.ansiBrightBlue": "#6684E1",
-    "terminal.ansiBrightCyan": "#1FAD83",
-    "terminal.ansiBrightGreen": "#60AC39",
-    "terminal.ansiBrightMagenta": "#B854D4",
-    "terminal.ansiBrightRed": "#D73737",
-    "terminal.ansiBrightWhite": "#20201D",
-    "terminal.ansiBrightYellow": "#AE9513",
-    "terminal.ansiCyan": "#1FAD83",
-    "terminal.ansiGreen": "#60AC39",
-    "terminal.ansiMagenta": "#B854D4",
-    "terminal.ansiRed": "#D73737",
-    "terminal.ansiWhite": "#6E6B5E",
-    "terminal.ansiYellow": "#AE9513",
-
-    "debugConsole.errorForeground": "#d00",
-    "debugConsole.infoForeground": "#6E6B5E",
-    "debugConsole.sourceForeground": "#0c0",
-    "debugConsole.warningForeground": "#800",
-    "debugView.exceptionLabelForeground": "#ff0000",
-    "debugView.valueChangedHighlight": "#9174c7",
-
     "editor.selectionBackground": "#ffd700",
-    "editor.selectionForeground": "#ffffff",
-    "editorLineNumber.activeForeground": "#d75f87",
-
-    // "editor.lineHighlightBackground": "#00000090",
-    // "editor.lineHighlightBorder": "#ffffff30",
-
-    "sideBar.background": "#FEFBEC",
-    "sideBar.foreground": "#6E6B5E",
-
-    "activityBar.background": "#FEFBEC",
-    "titleBar.activeBackground": "#FEFBEC"
-
-    // "editor.background": "#ffffd7"
-    // "editor.background": "#FEFBEC"
+    "editor.selectionHighlightBackground": "#ffffff00",
+    "editor.findMatchHighlightBackground": "#ffffff00"
   },
 
-  // "editor.fontFamily": "'Fira Code','JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
-  "editor.fontFamily": "Fira Code,'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
-  "editor.fontLigatures": true,
-  "editor.fontSize": 12,
-  "editor.fontWeight": "400", // Regular
-  "editor.linkedEditing": true,
-  "editor.minimap.enabled": false,
-  "editor.occurrencesHighlight": true,
-  "editor.rulers": [100, 120],
+  "explorer.incrementalNaming": "smart",
+  "explorer.compactFolders": false,
+
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
-    // "source.fixAll": true
   },
-  "editor.cursorStyle": "line",
   "editor.detectIndentation": true,
+  "editor.fontFamily": "Fira Code,'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontSize": 12,
+  "editor.fontWeight": "400",
   "editor.formatOnPaste": true,
-  "editor.formatOnSave": true,
-  "editor.formatOnType": true,
   "editor.hover.sticky": true,
   "editor.insertSpaces": true,
+  "editor.linkedEditing": true,
   "editor.matchBrackets": "always",
+  "editor.minimap.enabled": false,
+  "editor.occurrencesHighlight": true,
   "editor.parameterHints.enabled": true,
   "editor.renderControlCharacters": true,
-  "editor.renderIndentGuides": true,
   "editor.renderLineHighlight": "line",
   "editor.renderWhitespace": "all",
+  "editor.rulers": [100, 120],
   "editor.showFoldingControls": "always",
   "editor.suggestLineHeight": 24,
   "editor.suggestSelection": "first",
   "editor.tabSize": 4,
   "editor.trimAutoWhitespace": true,
 
-  "explorer.incrementalNaming": "smart",
-  "explorer.compactFolders": false,
-
   "files.autoGuessEncoding": true,
-  "files.eol": "\n",
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
   "files.watcherExclude": {
@@ -119,22 +69,6 @@
     "**/bower_components": true,
     "**/tmp/cache": true
   },
-
-  "terminal.integrated.automationShell.osx": "zsh",
-  "terminal.integrated.copyOnSelection": true,
-  "terminal.integrated.cursorStyle": "line",
-  "terminal.integrated.defaultProfile.osx": "zsh",
-  "terminal.integrated.defaultProfile.windows": "zsh",
-  "terminal.integrated.fontFamily": "Fira Code",
-  "terminal.integrated.fontSize": 12,
-  "terminal.integrated.env.linux": {
-    "VSCODE_INTEGRATED_TERMINAL": "true"
-  },
-  "terminal.integrated.env.osx": {
-    "VSCODE_INTEGRATED_TERMINAL": "true"
-  },
-
-  "security.workspace.trust.untrustedFiles": "newWindow",
 
   "debug.inlineValues": true,
   "debug.internalConsoleOptions": "openOnSessionStart",
@@ -209,19 +143,6 @@
     "editor.tabSize": 4
   },
 
-  "yaml.schemas": {
-    "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/schemas/v3.0/schema.json": [
-      "*.yaml",
-      "*.yml"
-    ],
-    "https://d33vqc0rt9ld30.cloudfront.net/latest/gzip/CloudFormationResourceSpecification.json": [
-      "*.cf.yaml",
-      "*.cf.yml",
-      "cloud*formation/*.yaml",
-      "cloud*formation/*.yml"
-    ]
-  },
-
   "xml.codeLens.enabled": true,
   "xml.format.preserveAttributeLineBreaks": true,
 
@@ -230,11 +151,6 @@
   "emmet.showExpandedAbbreviation": "always",
   "emmet.showAbbreviationSuggestions": true,
   "emmet.excludeLanguages": ["markdown", "json"],
-
-  // "prettier.singleQuote": true,
-  // "prettier.semi": false,
-  // "prettier.trailingComma": "none",
-  // "prettier.useTabs": false,
 
   "gitlens.advanced.messages": {
     "suppressCommitHasNoPreviousCommitWarning": false,
@@ -257,86 +173,31 @@
 
   "vetur.format.defaultFormatter.js": "prettier",
 
-  "bracket-pair-colorizer-2.colors": [
-    "#ff9900", // Orange-Brown
-    "#f500f5", // Medium-Pink
-    "#54b9f8" // Medium-Blue
-  ],
-
-  "todo-tree.tree.buttons.scanMode": true,
-  "todo-tree.tree.showCountsInTree": true,
-  "todo-tree.highlights.defaultHighlight": {
-    "fontWeight": "bold",
-    "foreground": "white",
-    "background": "yellow",
-    "icon": "checklist",
-    "rulerColour": "yellow",
-    "type": "tag",
-    "iconColour": "yellow",
-    "opacity": 50
-  },
-  // "foreground": "green",
-  // "foreground": "#FF5F17",
-  "todo-tree.highlights.customHighlight": {
-    "TODO": {
-      "icon": "check",
-      "type": "tag",
-      "foreground": "#FF5F17",
-      "iconColour": "#2C7CFF"
-    },
-    "FIXME": {
-      "icon": "check",
-      "type": "tag",
-      "foreground": "#FF5F17",
-      "iconColour": "#2C7CFF"
-    }
-  },
-
-  // "cSpell.userWords": ["TODO", "todo"],
-
-  "filesize.useDecimal": true,
-  "filesize.showGzipInStatusBar": true,
-
-  // "native-ascii-converter.auto-conversion-on-activate": true,
-  // "native-ascii-converter.auto-conversion-on-save": true,
-
-  "sonarlint.ls.javaHome": "/Users/dou/Developer/env/jdk11/Contents/Home",
-
-  "local-history.enable": false,
-
-  "commentTranslate.targetLanguage": "zh-CN",
-
-  "todo-tree.general.tags": [
-    "BUG",
-    "HACK",
-    "FIXME",
-    "TODO",
-    "XXX",
-    "[ ]",
-    "[x]"
-  ],
-  "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*($TAGS)",
-
   "vim.easymotion": true,
-  "vim.incsearch": true,
-  "vim.useSystemClipboard": true,
-  "vim.useCtrlKeys": true,
+  "vim.surround": true,
+  "vim.replaceWithRegister": true,
+  "vim.highlightedyank.duration": 5000,
+  "vim.highlightedyank.color": "rgba(255, 215, 0, 0.6)",
+  "vim.highlightedyank.enable": true,
   "vim.hlsearch": true,
+  "vim.incsearch": true,
   "vim.searchHighlightColor": "#ffd700",
-  "vim.smartRelativeLine": false,
   "vim.showcmd": true,
+  "vim.smartRelativeLine": false,
+  "vim.useCtrlKeys": true,
+  "vim.useSystemClipboard": true,
   "vim.insertModeKeyBindings": [
-    {
-      "before": ["<C-i>"],
-      "commands": ["editor.action.triggerParameterHints"]
-    },
     {
       "before": ["j", "k"],
       "after": ["<Esc>"]
     },
     {
-      "before": ["<C-x>"],
-      "after": ["BS"]
+      "before": ["<C-h>"],
+      "after": ["LEFT"]
+    },
+    {
+      "before": ["<C-j>"],
+      "after": ["DOWN"]
     },
     {
       "before": ["<C-l>"],
@@ -345,14 +206,6 @@
     {
       "before": ["<C-k>"],
       "after": ["UP"]
-    },
-    {
-      "before": ["<C-j>"],
-      "after": ["DOWN"]
-    },
-    {
-      "before": ["<C-h>"],
-      "after": ["LEFT"]
     }
     // {
     //   "before": ["<C-a>"],
@@ -364,18 +217,27 @@
     // }
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
+    // {
+    //   "before": ["<C-i>"],
+    //   "commands": ["editor.action.triggerParameterHints"]
+    // },
     {
-      "before": ["<space>", "1"],
-      "commands": ["workbench.action.focusSideBar"]
+      "before": ["_"],
+      "after": ["g", "r"]
     },
     {
       "before": ["<space>", "s", "b"],
       "commands": ["workbench.action.toggleSidebarVisibility"]
     },
-    // {
-    //   "before": ["<C-i>"],
-    //   "commands": ["editor.action.triggerParameterHints"]
-    // },
+    {
+      "before": ["<space>", "f", "s"],
+      "commands": ["workbench.action.focusSideBar"]
+      // "commands": ["workbench.view.explorer"]
+    },
+    {
+      "before": ["<space>", "s", "i"],
+      "commands": ["workbench.files.action.showActiveFileInExplorer"]
+    },
     {
       "before": ["<space>", "r", "f"],
       "commands": ["editor.action.refactor"]
@@ -385,12 +247,25 @@
       "commands": ["editor.action.rename"]
     },
     {
+      "before": ["<space>", "o", "l"],
+      "commands": ["outline.focus"]
+    },
+    {
       "before": ["<space>", "g", "r"],
+      //"commands": ["editor.action.goToReferences"]
       "commands": ["editor.action.referenceSearch.trigger"]
     },
     {
       "before": ["<space>", "g", "i"],
       "commands": ["editor.action.goToImplementation"]
+    },
+    {
+      "before": ["<space>", "g", "s"],
+      "commands": ["java.action.navigateToSuperImplementation"]
+    },
+    {
+      "before": ["<space>", "g", "d"],
+      "commands": ["editor.action.goToDeclaration"]
     },
     {
       "before": ["<space>", "q", "f"],
@@ -401,8 +276,20 @@
       "commands": ["editor.action.quickFix"]
     },
     {
+      "before": ["<space>", "g", "e"],
+      "commands": ["editor.action.sourceAction"]
+    },
+    {
       "before": ["<space>", "s", "a"],
       "commands": ["editor.action.sourceAction"]
+    },
+    {
+      "before": ["<C-j>"],
+      "commands": ["editor.action.wordHighlight.next"]
+    },
+    {
+      "before": ["<C-k>"],
+      "commands": ["editor.action.wordHighlight.prev"]
     },
     {
       "before": ["<space>", "s", "h"],
@@ -425,11 +312,11 @@
       "commands": ["workbench.action.showAllSymbols"]
     },
     {
-      "before": ["<space>", "o", "s"],
+      "before": ["<space>", "o", "f"],
       "commands": ["workbench.action.quickOpen"]
     },
     {
-      "before": ["<space>", "o", "l"],
+      "before": ["<Leader>", "o", "l"],
       "commands": ["editor.action.openLink"]
     },
     {
@@ -464,37 +351,21 @@
       "before": ["<C-n>"],
       "after": ["g", "b"]
     },
-    {
-      "before": ["<leader>", "d"],
-      "after": ["\"", "_", "d"]
-    },
+    // {
+    //   "before": ["<leader>", "d"],
+    //   "after": ["\"", "_", "d"]
+    // },
     {
       "before": ["<leader>", "D"],
       "after": ["\"", "_", "D"]
     },
-    {
-      "before": ["<leader>", "d", "d"],
-      "after": ["\"", "_", "d", "d"]
-    },
+    // {
+    //   "before": ["<leader>", "d", "d"],
+    //   "after": ["\"", "_", "d", "d"]
+    // },
     {
       "before": ["<leader>", "x"],
       "after": ["\"", "_", "x"]
-    },
-    {
-      "before": ["<leader>", "H"],
-      "after": ["0"]
-    },
-    {
-      "before": ["<leader>", "L"],
-      "after": ["$"]
-    },
-    {
-      "before": ["<leader>", "h"],
-      "after": ["^"]
-    },
-    {
-      "before": ["<leader>", "l"],
-      "after": ["g", "_"]
     },
     {
       "before": ["<leader>", "f"],
@@ -536,10 +407,6 @@
     //   "before": ["<space>", "n", "f"],
     //   "commands": ["explorer.newFile"]
     // },
-    {
-      "before": ["<space>", "f", "s"],
-      "commands": ["workbench.action.focusSideBar"]
-    },
     {
       "before": ["g", "n"],
       "after": ["g", "t"]
@@ -597,14 +464,6 @@
     //   "commands": ["editor.action.removeCommentLine"]
     // },
     {
-      "before": ["<space>", "d", "c"],
-      "commands": ["turboConsoleLog.deleteAllLogMessages"]
-    },
-    {
-      "before": ["<space>", "c", "c"],
-      "commands": ["turboConsoleLog.commentAllLogMessages"]
-    },
-    {
       "before": ["∆"],
       "after": ["d", "d", "p"]
     },
@@ -615,20 +474,16 @@
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
     {
+      "before": ["<CR>"],
+      "commands": ["editor.action.smartSelect.expand"]
+    },
+    {
       "before": ["<space>", "r", "f"],
       "commands": ["editor.action.refactor"]
     },
     {
-      "before": ["<space>", "s", "o"],
-      "commands": ["extension.insertSysoutStatement"]
-    },
-    {
-      "before": ["<space>", "c", "o"],
-      "commands": ["turboConsoleLog.displayLogMessage"]
-    },
-    {
-      "before": ["<CR>"],
-      "commands": ["editor.action.smartSelect.expand"]
+      "before": ["<space>", "l", "l"],
+      "commands": ["editor.action.quickFix"]
     },
     {
       "before": ["<C-n>"],
@@ -666,23 +521,17 @@
   },
 
   "maven.excludedFolders": ["**/.*", "**/node_modules", "**/target", "**/bin"],
-  "maven.executable.path": "/Users/dou/Developer/env/apache-maven-3.8.1/bin/mvn",
-  "maven.terminal.useJavaHome": true,
-  "maven.terminal.customEnv": [
-    {
-      "environmentVariable": "JAVA_HOME",
-      "value": "/Users/dou/Developer/env/jdk11/Contents/Home"
-    }
-  ],
   "maven.pomfile.autoUpdateEffectivePOM": true,
 
+  // "java.completion.importOrder": ["", "javax", "java", "#"],
   "java.checkstyle.autocheck": false,
   "java.code.generators.copyJsonPropertyAnnotationsFromVariablesToSettersGetters": true,
   "java.code.generators.includeGeneratedAnnotation": true,
   "java.completion.guessMethodArguments": true,
-  // "java.completion.importOrder": ["", "javax", "java", "#"],
   "java.completion.importOrder": ["java", "javax", "com", "org"],
   "java.configuration.updateBuildConfiguration": "automatic",
+  "java.debug.settings.hotCodeReplace": "auto",
+  "java.debug.settings.showStaticVariables": true,
   "java.dependency.autoRefresh": true,
   "java.dependency.showMembers": true,
   "java.dependency.syncWithFolderExplorer": true,
@@ -691,14 +540,16 @@
   "java.format.enabled": true,
   "java.format.settings.profile": "GoogleStyle",
   "java.format.settings.url": "/Users/dou/.vscode/eclipse-java-google-style.xml",
+  "java.home": "/Users/dou/Developer/env/jdk11/Contents/Home",
   "java.implementationsCodeLens.enabled": true,
+  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -javaagent:\"/Users/dou/.vscode/extensions/gabrielbb.vscode-lombok-1.0.1/server/lombok.jar\"",
   "java.maven.downloadSources": true,
   "java.project.importOnFirstTimeStartup": "automatic",
   "java.referencesCodeLens.enabled": true,
   "java.saveActions.organizeImports": true,
+  "java.signatureHelp.enabled": true,
   "java.symbols.includeSourceMethodDeclarations": true,
-
-  "java.home": "/Users/dou/Developer/env/jdk11/Contents/Home",
+  "java.test.defaultConfig": "default",
   "java.configuration.runtimes": [
     {
       "name": "JavaSE-11",
@@ -707,18 +558,7 @@
     }
   ],
 
-  "java.test.defaultConfig": "default",
-
-  "java.debug.settings.hotCodeReplace": "auto",
-  "java.debug.settings.showStaticVariables": true,
-  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -javaagent:\"/Users/dou/.vscode/extensions/gabrielbb.vscode-lombok-1.0.1/server/lombok.jar\"",
-  "java.signatureHelp.enabled": true,
-
-  "spring.initializr.defaultArtifactId": "demo",
   "spring.initializr.defaultGroupId": "cc.vv",
-  "spring.initializr.defaultJavaVersion": "11",
-  "spring.initializr.defaultLanguage": "Java",
-  "spring.initializr.serviceUrl": ["https://start.spring.io/"],
 
   "boot-java.change-detection.on": true,
   "boot-java.scan-java-test-sources.on": true,
@@ -728,28 +568,12 @@
   "boot-java.support-spring-xml-config.scan-folders": "src/main",
   "boot-java.validation.spel.on": true,
 
-  "spring-boot.ls.java.home": "/Users/dou/Developer/env/jdk11/Contents/Home",
+  "sonarlint.ls.javaHome": "/Users/dou/Developer/env/jdk11/Contents/Home",
 
   "redhat.telemetry.enabled": false,
-  "telemetry.enableTelemetry": false,
-  "vscode-mysql.enableTelemetry": false,
   "sonarlint.disableTelemetry": true,
-
-  "rsp-ui.enableStartServerOnActivation": [
-    {
-      "id": "redhat.vscode-server-connector",
-      "name": "Red Hat Server Connector",
-      "startOnActivation": true
-    }
-  ],
-  "vs-kubernetes": {
-    "vscode-kubernetes.kubectl-path.mac": "/Users/dou/.vs-kubernetes/tools/kubectl/kubectl",
-    "vscode-kubernetes.minikube-path.mac": "/Users/dou/.vs-kubernetes/tools/minikube/darwin-amd64/minikube",
-    "vscode-kubernetes.helm-path.mac": "/Users/dou/.vs-kubernetes/tools/helm/darwin-amd64/helm"
-  },
-  "markdown-preview-enhanced.liveUpdate": false,
-  "extension.bracket_char": true
+  "telemetry.telemetryLevel": "off",
+  "vscode-mysql.enableTelemetry": false,
+  "quarkus.tools.alwaysShowWelcomePage": false
 }
-
-
 
