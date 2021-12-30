@@ -77,15 +77,15 @@ nnoremap <Leader>pp :action ShowPopupMenu<CR>
 "nnoremap <Leader>b; :action OpenProjectWindows<CR>
 
 """ tab
-nmap <C-1> :action GoToTab1<CR>
-nmap <C-2> :action GoToTab2<CR>
-nmap <C-3> :action GoToTab3<CR>
-nmap <C-4> :action GoToTab4<CR>
-nmap <C-5> :action GoToTab5<CR>
-nmap <C-6> :action GoToTab6<CR>
-nmap <C-7> :action GoToTab7<CR>
-nmap <C-8> :action GoToTab8<CR>
-nmap <C-9> :action GoToTab9<CR>
+nnoremap <C-1> :action GoToTab1<CR>
+nnoremap <C-2> :action GoToTab2<CR>
+nnoremap <C-3> :action GoToTab3<CR>
+nnoremap <C-4> :action GoToTab4<CR>
+nnoremap <C-5> :action GoToTab5<CR>
+nnoremap <C-6> :action GoToTab6<CR>
+nnoremap <C-7> :action GoToTab7<CR>
+nnoremap <C-8> :action GoToTab8<CR>
+nnoremap <C-9> :action GoToTab9<CR>
 
 nnoremap gn gt
 nnoremap gp gT
@@ -134,6 +134,9 @@ nnoremap <Leader>iv :action IntroduceVariable<CR>
 nnoremap <Space>rf :action Refactorings.QuickListPopupAction<CR>
 vnoremap <Space>rf :action Refactorings.QuickListPopupAction<CR>
 nnoremap <Space>rm :action RefactoringMenu<CR>
+nnoremap <Space>sw :action SurroundWith<CR>
+vnoremap <Space>sw :action SurroundWith<CR>
+
 " 重命名
 nnoremap <Space>rn :action RenameElement<CR>
 nnoremap <Space>ge :action Generate<CR>
@@ -160,18 +163,18 @@ nnoremap <Space>se :action ShowErrorDescription<CR>
 nnoremap == :action ReformatCode<CR>
 nnoremap <Space>fm :action ReformatCode<CR>
 
-nnoremap <Leader>rc :action Run<CR>
-nnoremap <Leader>rm :action RunClass<CR>
+nnoremap <Leader>rm :action Run<CR>
+nnoremap <Leader>rc :action RunClass<CR>
 nnoremap <Leader>cr :action ChooseRunConfiguration<CR>
+nnoremap <Leader>cg :action RunContextPopupGroup<CR>
 
 nnoremap <Leader>cc :action CommentByLineComment<CR>
-vnoremap <Leader>cc :action CommentByLineComment<CR>
+"vnoremap <Leader>cc :action CommentByLineComment<CR>
 vnoremap <Leader>cc :action CommentByBlockComment<CR>
+
 
 nnoremap <Leader>nc :action NewClass<CR>
 
-nnoremap <Leader>sw :action SurroundWith<CR>
-vnoremap <Leader>sw :action SurroundWith<CR>
 
 nnoremap <A-j> :action MoveLineDown<CR>
 nnoremap <A-k> :action MoveLineUp<CR>
@@ -195,3 +198,7 @@ nnoremap \ch :action CallHierarchy<CR>
 
 nnoremap <Leader>j1 :action QuickJavaDoc<CR>
 nnoremap <Leader>j2 :action QuickImplementations<CR>
+
+nnoremap <Leader>gi :action JumpToLastChange<CR>
+
+nnoremap <Leader>vv :action ViewImportPopups<CR>
