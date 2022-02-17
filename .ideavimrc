@@ -1,7 +1,5 @@
 let mapleader = ","
 
-inoremap jk <Esc>
-
 """ ideavimrc
 nnoremap <Leader>ev :e ~/.ideavimrc<CR>
 nnoremap <Leader>sv :action IdeaVim.ReloadVimRc.reload<CR>
@@ -15,6 +13,8 @@ set smartcase
 set scrolloff=4
 nnoremap <silent> <BS> :nohlsearch<CR>
 
+inoremap jk <Esc>
+
 inoremap <C-h> <LEFT>
 inoremap <C-j> <DOWN>
 inoremap <C-k> <UP>
@@ -23,12 +23,13 @@ inoremap <C-l> <RIGHT>
 "inoremap <C-e> <End>
 
 set clipboard+=unnamed
-noremap <Leader>y "*y
-noremap <Leader>p "*p
-noremap <Leader>P "0p
-noremap <Leader>d "_d
-noremap <Leader>D "_D
-noremap <Leader>dd "_dd
+
+vnoremap > >gv
+vnoremap < <gv
+
+""" 安装IdeaVimExtension
+"set keep-english-in-normal
+set keep-english-in-normal-and-restore-in-insert
 
 """ plugin
 set NERDTree
@@ -39,9 +40,6 @@ set keep-english-in-normal
 set multiple-cursors
 set surround
 set commentary
-
-""" plugin: NERDTree
-nnoremap <Space>fs :NERDTree<CR>
 
 """ plugin: ReplaceWithRegister
 map _ gr
@@ -77,35 +75,45 @@ nnoremap <Leader>pp :action ShowPopupMenu<CR>
 "nnoremap <Leader>b; :action OpenProjectWindows<CR>
 
 """ tab
-nnoremap <C-1> :action GoToTab1<CR>
-nnoremap <C-2> :action GoToTab2<CR>
-nnoremap <C-3> :action GoToTab3<CR>
-nnoremap <C-4> :action GoToTab4<CR>
-nnoremap <C-5> :action GoToTab5<CR>
-nnoremap <C-6> :action GoToTab6<CR>
-nnoremap <C-7> :action GoToTab7<CR>
-nnoremap <C-8> :action GoToTab8<CR>
-nnoremap <C-9> :action GoToTab9<CR>
+"nnoremap <C-1> :action GoToTab1<CR>
+"nnoremap <C-2> :action GoToTab2<CR>
+"nnoremap <C-3> :action GoToTab3<CR>
+"nnoremap <C-4> :action GoToTab4<CR>
+"nnoremap <C-5> :action GoToTab5<CR>
+"nnoremap <C-6> :action GoToTab6<CR>
+"nnoremap <C-7> :action GoToTab7<CR>
+"nnoremap <C-8> :action GoToTab8<CR>
+"nnoremap <C-9> :action GoToTab9<CR>
 
-nnoremap gn gt
-nnoremap gp gT
-nnoremap <Leader>qq :q<CR>
+""" tab
+nnoremap <Space>1 gT
+nnoremap <Space>2 gt
+nnoremap <Space>0 :q<CR>
 nnoremap <Leader>qa :action CloseAllEditors<CR>
 nnoremap <Leader>qo :action CloseAllEditorsButActive<CR>
 
+""" plugin: NERDTree
+" P: go to root
+" p: go to parent
+" K: go to first child
+" J: go to last child
+" <C-j>: go to next sibling
+" <C-k>: go to prev sibling
+"nnoremap <Space>fs :NERDTree<CR>
+nnoremap <Space>fs :NERDTreeToggle<CR>
+
 """ 用NERDTree代替
 " nnoremap <Leader>zp :action ActivateProjectToolWindow<CR>
-nnoremap <Space>ha :action HideAllWindows<CR>
-nnoremap <Space>sb :action HideActiveWindow<CR>
+nnoremap <Leader>ha :action HideAllWindows<CR>
+nnoremap <Leader>sb :action HideActiveWindow<CR>
 
-nnoremap <Space>si :action SelectInProjectView<CR>
-nnoremap <Leader>si :action ActivateProjectToolWindow<CR>
+"nnoremap <Space>si :action SelectInProjectView<CR>
+"nnoremap <Leader>si :action ActivateProjectToolWindow<CR>
 
 """ search
 " idea自带的搜索配置
-nnoremap <Leader>/ :action Find<CR>
+nnoremap <Space>/ :action Find<CR>
 nnoremap <Space>fi :action FindInPath<CR>
-nnoremap <Space>fu :action FindUsages<CR>
 "nnoremap <Leader>fm :action FindUsagesMenuGroup<CR>
 nnoremap <Space>hu :action HighlightUsagesInFile<CR>
 
@@ -113,6 +121,7 @@ nnoremap <Space>hu :action HighlightUsagesInFile<CR>
 nnoremap <Space>ol :action FileStructurePopup<CR>
 nnoremap <Leader>ol :action ActivateStructureToolWindow<CR>
 
+nnoremap <Space>fu :action FindUsages<CR>
 nnoremap <Space>gr :action ShowUsages<CR>
 nnoremap <Space>gi :action GotoImplementation<CR>
 nnoremap <Space>gs :action GotoSuperMethod<CR>
@@ -121,8 +130,10 @@ nnoremap <Space>gt :action GotoTest<CR>
 " show return type
 nnoremap <Space>rt :action ExpressionTypeInfo<CR>
 
+""" type
 nnoremap <Space>ot :action GotoClass<CR>
-nnoremap <Space>of :action SearchEverywhere<CR>
+""" resources
+nnoremap <Space>or :action SearchEverywhere<CR>
 
 " :action CodeMenu<CR>
 " assign an additional shortcut to that action in your Keymap, exit IDE and check IDE config files
@@ -137,7 +148,7 @@ nnoremap <Space>rm :action RefactoringMenu<CR>
 nnoremap <Space>sw :action SurroundWith<CR>
 vnoremap <Space>sw :action SurroundWith<CR>
 
-" 重命名
+" rename
 nnoremap <Space>rn :action RenameElement<CR>
 nnoremap <Space>ge :action Generate<CR>
 vnoremap <Space>em :action ExtractMethod<CR>
@@ -163,18 +174,31 @@ nnoremap <Space>se :action ShowErrorDescription<CR>
 nnoremap == :action ReformatCode<CR>
 nnoremap <Space>fm :action ReformatCode<CR>
 
+""" execute
 nnoremap <Leader>rm :action Run<CR>
 nnoremap <Leader>rc :action RunClass<CR>
 nnoremap <Leader>cr :action ChooseRunConfiguration<CR>
 nnoremap <Leader>cg :action RunContextPopupGroup<CR>
 
 nnoremap <Leader>cc :action CommentByLineComment<CR>
-"vnoremap <Leader>cc :action CommentByLineComment<CR>
-vnoremap <Leader>cc :action CommentByBlockComment<CR>
-
+vnoremap <Leader>cc :action CommentByLineComment<CR>
+"vnoremap <Leader>cc :action CommentByBlockComment<CR>
 
 nnoremap <Leader>nc :action NewClass<CR>
 
+""" File
+nnoremap <Leader>sp :action ShowFilePath<CR>
+
+""" debug
+nnoremap <Leader>rd :action Debug<CR>
+nnoremap <Leader>db :action ToggleLineBreakpoint<CR>
+nnoremap <Leader>dv :action ViewBreakpoints<CR>
+nnoremap <F4> <ESC>:action Stop<CR>
+nnoremap <F5> <ESC>:action Resume<CR>
+nnoremap <F6> <ESC>:action StepOver<CR>
+nnoremap <F7> <ESC>:action SmartStepInto<CR>
+nnoremap <F8> <ESC>:action StepOut<CR>
+nnoremap <F9> <ESC>:action EvaluateExpression<CR>
 
 nnoremap <A-j> :action MoveLineDown<CR>
 nnoremap <A-k> :action MoveLineUp<CR>
