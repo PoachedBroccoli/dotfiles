@@ -1,0 +1,140 @@
+let mapleader=","
+
+set imd
+set incsearch
+set hlsearch
+set smartindent
+set autoindent
+set ignorecase
+set smartcase
+set saney
+set clipboard=unnamed
+set contentassistmode
+
+nnoremap <Space>sv :source ~/.vrapperrc<CR>:noh<CR>
+
+nnoremap <Leader>w :w<CR>
+inoremap jk <ESC>
+
+nnoremap <BS> :noh<CR>
+
+inoremap <C-h> <LEFT>
+inoremap <C-j> <DOWN>
+inoremap <C-k> <UP>
+inoremap <C-l> <RIGHT>
+
+nnoremap <Space>1 gT
+nnoremap <Space>2 gt
+
+
+eclipseaction findReplace org.eclipse.ui.edit.findReplace
+nnoremap <Space>fr :findReplace<CR>
+
+eclipseaction toggleComment1 org.eclipse.jdt.ui.edit.text.java.toggle.comment
+eclipseaction toggleComment2 org.dadacoalition.yedit.commands.toggleComment
+nnoremap <Leader>cc :toggleComment2<CR>
+
+eclipseaction format org.eclipse.jdt.ui.edit.text.java.format
+nnoremap <Space>fm :format<CR>
+
+eclipseaction organizeImports org.eclipse.jdt.ui.edit.text.java.organize.imports
+nnoremap <Space>oi :organizeImports<CR>
+
+eclipseaction type org.eclipse.jdt.ui.navigate.open.type
+nnoremap <Space>ot :type<CR>
+
+eclipseaction resource org.eclipse.ui.navigate.openResource
+nnoremap <Space>or :resource<CR>
+
+" Open Window
+eclipseaction references org.eclipse.jdt.ui.edit.text.java.search.references.in.workspace
+nnoremap <Space>gr :references<CR>
+
+" Popup
+eclipseaction openHierarchy org.eclipse.jdt.ui.edit.text.java.open.hierarchy
+nnoremap <Space>sh :openHierarchy<CR>
+
+" Open Window
+eclipseaction callHierarchy org.eclipse.jdt.ui.edit.text.java.open.call.hierarchy
+nnoremap <Space>oh :callHierarchy<CR>
+
+
+" Open Window
+eclipseaction searchImplementors1 org.eclipse.jdt.ui.edit.text.java.search.implementors.in.workspace
+nnoremap <Space>gi :searchImplementors1<CR>
+
+" Popup
+eclipseaction searchImplementors2 org.eclipse.jdt.ui.edit.text.java.open.implementation
+nnoremap <Space>gI :searchImplementors2<CR>
+
+eclipseaction OpenSuperImplementation org.eclipse.jdt.ui.edit.text.java.open.super.implementation
+nnoremap <Space>gs :OpenSuperImplementation<CR>
+
+
+eclipseaction showView org.eclipse.ui.views.showView
+
+" Popup
+eclipseaction outline org.eclipse.jdt.ui.edit.text.java.show.outline
+nnoremap <Space>ol :outline<CR>
+
+" Open Window
+eclipseaction searchOccurrences org.eclipse.jdt.ui.edit.text.java.search.occurrences.in.file.quickMenu
+nnoremap <Space>oo :searchOccurrences<CR>
+
+eclipseaction MoveLinesUp org.eclipse.ui.edit.text.moveLineUp
+
+eclipseaction MoveLinesDown org.eclipse.ui.edit.text.moveLineDown
+
+eclipseaction GotoNextMember org.eclipse.jdt.ui.edit.text.java.goto.next.member
+nnoremap ]] :GotoNextMember<CR>
+
+eclipseaction GotoPreviousMember org.eclipse.jdt.ui.edit.text.java.goto.previous.member
+nnoremap [[ :GotoPreviousMember<CR>
+
+eclipseaction NextView org.eclipse.ui.window.nextView
+nnoremap <Space>vv :NextView<CR>
+
+eclipseaction ExtractLocalVariable org.eclipse.jdt.ui.edit.text.java.extract.local.variable
+eclipseaction IntroduceParameter org.eclipse.jdt.ui.edit.text.java.introduce.parameter
+nnoremap <Space>ll :ExtractLocalVariable<CR>
+
+eclipseaction showContextMenu org.eclipse.ui.window.showContextMenu
+nnoremap <Space>3 :showContextMenu<CR>
+
+eclipseaction ShowRulerContextMenu org.eclipse.ui.edit.text.showRulerContextMenu
+nnoremap <Space>4 :ShowRulerContextMenu<CR>
+
+eclipseaction ContentAssistContextInformation org.eclipse.ui.edit.text.contentAssist.contextInformation
+nnoremap <Space>5 :ContentAssistContextInformation<CR>
+
+eclipseaction QuickFix2 org.eclipse.ui.edit.text.contentAssist.proposals
+eclipseaction QuickFix org.eclipse.jdt.ui.edit.text.java.correction.assist.proposals
+nnoremap <Space>qf :QuickFix<CR>
+
+eclipseaction OverrideMethods org.eclipse.jdt.ui.edit.text.java.override.methods
+nnoremap <Space>om :OverrideMethods<CR>
+
+eclipseaction RenameElement org.eclipse.jdt.ui.edit.text.java.rename.element
+eclipseaction Rename org.eclipse.ui.edit.rename
+nnoremap <Space>rn :RenameElement<CR>
+
+eclipseaction PromoteLocalVariable org.eclipse.jdt.ui.edit.text.java.promote.local.variable
+nnoremap <Space>rv :PromoteLocalVariable<CR>
+
+
+" Debug
+" Resume
+eclipseaction Resume org.eclipse.debug.ui.commands.Resume
+nnoremap 5 :Resume<CR>
+
+" Step Into
+eclipseaction StepInto org.eclipse.debug.ui.commands.StepInto
+nnoremap 6 :StepInto<CR>
+
+" Step Over
+eclipseaction StepOver org.eclipse.debug.ui.commands.StepOver
+nnoremap 7 :StepOver<CR>
+
+" Step Return
+eclipseaction StepReturn org.eclipse.debug.ui.commands.StepReturn
+nnoremap 8 :StepReturn<CR>
