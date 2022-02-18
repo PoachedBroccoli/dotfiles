@@ -11,6 +11,8 @@ set incsearch
 set ignorecase
 set smartcase
 set scrolloff=4
+set clipboard+=unnamed
+
 nnoremap <silent> <BS> :nohlsearch<CR>
 
 inoremap jk <Esc>
@@ -19,19 +21,14 @@ inoremap <C-h> <LEFT>
 inoremap <C-j> <DOWN>
 inoremap <C-k> <UP>
 inoremap <C-l> <RIGHT>
-"inoremap <C-a> <Home>
-"inoremap <C-e> <End>
-
-set clipboard+=unnamed
 
 vnoremap > >gv
 vnoremap < <gv
 
+""" plugin
 """ 安装IdeaVimExtension
 "set keep-english-in-normal
 set keep-english-in-normal-and-restore-in-insert
-
-""" plugin
 set NERDTree
 set ReplaceWithRegister
 set highlightedyank
@@ -49,32 +46,29 @@ let g:highlightedyank_highlight_duration = "2000"
 "let g:highlightedyank_highlight_color = "rgba(255, 215, 0, 1)"
 "let g:highlightedyank_highlight_color = "rgba(160, 160, 160, 155)"
 
-" plugin: multiple-cursors
+""" plugin: multiple-cursors
 map <C-n> <A-n>
 map <C-P> <A-P>
 map <C-X> <A-X>
 map g<C-N> g<A-N>
 
 """ plugin: AceAction
-""" default <C-;>
+" default <C-;>
 nnoremap <Leader>f :action AceAction<CR>
 nnoremap <Leader>F :action AceLineAction<CR>
 
 """ plugin: String Manipulation
-nnoremap <Leader>ss :action osmedile.intellij.stringmanip.PopupChoiceAction<CR>
+"nnoremap <Leader>ss :action osmedile.intellij.stringmanip.PopupChoiceAction<CR>
 
 """ plugin: Translation
-nnoremap <Leader>tl :action TranslationPopupMenu<CR>
-
-""" right click
-nnoremap <Leader>pp :action ShowPopupMenu<CR>
-
-""" ProjectWindow
-"nnoremap <Leader>bn :action NextProjectWindow<CR>
-"nnoremap <Leader>bp :action PreviousProjectWindow<CR>
-"nnoremap <Leader>b; :action OpenProjectWindows<CR>
+"nnoremap <Leader>tl :action TranslationPopupMenu<CR>
 
 """ tab
+nnoremap <Space>1 gT
+nnoremap <Space>2 gt
+nnoremap <Space>0 :q<CR>
+nnoremap <Leader>qa :action CloseAllEditors<CR>
+nnoremap <Leader>qo :action CloseAllEditorsButActive<CR>
 "nnoremap <C-1> :action GoToTab1<CR>
 "nnoremap <C-2> :action GoToTab2<CR>
 "nnoremap <C-3> :action GoToTab3<CR>
@@ -85,12 +79,14 @@ nnoremap <Leader>pp :action ShowPopupMenu<CR>
 "nnoremap <C-8> :action GoToTab8<CR>
 "nnoremap <C-9> :action GoToTab9<CR>
 
-""" tab
-nnoremap <Space>1 gT
-nnoremap <Space>2 gt
-nnoremap <Space>0 :q<CR>
-nnoremap <Leader>qa :action CloseAllEditors<CR>
-nnoremap <Leader>qo :action CloseAllEditorsButActive<CR>
+""" https://youtrack.jetbrains.com/issue/VIM-44
+""" https://youtrack.jetbrains.com/issue/VIM-44#focus=Comments-27-5199824.0-0
+""" https://github.com/JetBrains/ideavim/pull/436
+" some wrong...
+"nnoremap <C-o> :action Back<CR>
+"nnoremap <C-i> :action Forward<CR>
+nmap <C-o> <Action>(Back)
+nmap <C-i> <Action>(Forward)
 
 """ plugin: NERDTree
 " P: go to root
@@ -101,54 +97,67 @@ nnoremap <Leader>qo :action CloseAllEditorsButActive<CR>
 " <C-k>: go to prev sibling
 "nnoremap <Space>fs :NERDTree<CR>
 nnoremap <Space>fs :NERDTreeToggle<CR>
-
 """ 用NERDTree代替
 " nnoremap <Leader>zp :action ActivateProjectToolWindow<CR>
 nnoremap <Leader>ha :action HideAllWindows<CR>
 nnoremap <Leader>sb :action HideActiveWindow<CR>
-
 "nnoremap <Space>si :action SelectInProjectView<CR>
 "nnoremap <Leader>si :action ActivateProjectToolWindow<CR>
+"nnoremap <Leader>bn :action NextProjectWindow<CR>
+"nnoremap <Leader>bp :action PreviousProjectWindow<CR>
+"nnoremap <Leader>b; :action OpenProjectWindows<CR>
+
+" right click
+nnoremap <Leader>pp :action ShowPopupMenu<CR>
+
+" Terminal
+nnoremap <Leader>tt :action ActivateTerminalToolWindow<CR>
+
+" Recent ...
+nnoremap <Leader><Leader>p :action ManageRecentProjects<CR>
+nnoremap <Leader><Leader>F :action RecentChangedFiles<CR>
+nnoremap <Leader><Leader>f :action RecentFiles<CR>
+nnoremap <Leader><Leader>l :action RecentLocations<cr>
+nnoremap <Leader><Leader>h :action LocalHistory.ShowHistory<CR>
 
 """ search
 " idea自带的搜索配置
 nnoremap <Space>/ :action Find<CR>
-nnoremap <Space>fi :action FindInPath<CR>
 "nnoremap <Leader>fm :action FindUsagesMenuGroup<CR>
-nnoremap <Space>hu :action HighlightUsagesInFile<CR>
+"nnoremap <Space>hu :action HighlightUsagesInFile<CR>
+
+""" type
+nnoremap <Space>ot :action GotoClass<CR>
+""" resources
+nnoremap <Space>or :action SearchEverywhere<CR>
+""" grep
+nnoremap <Space>fg :action FindInPath<CR>
 
 " outline
 nnoremap <Space>ol :action FileStructurePopup<CR>
 nnoremap <Leader>ol :action ActivateStructureToolWindow<CR>
 
-nnoremap <Space>fu :action FindUsages<CR>
+nnoremap <Space>gR :action FindUsages<CR>
 nnoremap <Space>gr :action ShowUsages<CR>
 nnoremap <Space>gi :action GotoImplementation<CR>
 nnoremap <Space>gs :action GotoSuperMethod<CR>
 nnoremap <Space>gd :action GotoDeclaration<CR>
 nnoremap <Space>gt :action GotoTest<CR>
 " show return type
-nnoremap <Space>rt :action ExpressionTypeInfo<CR>
-
-""" type
-nnoremap <Space>ot :action GotoClass<CR>
-""" resources
-nnoremap <Space>or :action SearchEverywhere<CR>
+"nnoremap <Space>rt :action ExpressionTypeInfo<CR>
 
 " :action CodeMenu<CR>
 " assign an additional shortcut to that action in your Keymap, exit IDE and check IDE config files
 " /Users/${username}/Library/Application Support/JetBrains
 nnoremap <Space>qf :action ShowIntentionActions<CR>
-nnoremap <Space>ll :action IntroduceActionsGroup<CR>
-inoremap <C-,> <Esc>:action IntroduceVariable<CR>
-nnoremap <Leader>iv :action IntroduceVariable<CR>
+nnoremap <Leader>ll :action IntroduceActionsGroup<CR>
+nnoremap <Space>ll :action IntroduceVariable<CR>
+inoremap <C-;> <Esc>:action IntroduceVariable<CR>
 nnoremap <Space>rf :action Refactorings.QuickListPopupAction<CR>
 vnoremap <Space>rf :action Refactorings.QuickListPopupAction<CR>
 nnoremap <Space>rm :action RefactoringMenu<CR>
 nnoremap <Space>sw :action SurroundWith<CR>
 vnoremap <Space>sw :action SurroundWith<CR>
-
-" rename
 nnoremap <Space>rn :action RenameElement<CR>
 nnoremap <Space>ge :action Generate<CR>
 vnoremap <Space>em :action ExtractMethod<CR>
@@ -160,17 +169,10 @@ nnoremap <Space>oi :action OptimizeImports<CR>
 nnoremap <C-j> :action GotoNextElementUnderCaretUsage<CR>
 nnoremap <C-k> :action GotoPrevElementUnderCaretUsage<CR>
 
-" history
-nnoremap <Leader>cf :action RecentChangedFiles<CR>
-nnoremap <Leader>lh :action LocalHistory.ShowHistory<CR>
+nnoremap [e :action GotoPreviousError<CR>
+nnoremap ]e :action GotoNextError<CR>
 
-nnoremap [e :action GotoPreviousError<cr>
-nnoremap ]e :action GotoNextError<cr>
-nnoremap <C-o> :action Back<CR>
-nnoremap <C-i> :action Forward<CR>
-nnoremap <Leader>rl :action RecentLocations<cr>
-
-nnoremap <Space>se :action ShowErrorDescription<CR>
+nnoremap <Leader>se :action ShowErrorDescription<CR>
 nnoremap == :action ReformatCode<CR>
 nnoremap <Space>fm :action ReformatCode<CR>
 
@@ -212,17 +214,16 @@ nnoremap <Leader>ic :action InspectCode<CR>
 
 nnoremap <Leader>mr :action Maven.Reimport<CR>
 
-
 nnoremap <Space>cr :action CopyReferencePopupGroup<CR>
 
-nnoremap \pi :action ParameterInfo<CR>
-nnoremap \mh :action MethodHierarchy<CR>
+"nnoremap \pi :action ParameterInfo<CR>
+"nnoremap \mh :action MethodHierarchy<CR>
 nnoremap \th :action TypeHierarchy<CR>
 nnoremap \ch :action CallHierarchy<CR>
 
-nnoremap <Leader>j1 :action QuickJavaDoc<CR>
-nnoremap <Leader>j2 :action QuickImplementations<CR>
+"nnoremap <Leader>j1 :action QuickJavaDoc<CR>
+"nnoremap <Leader>j2 :action QuickImplementations<CR>
 
 nnoremap <Leader>gi :action JumpToLastChange<CR>
 
-nnoremap <Leader>vv :action ViewImportPopups<CR>
+"nnoremap <Leader>vv :action ViewImportPopups<CR>
