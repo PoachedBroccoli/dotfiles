@@ -82,11 +82,12 @@ nnoremap <Leader>qo :action CloseAllEditorsButActive<CR>
 """ https://youtrack.jetbrains.com/issue/VIM-44
 """ https://youtrack.jetbrains.com/issue/VIM-44#focus=Comments-27-5199824.0-0
 """ https://github.com/JetBrains/ideavim/pull/436
-" some wrong...
 "nnoremap <C-o> :action Back<CR>
 "nnoremap <C-i> :action Forward<CR>
 nmap <C-o> <Action>(Back)
 nmap <C-i> <Action>(Forward)
+nmap g; <Action>(JumpToLastChange)
+nmap g, <Action>(JumpToNextChange)
 
 """ plugin: NERDTree
 " P: go to root
