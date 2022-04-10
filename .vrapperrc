@@ -45,6 +45,7 @@ nnoremap <Space>ot :type<CR>
 
 eclipseaction resource org.eclipse.ui.navigate.openResource
 nnoremap <Space>or :resource<CR>
+nnoremap <Space>ff :resource<CR>
 
 " Open Window
 eclipseaction references org.eclipse.jdt.ui.edit.text.java.search.references.in.workspace
