@@ -1,12 +1,11 @@
 ## dotfiles
 
-
-
 ##### Usage
 
+- ~~git clone https://github.com/PoachedBroccoli/dotfiles.git~~
 
-~~git clone https://github.com/PoachedBroccoli/dotfiles.git~~
-~~cd dotfiles/script~~
-~~chmod +x ./install.sh && ./install.sh~~
+- ~~cd dotfiles/script~~
 
-A bare Git repository
+- ~~chmod +x ./install.sh && ./install.sh~~
+
+~~A bare Git repository~~
