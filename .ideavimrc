@@ -1,3 +1,5 @@
+" https://github.com/JetBrains/ideavim/blob/master/src/main/java/com/maddyhome/idea/vim/package-info.java
+
 let mapleader = ","
 
 """ ideavimrc
@@ -22,13 +24,16 @@ inoremap <C-j> <DOWN>
 inoremap <C-k> <UP>
 inoremap <C-l> <RIGHT>
 
-vnoremap > >gv
-vnoremap < <gv
+"vnoremap > >gv
+"vnoremap < <gv
+vnoremap > :action EditorIndentSelection<CR>
+vnoremap < :action EditorUnindentSelection<CR>
 
 """ plugin
 """ 安装IdeaVimExtension
 "set keep-english-in-normal
 set keep-english-in-normal-and-restore-in-insert
+set idearefactormode=keep
 set NERDTree
 set ReplaceWithRegister
 set highlightedyank
@@ -54,8 +59,9 @@ map g<C-N> g<A-N>
 
 """ plugin: AceAction
 " default <C-;>
-nnoremap <Leader>f :action AceAction<CR>
-nnoremap <Leader>F :action AceLineAction<CR>
+nnoremap <Leader><Leader>f :action AceAction<CR>
+vnoremap <Leader><Leader>f :action AceAction<CR>
+nnoremap <Leader><Leader>F :action AceLineAction<CR>
 
 """ plugin: String Manipulation
 "nnoremap <Leader>ss :action osmedile.intellij.stringmanip.PopupChoiceAction<CR>
@@ -63,21 +69,15 @@ nnoremap <Leader>F :action AceLineAction<CR>
 """ plugin: Translation
 "nnoremap <Leader>tl :action TranslationPopupMenu<CR>
 
+nnoremap <Leader>w :w<CR>
+
 """ tab
 nnoremap <Space>1 gT
 nnoremap <Space>2 gt
-nnoremap <Space>0 :q<CR>
+nnoremap <Space>3 :action CloseContent<CR>
+nnoremap <Space>4 :action ReopenClosedTab<CR>
 nnoremap <Leader>qa :action CloseAllEditors<CR>
 nnoremap <Leader>qo :action CloseAllEditorsButActive<CR>
-"nnoremap <C-1> :action GoToTab1<CR>
-"nnoremap <C-2> :action GoToTab2<CR>
-"nnoremap <C-3> :action GoToTab3<CR>
-"nnoremap <C-4> :action GoToTab4<CR>
-"nnoremap <C-5> :action GoToTab5<CR>
-"nnoremap <C-6> :action GoToTab6<CR>
-"nnoremap <C-7> :action GoToTab7<CR>
-"nnoremap <C-8> :action GoToTab8<CR>
-"nnoremap <C-9> :action GoToTab9<CR>
 
 """ https://youtrack.jetbrains.com/issue/VIM-44
 """ https://youtrack.jetbrains.com/issue/VIM-44#focus=Comments-27-5199824.0-0
@@ -90,36 +90,36 @@ nmap g; <Action>(JumpToLastChange)
 nmap g, <Action>(JumpToNextChange)
 
 """ plugin: NERDTree
+" https://github.com/JetBrains/ideavim/wiki/NERDTree-support#supported-commands
 " P: go to root
 " p: go to parent
 " K: go to first child
 " J: go to last child
 " <C-j>: go to next sibling
 " <C-k>: go to prev sibling
-"nnoremap <Space>fs :NERDTree<CR>
-nnoremap <Space>fs :NERDTreeToggle<CR>
+" t: open
+" o: open file
+" o: toggle folder
+" x: collapse folder
+" m: show context menu
+nnoremap <Space>fs :NERDTree<CR>
+nnoremap <Space>fS :NERDTreeToggle<CR>
+"nnoremap <Space>fs :NERDTreeToggle<CR>
+
 """ 用NERDTree代替
-" nnoremap <Leader>zp :action ActivateProjectToolWindow<CR>
 nnoremap <Leader>ha :action HideAllWindows<CR>
-nnoremap <Leader>sb :action HideActiveWindow<CR>
-"nnoremap <Space>si :action SelectInProjectView<CR>
-"nnoremap <Leader>si :action ActivateProjectToolWindow<CR>
-"nnoremap <Leader>bn :action NextProjectWindow<CR>
-"nnoremap <Leader>bp :action PreviousProjectWindow<CR>
-"nnoremap <Leader>b; :action OpenProjectWindows<CR>
+nnoremap <C-w>c :action HideActiveWindow<CR>
 
 " right click
 nnoremap <Leader>pp :action ShowPopupMenu<CR>
 
 " Terminal
-nnoremap <Leader>tt :action ActivateTerminalToolWindow<CR>
+nnoremap <Space>tt :action ActivateTerminalToolWindow<CR>
 
 " Recent ...
 nnoremap <Leader><Leader>p :action ManageRecentProjects<CR>
-nnoremap <Leader><Leader>F :action RecentChangedFiles<CR>
-nnoremap <Leader><Leader>f :action RecentFiles<CR>
-nnoremap <Leader><Leader>l :action RecentLocations<cr>
-nnoremap <Leader><Leader>h :action LocalHistory.ShowHistory<CR>
+nnoremap <Leader>f" :action RecentChangedFiles<CR>
+nnoremap <Leader>f' :action RecentFiles<CR>
 
 """ search
 " idea自带的搜索配置
@@ -130,7 +130,7 @@ nnoremap <Space>/ :action Find<CR>
 """ type
 nnoremap <Space>ot :action GotoClass<CR>
 """ resources
-nnoremap <Space>or :action SearchEverywhere<CR>
+nnoremap <Space>ff :action SearchEverywhere<CR>
 """ grep
 nnoremap <Space>fg :action FindInPath<CR>
 
@@ -138,14 +138,16 @@ nnoremap <Space>fg :action FindInPath<CR>
 nnoremap <Space>ol :action FileStructurePopup<CR>
 nnoremap <Leader>ol :action ActivateStructureToolWindow<CR>
 
-nnoremap <Space>gR :action FindUsages<CR>
+nnoremap <Leader>gr :action FindUsages<CR>
 nnoremap <Space>gr :action ShowUsages<CR>
 nnoremap <Space>gi :action GotoImplementation<CR>
 nnoremap <Space>gs :action GotoSuperMethod<CR>
 nnoremap <Space>gd :action GotoDeclaration<CR>
 nnoremap <Space>gt :action GotoTest<CR>
-" show return type
-"nnoremap <Space>rt :action ExpressionTypeInfo<CR>
+
+" SelectAllOccurrences
+nnoremap <C-j> :action GotoNextElementUnderCaretUsage<CR>
+nnoremap <C-k> :action GotoPrevElementUnderCaretUsage<CR>
 
 " :action CodeMenu<CR>
 " assign an additional shortcut to that action in your Keymap, exit IDE and check IDE config files
@@ -166,14 +168,10 @@ nnoremap <Space>om :action OverrideMethods<CR>
 nnoremap <Space>im :action ImplementMethods<CR>
 nnoremap <Space>oi :action OptimizeImports<CR>
 
-" SelectAllOccurrences
-nnoremap <C-j> :action GotoNextElementUnderCaretUsage<CR>
-nnoremap <C-k> :action GotoPrevElementUnderCaretUsage<CR>
-
 nnoremap [e :action GotoPreviousError<CR>
 nnoremap ]e :action GotoNextError<CR>
 
-nnoremap <Leader>se :action ShowErrorDescription<CR>
+nnoremap <Space>E :action ShowErrorDescription<CR>
 nnoremap == :action ReformatCode<CR>
 nnoremap <Space>fm :action ReformatCode<CR>
 
@@ -207,6 +205,10 @@ nnoremap <A-j> :action MoveLineDown<CR>
 nnoremap <A-k> :action MoveLineUp<CR>
 vnoremap <A-j> :action MoveStatementDown<CR>
 vnoremap <A-k> :action MoveStatementUp<CR>
+"inoremap <A-j> <Esc>:action MoveStatementDown<CR>gi
+"inoremap <A-k> <Esc>:action MoveStatementUp<CR>gi
+inoremap <A-j> <Esc>:m +1<CR>gi
+inoremap <A-k> <Esc>:m -2<CR>gi
 
 nnoremap [[ :<C-u>action MethodUp<CR>
 nnoremap ]] :<C-u>action MethodDown<CR>
@@ -228,3 +230,6 @@ nnoremap \ch :action CallHierarchy<CR>
 nnoremap <Leader>gi :action JumpToLastChange<CR>
 
 "nnoremap <Leader>vv :action ViewImportPopups<CR>
+
+nnoremap <C-z> :action ToggleDistractionFreeMode<CR>
+
