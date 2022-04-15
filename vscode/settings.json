@@ -1,72 +1,43 @@
 {
   "window.title": "${dirty}${activeEditorMedium}${separator}${rootName}",
 
-  "workbench.colorTheme": "Better Solarized Light",
   "workbench.editor.enablePreview": false,
   "workbench.editor.showTabs": true,
   "workbench.editor.wrapTabs": true,
-  "workbench.iconTheme": "vscode-icons",
+  "workbench.tree.indent": 10,
+  "workbench.colorTheme": "GitHub Light",
   "workbench.colorCustomizations": {
     "editor.selectionBackground": "#ffd700",
-    "editor.selectionHighlightBackground": "#ffffff00",
-    "editor.findMatchHighlightBackground": "#ffffff00"
+    "statusBar.background": "#B48EAD",
+    "statusBar.noFolderBackground": "#B48EAD",
+    "statusBar.debuggingBackground": "#B48EAD",
+    "statusBar.foreground": "#434C5E",
+    "statusBar.debuggingForeground": "#434C5E"
   },
+
+  // "editor.fontFamily": "'Fira Code','JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
+  // "editor.fontSize": 12,
+  // "editor.lineHeight": 20,
+  "editor.linkedEditing": true,
+  "editor.minimap.enabled": false,
+  "editor.occurrencesHighlight": true,
+  "editor.rulers": [80, 100, 120],
+  "editor.renderLineHighlight": "line",
+  "editor.renderWhitespace": "all",
+  "editor.showFoldingControls": "always",
+  "editor.suggestLineHeight": 24,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
 
   "explorer.incrementalNaming": "smart",
   "explorer.compactFolders": false,
 
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": true
-  },
-  "editor.detectIndentation": true,
-  "editor.fontFamily": "Fira Code,'JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
-  "editor.fontSize": 12,
-  "editor.fontWeight": "400",
-  "editor.formatOnPaste": true,
-  "editor.hover.sticky": true,
-  "editor.insertSpaces": true,
-  "editor.linkedEditing": true,
-  "editor.matchBrackets": "always",
-  "editor.minimap.enabled": false,
-  "editor.occurrencesHighlight": true,
-  "editor.parameterHints.enabled": true,
-  "editor.renderControlCharacters": true,
-  "editor.renderLineHighlight": "line",
-  "editor.renderWhitespace": "all",
-  "editor.rulers": [100, 120],
-  "editor.showFoldingControls": "always",
-  "editor.suggestLineHeight": 24,
-  "editor.suggestSelection": "first",
-  "editor.tabSize": 4,
-  "editor.trimAutoWhitespace": true,
-
   "files.autoGuessEncoding": true,
-  "files.trimFinalNewlines": true,
-  "files.trimTrailingWhitespace": true,
-  "files.watcherExclude": {
-    "**/images/**": true
-  },
-  "files.exclude": {
-    "**/.classpath": true,
-    "**/.project": true,
-    "**/.settings": true,
-    "**/.factorypath": true,
-    "**/.DS_Store": true,
-    "**/.git": true,
-    "**/.svn": true
-  },
-  "files.associations": {
-    "*.xml": "xml",
-    "application*.properties": "spring-boot-properties",
-    "application.properties": "spring-boot-properties",
-    "*.yaml": "spring-boot-properties-yaml",
-    "*.yml": "spring-boot-properties-yaml"
-  },
+  "files.eol": "\n",
 
   "search.showLineNumbers": true,
   "search.exclude": {
     "**/node_modules": true,
-    "**/bower_components": true,
     "**/tmp/cache": true
   },
 
@@ -74,74 +45,6 @@
   "debug.internalConsoleOptions": "openOnSessionStart",
   "debug.openDebug": "openOnSessionStart",
   "debug.toolBarLocation": "docked",
-
-  "extensions.autoUpdate": true,
-
-  "[html]": {
-    "editor.defaultFormatter": "vscode.html-language-features"
-  },
-  "[css]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[scss]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.tabSize": 2
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.tabSize": 2
-  },
-  "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.tabSize": 2
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.tabSize": 2
-  },
-  "[vue]": {
-    "editor.defaultFormatter": "octref.vetur",
-    "editor.tabSize": 2
-  },
-  "[java]": {
-    "editor.tabSize": 4,
-    "files.insertFinalNewline": false
-  },
-  "[python]": {
-    "editor.tabSize": 4
-  },
-  "[sql]": {
-    // "editor.defaultFormatter": "clarkyu.vscode-sql-beautify",
-    "editor.tabSize": 2
-  },
-  "[dockerfile]": {
-    "editor.tabSize": 2
-  },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.tabSize": 2
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.tabSize": 2
-  },
-  "[markdown]": {
-    "files.trimTrailingWhitespace": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[yaml]": {
-    "editor.defaultFormatter": "redhat.vscode-yaml",
-    "editor.tabSize": 2,
-    "editor.codeLens": true
-  },
-  "[xml]": {
-    // "editor.defaultFormatter": "redhat.vscode-xml",
-    "editor.defaultFormatter": "DotJoshJohnson.xml",
-    "editor.tabSize": 4
-  },
 
   "xml.codeLens.enabled": true,
   "xml.format.preserveAttributeLineBreaks": true,
@@ -152,33 +55,11 @@
   "emmet.showAbbreviationSuggestions": true,
   "emmet.excludeLanguages": ["markdown", "json"],
 
-  "gitlens.advanced.messages": {
-    "suppressCommitHasNoPreviousCommitWarning": false,
-    "suppressCommitNotFoundWarning": false,
-    "suppressFileNotUnderSourceControlWarning": false,
-    "suppressGitVersionWarning": false,
-    "suppressLineUncommittedWarning": false,
-    "suppressNoRepositoryWarning": false
-  },
-
   "git-graph.openNewTabEditorGroup": "Beside",
-
-  "javascript.updateImportsOnFileMove.enabled": "always",
-
-  "versionlens.suggestions.showOnStartup": true,
-
-  "html.format.extraLiners": "",
-
-  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-
-  "vetur.format.defaultFormatter.js": "prettier",
 
   "vim.easymotion": true,
   "vim.surround": true,
   "vim.replaceWithRegister": true,
-  "vim.highlightedyank.duration": 5000,
-  "vim.highlightedyank.color": "rgba(255, 215, 0, 0.6)",
-  "vim.highlightedyank.enable": true,
   "vim.hlsearch": true,
   "vim.incsearch": true,
   "vim.searchHighlightColor": "#ffd700",
@@ -186,6 +67,10 @@
   "vim.smartRelativeLine": false,
   "vim.useCtrlKeys": true,
   "vim.useSystemClipboard": true,
+  "vim.visualstar": true,
+  "vim.highlightedyank.enable": true,
+  "vim.highlightedyank.color": "rgba(255, 215, 0, 0.6)",
+  "vim.highlightedyank.duration": 5000,
   "vim.insertModeKeyBindings": [
     {
       "before": ["j", "k"],
@@ -217,10 +102,28 @@
     // }
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
-    // {
-    //   "before": ["<C-i>"],
-    //   "commands": ["editor.action.triggerParameterHints"]
-    // },
+    {
+      "before": ["<space>", "f", "s"],
+      // "commands": ["workbench.action.focusSideBar"]
+      "commands": ["workbench.view.explorer"]
+      // workbench.view.explorer
+    },
+    {
+      "before": ["<space>", "f", "f"],
+      "commands": ["workbench.action.quickOpen"]
+    },
+    {
+      "before": ["<space>", "f", "g"],
+      "commands": ["workbench.action.findInFiles"]
+    },
+    {
+      "before": ["<space>", "1"],
+      "after": ["g", "T"]
+    },
+    {
+      "before": ["<space>", "2"],
+      "after": ["g", "t"]
+    },
     {
       "before": ["_"],
       "after": ["g", "r"]
@@ -228,11 +131,6 @@
     {
       "before": ["<space>", "s", "b"],
       "commands": ["workbench.action.toggleSidebarVisibility"]
-    },
-    {
-      "before": ["<space>", "f", "s"],
-      "commands": ["workbench.action.focusSideBar"]
-      // "commands": ["workbench.view.explorer"]
     },
     {
       "before": ["<space>", "s", "i"],
@@ -258,10 +156,6 @@
     {
       "before": ["<space>", "g", "i"],
       "commands": ["editor.action.goToImplementation"]
-    },
-    {
-      "before": ["<space>", "g", "s"],
-      "commands": ["java.action.navigateToSuperImplementation"]
     },
     {
       "before": ["<space>", "g", "d"],
@@ -351,37 +245,37 @@
       "before": ["<C-n>"],
       "after": ["g", "b"]
     },
-    // {
-    //   "before": ["<leader>", "d"],
-    //   "after": ["\"", "_", "d"]
-    // },
+    {
+      "before": ["<leader>", "d"],
+      "after": ["\"", "_", "d"]
+    },
     {
       "before": ["<leader>", "D"],
       "after": ["\"", "_", "D"]
     },
-    // {
-    //   "before": ["<leader>", "d", "d"],
-    //   "after": ["\"", "_", "d", "d"]
-    // },
+    {
+      "before": ["<leader>", "d", "d"],
+      "after": ["\"", "_", "d", "d"]
+    },
     {
       "before": ["<leader>", "x"],
       "after": ["\"", "_", "x"]
     },
     {
-      "before": ["<leader>", "f"],
+      "before": ["<leader>", "<leader>", "f"],
       "after": ["<leader>", "<leader>", "s"]
     },
     {
-      "before": ["<leader>", "s"],
+      "before": ["<leader>", "<leader>", "F"],
+      "after": ["<leader>", "<leader>", "<leader>", "j"]
+    },
+    {
+      "before": ["<leader>", "<leader>", "s"],
       "after": ["<leader>", "<leader>", "<leader>", "b", "d", "w"]
     },
     {
-      "before": ["<leader>", "e"],
+      "before": ["<leader>", "<leader>", "e"],
       "after": ["<leader>", "<leader>", "<leader>", "b", "d", "e"]
-    },
-    {
-      "before": ["<leader>", "F"],
-      "after": ["<leader>", "<leader>", "<leader>", "b", "d", "j", "k"]
     },
     {
       "before": ["<leader>", "w"],
@@ -402,18 +296,6 @@
     {
       "before": ["<leader>", "n", "f"],
       "commands": ["workbench.action.files.newUntitledFile"]
-    },
-    // {
-    //   "before": ["<space>", "n", "f"],
-    //   "commands": ["explorer.newFile"]
-    // },
-    {
-      "before": ["g", "n"],
-      "after": ["g", "t"]
-    },
-    {
-      "before": ["g", "p"],
-      "after": ["g", "T"]
     },
     {
       "before": ["<C-h>"],
@@ -464,15 +346,35 @@
     //   "commands": ["editor.action.removeCommentLine"]
     // },
     {
-      "before": ["∆"],
-      "after": ["d", "d", "p"]
+      "before": ["<space>", "d", "c"],
+      "commands": ["turboConsoleLog.deleteAllLogMessages"]
     },
     {
-      "before": ["˚"],
-      "after": ["d", "d", "k", "P"]
+      "before": ["<space>", "c", "c"],
+      "commands": ["turboConsoleLog.commentAllLogMessages"]
     }
+    // {
+    //   "before": ["∆"],
+    //   "commands": ["editor.action.moveLinesDownAction"]
+    // },
+    // {
+    //   "before": ["˚"],
+    //   "commands": ["editor.action.moveLinesUpAction"]
+    // },
   ],
   "vim.visualModeKeyBindingsNonRecursive": [
+    // {
+    //   "before": [">"],
+    //   "after": [">", "g", "v"]
+    // },
+    {
+      "before": [">"],
+      "commands": ["editor.action.indentLines"]
+    },
+    {
+      "before": ["<"],
+      "commands": ["editor.action.outdentLines"]
+    },
     {
       "before": ["<CR>"],
       "commands": ["editor.action.smartSelect.expand"]
@@ -480,10 +382,6 @@
     {
       "before": ["<space>", "r", "f"],
       "commands": ["editor.action.refactor"]
-    },
-    {
-      "before": ["<space>", "l", "l"],
-      "commands": ["editor.action.quickFix"]
     },
     {
       "before": ["<C-n>"],
@@ -496,7 +394,7 @@
     {
       "before": ["<leader>", "c", "c"],
       "commands": ["editor.action.commentLine"]
-    },
+    }
     // {
     //   "before": ["<leader>", "c", "c"],
     //   "commands": ["editor.action.addCommentLine"]
@@ -505,14 +403,14 @@
     //   "before": ["<leader>", "c", "u"],
     //   "commands": ["editor.action.removeCommentLine"]
     // },
-    {
-      "before": ["∆"],
-      "commands": ["editor.action.moveLinesDownAction"]
-    },
-    {
-      "before": ["˚"],
-      "commands": ["editor.action.moveLinesUpAction"]
-    }
+    // {
+    //   "before": ["∆"],
+    //   "commands": ["editor.action.moveLinesDownAction"]
+    // },
+    // {
+    //   "before": ["˚"],
+    //   "commands": ["editor.action.moveLinesUpAction"]
+    // }
   ],
   "vim.leader": ",",
   "vim.handleKeys": {
@@ -520,60 +418,17 @@
     "<C-f>": true
   },
 
-  "maven.excludedFolders": ["**/.*", "**/node_modules", "**/target", "**/bin"],
-  "maven.pomfile.autoUpdateEffectivePOM": true,
+  "settingsSync.keybindingsPerPlatform": false,
 
-  // "java.completion.importOrder": ["", "javax", "java", "#"],
-  "java.checkstyle.autocheck": false,
-  "java.code.generators.copyJsonPropertyAnnotationsFromVariablesToSettersGetters": true,
-  "java.code.generators.includeGeneratedAnnotation": true,
-  "java.completion.guessMethodArguments": true,
-  "java.completion.importOrder": ["java", "javax", "com", "org"],
-  "java.configuration.updateBuildConfiguration": "automatic",
-  "java.debug.settings.hotCodeReplace": "auto",
-  "java.debug.settings.showStaticVariables": true,
-  "java.dependency.autoRefresh": true,
-  "java.dependency.showMembers": true,
-  "java.dependency.syncWithFolderExplorer": true,
-  "java.eclipse.downloadSources": true,
-  "java.format.comments.enabled": false,
-  "java.format.enabled": true,
-  "java.format.settings.profile": "GoogleStyle",
-  "java.format.settings.url": "/Users/dou/.vscode/eclipse-java-google-style.xml",
-  "java.home": "/Users/dou/Developer/env/jdk11/Contents/Home",
-  "java.implementationsCodeLens.enabled": true,
-  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -javaagent:\"/Users/dou/.vscode/extensions/gabrielbb.vscode-lombok-1.0.1/server/lombok.jar\"",
-  "java.maven.downloadSources": true,
-  "java.project.importOnFirstTimeStartup": "automatic",
-  "java.referencesCodeLens.enabled": true,
-  "java.saveActions.organizeImports": true,
-  "java.signatureHelp.enabled": true,
-  "java.symbols.includeSourceMethodDeclarations": true,
-  "java.test.defaultConfig": "default",
-  "java.configuration.runtimes": [
-    {
-      "name": "JavaSE-11",
-      "path": "/Users/dou/Developer/env/jdk11/Contents/Home",
-      "default": true
-    }
-  ],
-
-  "spring.initializr.defaultGroupId": "cc.vv",
-
-  "boot-java.change-detection.on": true,
-  "boot-java.scan-java-test-sources.on": true,
-  "boot-java.support-spring-xml-config.content-assist": true,
-  "boot-java.support-spring-xml-config.hyperlinks": true,
-  "boot-java.support-spring-xml-config.on": true,
-  "boot-java.support-spring-xml-config.scan-folders": "src/main",
-  "boot-java.validation.spel.on": true,
-
-  "sonarlint.ls.javaHome": "/Users/dou/Developer/env/jdk11/Contents/Home",
+  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -javaagent:\"/Users/veg/.vscode/extensions/gabrielbb.vscode-lombok-1.0.1/server/lombok.jar\"",
 
   "redhat.telemetry.enabled": false,
-  "sonarlint.disableTelemetry": true,
-  "telemetry.telemetryLevel": "off",
-  "vscode-mysql.enableTelemetry": false,
-  "quarkus.tools.alwaysShowWelcomePage": false
+
+  "security.workspace.trust.untrustedFiles": "open",
+
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
+
 
