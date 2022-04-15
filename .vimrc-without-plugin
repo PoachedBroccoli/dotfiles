@@ -1,0 +1,2087 @@
+" 许多配置不应该配置在.vimrc
+" 但为了在某些情况直接复制使用就 all in ~/.vimrc
+
+
+let mapleader = ","
+let g:mapleader = ","
+
+" man {{{
+runtime! ftplugin/man.vim
+" }}}
+
+" netrw_browse {{{
+" :h netrw-browse-maps
+" :h netrw-problems
+
+" :h :Explore
+let g:netrw_winsize = 30
+
+" in browser hit i to change view type
+let g:netrw_liststyle = 3
+
+" in browser hit I to toggle the banner
+" :h g:netrw_banner
+
+let g:netrw_browse_split = 4
+
+" let g:netrw_alto = 1
+" let g:netrw_altv = 1
+
+" let g:netrw_sort_sequence = '[\/]$,*'
+
+" let g:netrw_keepdir=0
+
+" augroup FolderTree
+"   autocmd!
+"   autocmd VimEnter * :Vexplore
+" augroup END
+
+" nnoremap <silent><Space>fs :call ToggleNetrw()<CR>
+let g:NetrwIsOpen=0
+function! ToggleNetrw()
+  if g:NetrwIsOpen
+    let i = bufnr("$")
+    while (i >= 1)
+      if (getbufvar(i, "&filetype") == "netrw")
+        silent execute "bwipeout " . i
+      endif
+      let i-=1
+    endwhile
+    let g:NetrwIsOpen=0
+  else
+    let g:NetrwIsOpen=1
+    silent Vexplore
+  endif
+endfunction
+nnoremap <silent><Space>fs :call ToggleNetRW()<CR>
+function ToggleNetRW()
+  if exists("g:netrw_buffer") && bufexists(g:netrw_buffer)
+    exe "bd".g:netrw_buffer | unlet g:netrw_buffer
+  else
+    Vexplore | let g:netrw_buffer=bufnr("%")
+  endif
+endfunction
+
+" }}}
+
+" Encoding Fileformats {{{
+"set encoding=utf-8
+set termencoding=utf-8
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,gbk,gb2312,big5,euc-jp,shift-jis,latin1
+set fileformats=unix,dos,mac
+" }}}
+
+" Syntax {{{
+syntax enable
+filetype plugin indent on
+" }}}
+
+" Mapping {{{
+" basic
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+nnoremap <leader>Q :q!<CR>
+
+nnoremap <leader>/ :let @/ = input('/')<CR>
+
+" Recent files (MRU)
+" :browse old
+
+
+" nohlsearch
+"nnoremap <silent> <bs> :let @/=''<CR>
+nnoremap <silent> <bs> :nohlsearch<CR>
+
+" 默认gf会在当前窗口打开，remap成分窗口显示
+nnoremap gf :vertical wincmd f<CR>
+
+" :vertical terminal
+
+" trailing whitespace
+nnoremap <silent> <F3> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
+
+inoremap jk <esc>
+inoremap <c-h> <left>
+inoremap <c-j> <down>
+inoremap <c-k> <up>
+inoremap <c-l> <right>
+
+"inoremap ( ()
+"inoremap { {<CR>}<C-o>O
+
+vnoremap < <gv
+vnoremap > >gv
+
+"cnoremap <C-a> <Home>
+"cnoremap <C-e> <End>
+cnoremap *** **/*
+
+if has('win32')
+  "nnoremap <a-j> :m .+1<CR>==
+  "nnoremap <a-k> :m .-2<CR>==
+  "inoremap <a-j> <esc>:m .+1<CR>==gi
+  "inoremap <a-k> <esc>:m .-2<CR>==gi
+  "vnoremap <a-j> :m '>+1<CR>gv=gv
+  "vnoremap <a-k> :m '<-2<CR>gv=gv
+
+  nnoremap <a-j> :m .+1<CR>
+  nnoremap <a-k> :m .-2<CR>
+  inoremap <a-j> <esc>:m .+1<CR>gi
+  inoremap <a-k> <esc>:m .-2<CR>gi
+  vnoremap <a-j> :m '>+1<CR>gv
+  vnoremap <a-k> :m '<-2<CR>gv
+elseif has('mac')
+  "nnoremap ∆ :m .+1<CR>==
+  "nnoremap ˚ :m .-2<CR>==
+  "inoremap ∆ <esc>:m .+1<CR>==gi
+  "inoremap ˚ <esc>:m .-2<CR>==gi
+  "vnoremap ∆ :m '>+1<CR>gv=gv
+  "vnoremap ˚ :m '<-2<CR>gv=gv
+
+  " <C-v><A-j>
+  " <C-v><A-k>
+  nnoremap ∆ :m .+1<CR>
+  nnoremap ˚ :m .-2<CR>
+  inoremap ∆ <esc>:m .+1<CR>gi
+  inoremap ˚ <esc>:m .-2<CR>gi
+  vnoremap ∆ :m '>+1<CR>gv
+  vnoremap ˚ :m '<-2<CR>gv
+endif
+
+" SmartExpand {{{
+
+" }}}
+
+" replace {{{
+" :h &
+" :h g&
+" :h @:
+" :h @@
+nnoremap <Leader>ra :<c-u>/g<home>%s/<c-r><c-w>/
+" }}}
+
+" autocomplete {{{
+
+" :h ins-completion
+
+"inoremap <expr> <Tab> pumvisible() ? "<C-n>" : "<Tab>"
+"inoremap <expr> <S-Tab> pumvisible() ? "<C-p>" : "<S-Tab>"
+"inoremap <expr> <CR> pumvisible() ? "<C-y>" : "<CR>"
+"inoremap <expr> <CR> pumvisible() ? (complete_info().selected == -1 ? '<C-n>' : '<C-y>') : '<CR>'
+
+inoremap <expr> <Tab> TabComplete()
+fun! TabComplete()
+  if getline('.')[col('.') - 2] =~ '\K' || pumvisible()
+    return "\<C-P>"
+  else
+    return "\<Tab>"
+  endif
+endfun
+
+set completeopt=menu,menuone,noinsert
+inoremap <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
+autocmd InsertCharPre * call AutoComplete()
+fun! AutoComplete()
+  if v:char =~ '\K'
+        \ && getline('.')[col('.') - 4] !~ '\K'
+        \ && getline('.')[col('.') - 3] =~ '\K'
+        \ && getline('.')[col('.') - 2] =~ '\K' " last char
+        \ && getline('.')[col('.') - 1] !~ '\K'
+
+    call feedkeys("\<C-P>", 'n')
+  end
+endfun
+" }}}
+
+" CompileRun {{{
+map <Leader>run :call CompileRun()<CR>
+
+func! CompileRun()
+  exec "w"
+  if &filetype == 'c'
+    exec "!gcc % -o %<"
+    exec "!time ./%<"
+  elseif &filetype == 'cpp'
+    exec "!g++ % -o %<"
+    exec "!time ./%<"
+  elseif &filetype == 'java'
+    exec "!javac %"
+    exec "!time java %"
+  elseif &filetype == 'sh'
+    exec "!time bash %"
+  elseif &filetype == 'python'
+    exec "!time python3 %"
+  elseif &filetype == 'html'
+    exec "!google-chrome % &"
+  elseif &filetype == 'go'
+    exec "!go build %<"
+    exec "!time go run %"
+  elseif &filetype == 'matlab'
+    exec "!time octave %"
+  endif
+endfunc
+" }}}
+
+" OpenURL {{{
+
+":h matchstr()
+":h /\c
+":h /\zs
+":h /\{-
+nnoremap <Space>ou :call OpenURL()<CR>
+function! Open(url)
+  let url = escape(a:url, "%|*#")
+  if has('win16') || has('win32') || has('win64')
+    exe '!start cmd /cstart /b ' . url . ''
+  elseif has('mac') || has('macunix') || has('gui_macvim')
+    exe 'silent !open "' . url . '"'
+  else
+    exe 'silent! !'.g:open_url_browser_default.' "' . url . '" &> /dev/null &'
+  endif
+  redraw!
+endfunction
+
+function! OpenURL()
+  "expand('<cWORD>')
+  "expand('<cfile>')
+  "let l:pat = 'https\?\|www'
+  "let l:found = search(pat, '', line('.'))
+  "let l:uri = matchstr(getline('.'), '\vhttps?:\/\/[^ >,;]*|www[^ >,;]*')
+  let uri = matchstr(getline('.'), '\vhttps?:\/\/[^ >,;]*|www[^ >,;]*')
+  let uri = substitute(uri, "'", '', "g")
+  if empty(uri)
+    echo 'No URI found in line.'
+  else
+    echo 'open: ' . uri
+    if match(uri, 'https\?:\/\/') > -1
+      " execute 'silent !open "' . uri . '"' | redraw!
+      call Open(uri)
+    else
+      " execute 'silent !open "' . 'https://' . uri . '"' | redraw!
+      call Open('https://' . uri)
+    endif
+  endif
+endfunc
+
+" }}}
+
+" VisualSearch {{{
+
+function! GetSelection()
+  return getline('.')[col("'<")-1:col("'>")-1]
+endfunction
+
+" https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+function! VisualSelection(direction, extra_filter) range
+  let l:saved_reg = @"
+  execute "normal! vgvy"
+
+  let l:pattern = escape(@", "\\/.*'$^~[]")
+  " \n$ 匹配到每一个段落的最后一行
+  let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+  if a:direction == 'gv'
+    call CmdLine("Ack '" . l:pattern . "' " )
+  elseif a:direction == 'replace'
+    call CmdLine("%s" . '/'. l:pattern . '/')
+  endif
+
+  let @/ = l:pattern
+  let @" = l:saved_reg
+endfunction
+" }}}
+
+
+" }}}
+
+
+" function {{{
+" function! DetectOS() abort
+"     if exists('g:env')
+"        return
+"     endif
+"    if has('win64') || has('win32') || has('win16')
+"        let g:env = 'WINDOWS'
+"    else
+"        let g:env = toupper(substitute(system('uname'), '\n', '', ''))
+"    endif
+" endfunction
+" call DetectOS()
+" if (g:env =~# 'WINDOWS')
+    " Enable Windows specific settings/plugins
+" else if (g:env =~# 'LINUX')
+    " Enable Linux specific settings/plugins
+" else if (g:env =~# 'DARWIN')
+    " Enable MacOS specific settings/plugins
+" else
+    " Other cases I can't think of like MINGW
+" endif
+" }}}
+
+" options {{{
+set nocompatible
+set backspace=eol,start,indent
+set nobackup
+set noswapfile
+set nowritebackup
+set hidden
+set shortmess+=c
+set shortmess+=s
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set autoindent
+set smartindent
+set cindent
+set copyindent
+set autoread
+set complete+=kspell
+"set completeopt=menuone,longest
+set splitright
+set splitbelow
+"set magic
+set lazyredraw
+set ttyfast
+set mouse=a
+set signcolumn=yes
+set showtabline=2
+
+set diffopt+=vertical
+"if has("patch-8.1.0360")
+  "set diffopt=internal,filler,algorithm:histogram,indent-heuristic
+"endif
+
+" https://github.com/agude/dotfiles/issues/2
+if &diff
+  "set diffopt=internal,filler,algorithm:histogram,indent-heuristic
+endif
+
+if has('mac') && $VIM == '/usr/share/vim'
+  set diffopt-=internal
+elseif has('patch-8.1.0360')
+  set diffopt+=algorithm:patience,indent-heuristic
+endif
+
+set path+=**
+" clear quickfix list
+" :cexpr []
+"
+" args `find . -type f`
+set wildignore+=*/node_modules/*,*/.git/*,*/.svn/*
+set wildignore+=*/.hg/*,*.swp,*.o,*.obj,*.bin.*.dll,*.exe
+set wildignore+=*.tags,tags
+set wildignore+=*.jpg,*.png,*.jpeg,*.bmp,*.gif,*.tiff,*.svg,*.ico
+set wildignore+=*.pdf
+set wildignore+=*.class,*.jar,*.apk
+set wildignore+=*.DS_Store
+set wildignore+=*/__pycahe__/*,*.pyc
+set wildmenu
+set wildmode=list:longest,list:full
+
+set matchpairs+=<:>
+set timeoutlen=500
+set updatetime=200
+set scrolloff=5
+" https://stackoverflow.com/questions/30691466/what-is-difference-between-vims-clipboard-unnamed-and-unnamedplus-settings
+"set clipboard+=unnamed
+set clipboard^=unnamed,unnamedplus
+set number
+set ruler
+set cursorline
+set colorcolumn=120
+set nowrap
+"set foldmethod=syntax
+"set foldcolumn=3
+set showcmd
+set showmode
+set list
+" set listchars=tab:>\ ,trail:•,extends:»,precedes:«,nbsp:␣,eol:↵
+" set listchars=tab:→\ ,trail:•,extends:»,precedes:«,nbsp:␣
+" set listchars=tab:\┊\ ,trail:•,extends:»,precedes:«,nbsp:␣
+set listchars=tab:▹\ ,trail:•,nbsp:␣
+" set listchars=tab:▹·,trail:•,extends:»,precedes:«,nbsp:␣
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set showmatch
+set matchtime=2
+set laststatus=2
+"set belloff=all
+set novisualbell
+set noerrorbells
+set t_vb=
+" }}}
+
+" Cursor Shape {{{
+
+let &t_ti .= "\e[1 q"
+let &t_SI .= "\e[5 q"
+let &t_EI .= "\e[1 q"
+let &t_te .= "\e[0 q"
+
+" https://vim.fandom.com/wiki/Change_cursor_shape_in_different_modes
+if $TERM_PROGRAM =~# 'Apple_Terminal'
+  let &t_SI.="\e[5 q" "SI = INSERT mode
+  let &t_SR.="\e[4 q" "SR = REPLACE mode
+  let &t_EI.="\e[1 q" "EI = NORMAL mode (ELSE)
+endif
+
+if $TERM_PROGRAM =~# 'iTerm'
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+  if exists('&t_SR')
+    let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+  endif
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
+
+if exists('$TMUX')
+  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+  if exists('&t_SR')
+    let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+  endif
+  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+endif
+" }}}
+
+" quickfix window size {{{
+augroup qfwin
+    autocmd!
+    autocmd FileType qf call AdjustWindowHeight(3, 20)
+augroup END
+function! AdjustWindowHeight(minheight, maxheight)
+    execute max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
+endfunction
+" }}}
+
+" terminal {{{
+tnoremap <esc> <c-\><c-n>
+
+let s:terminals = {}
+let s:terminal_window = -1
+let s:terminal_buffer = -1
+let s:terminal_job_id = -1
+let s:terminal_window_size = -1
+let s:aa = -1
+
+function! OpenTerminal(number)
+  let n = a:number ? a:number : 1
+  if has_key(s:terminals, n)
+    let t = s:terminals[n]
+    let bufwinid = bufwinid(t["terminal_bufnr"])
+    if bufwinid > 0
+      call Hide(bufwinid)
+      return
+    endif
+
+    for [k, v] in items(s:terminals)
+      let bufwinid = bufwinid(v["terminal_bufnr"])
+      if bufwinid > 0
+        call Hide(bufwinid)
+        break
+      endif
+    endfor
+
+    execute t["win_height"] . "split"
+    execute "b " . t["terminal_bufnr"]
+  else
+    for [k, v] in items(s:terminals)
+      let bufwinid = bufwinid(v["terminal_bufnr"])
+      if bufwinid > 0
+        call Hide(bufwinid)
+        break
+      endif
+    endfor
+
+    " create new terminal
+    let terminal = {}
+    let terminal["terminal_bufnr"] = term_start($SHELL, {
+          \ 'term_kill' : 'kill',
+          \ 'term_finish' : 'close',
+          \ 'close_cb' : 'Exit',
+          \ 'term_rows': '15'
+          \ })
+    let terminal["terminal_window"] = win_getid()
+    let terminal["terminal_name"] = "Terminal " . n
+    let terminal["win_height"] = winheight(win_getid())
+    let s:terminals[n] = terminal
+
+    execute "file " . printf("[%s]", terminal["terminal_name"])
+    set nobuflisted
+  endif
+endfunction
+
+" autocmd QuitPre * call <sid>TermForceCloseAll()
+" function! s:TermForceCloseAll() abort
+"   let term_bufs = filter(range(1, bufnr('$')), 'getbufvar(v:val, "&buftype") == "terminal"')
+"   for t in term_bufs
+"     execute "bd! " t
+"   endfor
+" endfunction
+
+function! SendCommand(termbuf, cmd)
+  call term_sendkeys(a:termbuf, shellescape(a:cmd) . "\n")
+endfunction
+
+function! Hide(winid)
+  if win_gotoid(a:winid)
+    hide
+  endif
+endfunction
+
+function! PrintBufInfo()
+  for bufitem in getbufinfo()
+    echo bufitem
+  endfor
+endfunction
+
+function! Exit(channel)
+  for [k, v] in items(s:terminals)
+    if bufexists(v["terminal_name"]) == 0
+      call remove(s:terminals, k)
+      break
+    endif
+  endfor
+endfunction
+
+nnoremap <silent> <F12> :<C-u>call OpenTerminal(v:count)<CR>
+tnoremap <F12> <C-\><C-n>:call OpenTerminal(v:count)<CR>
+
+" nnoremap <C-x>s :bot  term ++close ++rows=12<CR>
+" nnoremap <C-x>v :vert term ++close ++cols=66<CR>
+" }}}
+
+" basic autocmd {{{
+
+augroup FoldMethod
+  autocmd!
+  autocmd FileType yaml   setlocal foldmethod=indent foldlevel=100
+  autocmd FileType json   setlocal foldmethod=syntax foldlevel=100
+  autocmd FileType vim    setlocal foldmethod=syntax foldlevel=100
+  autocmd BufRead  .vimrc setlocal foldmethod=marker foldlevel=100
+augroup END
+
+" 应该放在各个类型的文件中 $HOME/.vim/after/ftplugin/filetype_name.vim
+" 但是这个.vimrc 是为了特殊情况下使用的
+augroup FiletypeIndent
+  autocmd!
+  autocmd FileType c          setlocal expandtab   tabstop=4 softtabstop=4 shiftwidth=4
+  autocmd FileType coffee     setlocal expandtab   tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd FileType css        setlocal expandtab   tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd FileType go         setlocal noexpandtab tabstop=4 softtabstop=4 shiftwidth=4
+  autocmd FileType haml       setlocal expandtab   tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd FileType html       setlocal expandtab   tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd FileType htmldjango setlocal expandtab   tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd FileType java       setlocal expandtab   tabstop=4 softtabstop=4 shiftwidth=4
+  autocmd FileType javascript setlocal expandtab   tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd FileType json       setlocal expandtab   tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd FileType kotlin     setlocal expandtab   tabstop=4 softtabstop=4 shiftwidth=4
+  autocmd FileType lua        setlocal expandtab   tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd FileType make       setlocal noexpandtab
+  autocmd FileType php        setlocal expandtab   tabstop=4 softtabstop=4 shiftwidth=4
+  autocmd FileType python     setlocal expandtab   tabstop=4 softtabstop=4 shiftwidth=4 colorcolumn=80
+  autocmd FileType ruby       setlocal expandtab   tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd FileType sass       setlocal expandtab   tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd FileType sh         setlocal expandtab   tabstop=4 softtabstop=4 shiftwidth=4
+  autocmd FileType scala      setlocal expandtab   tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd FileType scss       setlocal expandtab   tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd FileType toml       setlocal expandtab   tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd FileType vim        setlocal expandtab   tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd FileType vue        setlocal expandtab   tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd FileType xhtml      setlocal expandtab   tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd FileType xml        setlocal expandtab   tabstop=4 softtabstop=4 shiftwidth=4
+  autocmd FileType yaml,yml   setlocal expandtab   tabstop=2 softtabstop=2 shiftwidth=2
+augroup END
+
+" log-highlight
+" https://github.com/MTDL9/vim-log-highlighting
+
+augroup AutoCheckTime
+  autocmd!
+  autocmd FocusGained,BufEnter,CursorHold * :silent! checktime
+augroup END
+
+"augroup AutoTrim
+"autocmd BufWritePre * :%s/\s\+$//e
+"augroup END
+
+augroup RestoreLastPosition
+  autocmd!
+  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"zvzz"
+augroup END
+
+augroup Template
+  autocmd!
+  autocmd FileType sh,zsh,csh,tcsh nnoremap <silent><buffer><leader>head :0put='#!/bin/' . &filetype<CR>
+  autocmd FileType python,ruby     nnoremap <silent><buffer><leader>head :0put='#!/usr/bin/env ' . &filetype<CR>
+augroup END
+
+augroup TurnOffSyntax
+  autocmd!
+  autocmd BufReadPre *
+        \   if getfsize(expand("%")) > 10000000 |
+        \     syntax off |
+        \   endif
+augroup END
+" }}}
+
+
+" statusline {{{
+set laststatus=2
+set statusline=
+set statusline+=%m
+set statusline+=%h
+set statusline+=%r
+set statusline+=%{&paste?'PASTE\ MODE':''}
+set statusline+=%{g:gitbranch}
+set statusline+=\ %2*%{StatuslineMode()}
+set statusline+=%1*\ %F
+set statusline+=%=
+set statusline+=[%{FileSize()}]
+set statusline+=\ %{&ff}
+set statusline+=\ %{strlen(&fenc)?&fenc:'none'}
+set statusline+=\ %y
+set statusline+=\ %l/%L
+"set statusline+=\ %P
+set statusline+=\ %2*%{strftime('%Y-%m-%d\ %H:%M:%S')}
+
+function! StatuslineGitBranch()
+  let g:gitbranch=""
+  if &modifiable
+    try
+      let l:dir=expand('%:p:h')
+      let l:gitrevparse = system("git -C ".l:dir." rev-parse --abbrev-ref HEAD")
+      if !v:shell_error
+        let g:gitbranch = substitute(l:gitrevparse, '\n', '', 'g')
+      endif
+    catch
+    endtry
+  endif
+endfunction
+
+augroup GetGitBranch
+  autocmd!
+  autocmd VimEnter,WinEnter,BufEnter * call StatuslineGitBranch()
+augroup END
+
+function! StatuslineMode()
+  let l:mode=mode()
+  if l:mode==#"n"
+    return "NORMAL"
+  elseif l:mode==?"v"
+    return "VISUAL"
+  elseif l:mode==#"i"
+    return "INSERT"
+  elseif l:mode==#"R"
+    return "REPLACE"
+  elseif l:mode==?"s"
+    return "SELECT"
+  elseif l:mode==#"t"
+    return "TERMINAL"
+  elseif l:mode==#"c"
+    return "COMMAND"
+  elseif l:mode==#"!"
+    return "SHELL"
+  endif
+endfunction
+
+" https://vim.fandom.com/wiki/Get_the_name_of_the_current_file
+function! FileSize()
+  let l:size = getfsize(expand('%'))
+  if l:size == 0 || l:size == -1 || l:size == -2
+    return ''
+  endif
+  if l:size < 1024
+    return l:size.' bytes'
+  elseif l:size < 1024*1024
+    return printf('%.1f', l:size/1024.0).'k'
+  elseif l:size < 1024*1024*1024
+    return printf('%.1f', l:size/1024.0/1024.0) . 'm'
+  else
+    return printf('%.1f', l:size/1024.0/1024.0/1024.0) . 'g'
+  endif
+endfunction
+
+function! UpdateStatusBar(timer)
+  execute 'let &ro = &ro'
+endfunction
+let timer = timer_start(5000, 'UpdateStatusBar',{'repeat':-1})
+
+augroup StatusColor
+  autocmd!
+  "au ColorScheme,BufWinEnter * hi StatuslineNC   cterm=reverse gui=reverse
+  au ColorScheme,BufWinEnter * hi User1          cterm=bold ctermfg=241 ctermbg=254 guifg=#626262 guibg=#e4e4e4 gui=bold,standout
+  au ColorScheme,BufWinEnter * hi User2          cterm=bold ctermfg=231  ctermbg=107 guifg=#ffffff guibg=#87af5f gui=bold
+augroup END
+
+" }}}
+
+" command {{{
+
+" handling the permission-denied error
+command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+"command! W w !sudo tee % > /dev/null
+"command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
+" }}}
+
+" ColorScheme {{{
+
+" :h highlight-groups
+" :highlight
+" list all the current syntax groups
+" :syntax
+
+" :!echo $TERM       -> xterm-256color | xterm
+" :echo &term        -> xterm-256color | xterm
+" :echo &t_Co        -> 256            | 8
+
+" Syntax Groups
+" :h w18
+
+highlight clear
+
+if exists("syntax_on")
+  syntax reset
+endif
+
+set t_Co=256
+if (has("termguicolors"))
+  set termguicolors
+endif
+"set background=light
+"let &background = strftime("%H") < 17 ? "light" : "dark"
+
+"colorscheme heshui
+
+function! s:Color (group, bg, fg, style)
+  let l:bg      = empty(a:bg) ? '' : printf('guibg=%s ctermbg=%s', a:bg[0], a:bg[1])
+  let l:fg      = empty(a:fg) ? '' : printf('guifg=%s ctermfg=%s', a:fg[0], a:fg[1])
+  let l:style   = printf('cterm=%s gui=%s', a:style, a:style)
+  let l:command = 'highlight! ' . a:group . ' ' . l:bg . ' ' . l:fg . ' ' . l:style
+  execute l:command
+endfunction
+
+function! s:Link (group, point)
+  let l:link = "highlight! link " . a:group . ' ' . a:point
+  execute l:link
+endfunction
+
+let g:customizer = 1
+let g:bgcl = 'light'
+
+let s:blue17      = ['#00005f', '17']
+let s:blue23      = ['#005f5f', '23']
+let s:blue24      = ['#005f87', '24']
+let s:blue26      = ['#005fd7', '26']
+let s:blue31      = ['#0087af', '31']
+let s:blue32      = ['#0087d7', '32']
+let s:blue33      = ['#4078f2', '33']
+let s:blue38      = ['#00afd7', '38']
+let s:blue61      = ['#5f5faf', '61']
+let s:blue68      = ['#5f87d7', '68']
+let s:blue69      = ['#5f87ff', '69']
+let s:blue74      = ['#5fafd7', '74']
+let s:blue75      = ['#5fafff', '75']
+let s:blue99      = ['#875fff', '99']
+let s:blue109     = ['#87afaf', '109']
+let s:blue110     = ['#87afd7', '110']
+let s:blue111     = ['#87afff', '111']
+let s:blue116     = ['#87d7d7', '116']
+
+let s:green28     = ['#008700', '28']
+let s:green29     = ['#00875f', '29']
+let s:green30     = ['#008787', '30']
+let s:green35     = ['#00af5f', '35']
+let s:green36     = ['#00af87', '36']
+let s:green37     = ['#2aa198', '37']
+let s:green65     = ['#5f875f', '65']
+let s:green66     = ['#5f8787', '66']
+let s:green70     = ['#008700', '28']
+let s:green71     = ['#50a14f', '71']
+let s:green72     = ['#5faf87', '72']
+let s:green73     = ['#5fafaf', '73']
+let s:green106    = ['#859900', '106']
+let s:green107    = ['#87af5f', '107']
+let s:green108    = ['#87af87', '108']
+let s:green112    = ['#87d700', '112']
+let s:green113    = ['#87d75f', '113']
+let s:green114    = ['#87d787', '114']
+let s:green148    = ['#afd700', '148']
+let s:green149    = ['#afd75f', '149']
+let s:green150    = ['#afd787', '150']
+let s:green157    = ['#afffaf', '157']
+let s:green189    = ['#d7d7ff', '189']
+let s:green191    = ['#d7ff5f', '191']
+let s:green192    = ['#d7ff87', '192']
+let s:green193    = ['#d7ffaf', '193']
+let s:green194    = ['#DDFFDD', '194']
+
+let s:purple60    = ['#5f5f87', '60']
+let s:purple93    = ['#8700ff', '93']
+let s:purple96    = ['#875f87', '96']
+let s:purple98    = ['#875fd7', '98']
+let s:purple104   = ['#8787d7', '104']
+let s:purple127   = ['#af00af', '127']
+let s:purple133   = ['#af5faf', '133']
+let s:purple134   = ['#af5fd7', '134']
+let s:purple176   = ['#d787d7', '176']
+
+let s:gold136     = ['#af8700', '136']
+let s:gold179     = ['#d7af5f', '179']
+let s:gold180     = ['#d7af87', '180']
+let s:gold220     = ['#ffd700', '220']
+let s:gold222     = ['#ffd787', '222']
+
+let s:red88       = ['#870000', '88']
+let s:red95       = ['#875f5f', '95']
+let s:red124      = ['#af0000', '124']
+let s:red131      = ['#af5f5f', '131']
+let s:red167      = ['#d75f5f', '167']
+let s:red160      = ['#d70000', '160']
+let s:red196      = ['#ff0000', '196']
+let s:red203      = ['#ff5f5f', '203']
+let s:red204      = ['#ff5f87', '204']
+
+let s:pink161     = ['#d7005f', '161']
+let s:pink162     = ['#d70087', '162']
+let s:pink168     = ['#d75f87', '168']
+let s:pink169     = ['#d75faf', '169']
+let s:pink173     = ['#d7875f', '173']
+let s:pink174     = ['#d78787', '174']
+let s:pink175     = ['#d787af', '175']
+let s:pink197     = ['#ff005f', '197']
+let s:pink217     = ['#ffafaf', '217']
+let s:pink224     = ['#ffd7ff', '224']
+
+let s:orange94    = ['#875f00', '94']
+let s:orange130   = ['#af5f00', '130']
+let s:orange166   = ['#d75f00', '166']
+let s:orange172   = ['#d78700', '172']
+let s:orange208   = ['#ff8700', '208']
+let s:orange209   = ['#ff875f', '209']
+let s:orange210   = ['#ff8787', '210']
+
+let s:white231    = ['#ffffff', '231']
+
+let s:black16     = ['#000000', '16']
+let s:black233    = ['#003300', '233']
+let s:black235    = ['#262626', '235']
+let s:black236    = ['#303030', '236']
+let s:black237    = ['#3a3a3a', '237']
+
+let s:grey59      = ['#5f5f5f', '59']
+let s:grey102     = ['#878787', '102']
+let s:grey103     = ['#8787af', '103']
+let s:grey139     = ['#af87af', '139']
+let s:grey145     = ['#afafaf', '145']
+let s:grey188     = ['#d7d7d7', '188']
+let s:grey238     = ['#444444', '238']
+let s:grey239     = ['#4e4e4e', '239']
+let s:grey240     = ['#585858', '240']
+let s:grey241     = ['#626262', '241']
+let s:grey243     = ['#767676', '243']
+let s:grey244     = ['#808080', '244']
+let s:grey246     = ['#949494', '246']
+let s:grey247     = ['#9e9e9e', '247']
+let s:grey250     = ['#bcbcbc', '250']
+let s:grey251     = ['#c6c6c6', '251']
+let s:grey252     = ['#d0d0d0', '252']
+let s:grey254     = ['#e4e4e4', '254']
+let s:grey255     = ['#eeeeee', '255']
+
+let s:yellow11    = ['#ffff00', '11']
+let s:yellow11    = ['#ffd700', '11']
+let s:yellow184   = ['#d7d700', '184']
+let s:yellow187   = ['#d7d7af', '187']
+let s:yellow229   = ['#ffffaf', '229']
+let s:yellow230   = ['#ffffd7', '230']
+"let s:yellow23001 = ['#fdf6e3', '230']
+"let s:yellow23001 = ['#fdf6e3', '231']
+let s:yellow23001 = ['#ffffff', '231']
+
+if g:customizer
+
+  if g:bgcl ==# 'light'
+
+    set background=light
+
+    " light {{{
+    call s:Color('Normal'                   , s:yellow23001 , s:grey238   , 'NONE')
+
+    call s:Color('Comment'                  , ''            , s:grey244   , 'NONE')
+
+    "call s:Color('Constant'       , ''           , s:green37   , 'NONE')
+    call s:Color('Constant'                 , ''            , s:orange130 , 'NONE')
+    call s:Color('String'                   , ''            , s:gold136   , 'NONE')
+    call s:Color('Character'                , ''            , s:gold136   , 'NONE')
+    call s:Color('Number'                   , ''            , s:red131    , 'NONE')
+    call s:Color('Boolean'                  , ''            , s:gold136   , 'NONE')
+    call s:Color('Float'                    , ''            , s:red131    , 'NONE')
+
+    call s:Color('Identifier'               , ''            , s:purple133 , 'NONE')
+    call s:Color('Function'                 , ''            , s:purple133 , 'NONE')
+
+    "call s:Color('Statement'      , ''           , s:green106 , 'NONE')
+    call s:Color('Statement'                , ''            , s:blue32    , 'NONE')
+    call s:Color('Conditional'              , ''            , s:blue32    , 'NONE')
+    call s:Color('Repeat'                   , ''            , s:blue32    , 'NONE')
+    call s:Color('Label'                    , ''            , s:blue32    , 'NONE')
+    call s:Color('Operator'                 , ''            , s:blue32    , 'NONE')
+    call s:Color('Keyword'                  , ''            , s:blue32    , 'NONE')
+    call s:Color('Exception'                , ''            , s:blue32    , 'NONE')
+
+    call s:Color('PreProc'                  , ''            , s:green28   , 'NONE')
+    call s:Color('Include'                  , ''            , s:green28   , 'NONE')
+    call s:Color('Define'                   , ''            , s:green28   , 'NONE')
+    call s:Color('Macro'                    , ''            , s:green28   , 'NONE')
+    call s:Color('PreCondit'                , ''            , s:green28   , 'NONE')
+
+    call s:Color('Type'                     , ''            , s:blue61    , 'NONE')
+    call s:Color('StorageClass'             , ''            , s:blue61    , 'NONE')
+    call s:Color('Structure'                , ''            , s:blue61    , 'NONE')
+    call s:Color('Typedef'                  , ''            , s:blue61    , 'NONE')
+
+    call s:Color('Special'                  , ''            , s:red167    , 'NONE')
+    call s:Color('SpecialChar'              , ''            , s:red167    , 'NONE')
+    call s:Color('Tag'                      , ''            , s:red167    , 'NONE')
+    call s:Color('Delimiter'                , ''            , s:red167    , 'NONE')
+    call s:Color('SpecialComment'           , ''            , s:red167    , 'NONE')
+    call s:Color('Debug'                    , ''            , s:red167    , 'NONE')
+
+    call s:Color('Underlined'               , ''            , s:grey241   , 'underline')
+
+    call s:Color('Ignore'                   , ''            , ''          , 'NONE')
+
+    call s:Color('Todo'                     , ''            , s:grey246   , 'bold')
+
+    call s:Color('Error'                    , s:red160      , s:white231  , 'bold')
+
+    call s:Color('StatusLine'               , s:grey254     , s:grey241   , 'bold')
+    call s:Color('StatusLineNC'             , s:grey254     , s:grey246   , 'bold')
+    "call s:Color('StatusLineTerm', s:, s:, '')
+    "call s:Color('StatusLineTermNC', s:, s:, '')
+
+    call s:Color('TabLine'                  , s:grey254     , s:grey241   , 'NONE')
+    "call s:Color('TabLineSel'               , s:green107    , s:grey238   , 'bold')
+    call s:Color('TabLineSel'               , s:green107    , s:white231  , 'bold')
+    call s:Color('TabLineFill'              , s:grey254     , ''          , 'NONE')
+
+    call s:Color('VertSplit'                , s:grey254     , s:grey254   , 'NONE')
+
+    call s:Color('Pmenu'                    , s:grey254     , s:grey241   , 'NONE')
+    call s:Color('PmenuSel'                 , s:grey145     , s:black235  , 'NONE')
+    call s:Color('PmenuSbar'                , s:grey250     , ''          , 'NONE')
+    call s:Color('PmenuThumb'               , s:grey102     , ''          , 'NONE')
+    call s:Color('WildMenu'                 , s:purple98    , s:white231  , 'bold')
+
+    call s:Color('Visual'                   , s:gold220     , s:black235  , 'bold')
+    call s:Color('VisualNOS'                , s:gold220     , s:black235  , 'bold')
+
+    "call s:Color('ErrorMsg'          , ''            , s:pink197   , 'NONE')
+    call s:Color('WarningMsg'               , ''            , s:purple134 , 'NONE')
+    call s:Color('MoreMsg'                  , ''            , s:green35   , 'NONE')
+    call s:Color('ModeMsg'                  , ''            , s:orange130 , 'NONE')
+    call s:Color('Question'                 , ''            , s:blue38    , 'NONE')
+
+    call s:Color('Folded'                   , s:white231    , s:grey246   , 'NONE')
+    call s:Color('FoldColumn'               , s:grey254     , s:green29   , 'NONE')
+    call s:Color('SignColumn'               , s:white231    , s:orange130 , 'NONE')
+    call s:Color('ColorColumn'              , ''            , ''          , 'NONE')
+    call s:Color('LineNr'                   , ''            , s:grey246   , 'NONE')
+    call s:Color('MatchParen'               , s:white231    , s:black16   , 'bold,undercurl')
+
+    call s:Color('Cursor'                   , s:grey255     , ''          , 'NONE')
+    call s:Color('CursorLine'               , s:grey254     , ''          , 'bold')
+    call s:Color('CursorLineNr'             , s:grey254     , s:grey241   , 'bold')
+
+    call s:Color('Search'                   , s:yellow11    , s:black235  , 'bold')
+    "call s:Color('Search'         , s:gold136     , s:white231  , 'bold')
+    call s:Color('IncSearch'                , s:red204      , s:white231  , 'bold')
+
+    "call s:Color('DiffAdd'        , s:green113    , s:black235   , 'NONE')
+    call s:Color('DiffAdd'                  , s:green194    , s:black233  , 'NONE')
+    call s:Color('DiffChange'               , s:grey255     , ''          , 'NONE')
+    call s:Color('DiffDelete'               , s:pink224     , s:grey252   , 'NONE')
+    call s:Color('DiffText'                 , s:green189    , s:black233  , 'NONE')
+
+    "call s:Color('SpellBad'                , s:white231    , s:pink197   , 'undercurl')
+    "call s:Color('SpellCap'                , s:white231    , s:red167    , 'undercurl')
+    "call s:Color('SpellRare'               , s:white231    , s:red95     , 'undercurl')
+    "call s:Color('SpellLocal'              , s:white231    , s:orange94  , 'undercurl')
+
+    call s:Color('SpellBad'                 , s:white231    , s:grey255   , 'undercurl')
+    call s:Color('SpellCap'                 , s:white231    , s:grey255   , 'undercurl')
+    call s:Color('SpellRare'                , s:white231    , s:grey255   , 'undercurl')
+    call s:Color('SpellLocal'               , s:white231    , s:grey255   , 'undercurl')
+
+    " nbsp, tab, trail
+    call s:Color('SpecialKey'               , s:white231    , s:grey251   , 'NONE')
+    " eol, extends, precedes
+    call s:Color('NonText'                  , s:white231    , s:grey246   , 'NONE')
+    call s:Color('Directory'                , s:white231    , s:purple104 , 'NONE')
+    call s:Color('Title'                    , ''            , s:green30   , 'NONE')
+    call s:Color('Conceal'                  , s:white231    , s:grey103   , 'NONE')
+    call s:Color('Noise'                    , s:white231    , s:grey243   , 'NONE')
+    call s:Color('helpHyperTextJump'        , s:white231    , s:blue31    , 'NONE')
+    call s:Color('perlSharpBang'            , s:white231    , s:grey246   , 'NONE')
+    call s:Color('rubySharpBang'            , s:white231    , s:grey246   , 'NONE')
+    call s:Color('jsFuncCall'               , s:white231    , s:green30   , 'NONE')
+
+    call s:Color('vimFold'                  , s:white231    , s:grey246   , 'NONE')
+    call s:Color('vimCommentTitle'          , s:white231    , s:grey241   , 'NONE')
+
+    call s:Color('diffFile'                 , s:white231    , s:grey246   , 'NONE')
+    call s:Color('diffLine'                 , s:white231    , s:grey241   , 'NONE')
+    call s:Color('diffAdded'                , s:white231    , s:green28   , 'NONE')
+    call s:Color('diffRemoved'              , s:white231    , s:pink169   , 'NONE')
+    call s:Color('diffChanged'              , s:white231    , s:gold136   , 'NONE')
+    call s:Color('diffSubname'              , s:white231    , s:grey139   , 'NONE')
+    call s:Color('diffOldLine'              , s:white231    , s:blue69    , 'NONE')
+
+    call s:Color('mailSubject'              , s:white231    , s:green30   , 'NONE')
+    call s:Color('diffOldLine'              , s:white231    , s:grey246   , 'NONE')
+
+    " man {{{
+    call s:Color('manTitle'                 , ''            , s:gold136   , 'NONE')
+    call s:Color('manFooter'                , ''            , s:grey145   , 'NONE')
+    " }}}
+
+    " Markdown {{{
+    "call s:Color('markdownCode'            , s:white231    , s:grey246   , 'NONE')
+    "call s:Color('markdownCodeBlock'       , s:white231    , s:grey246   , 'NONE')
+    "call s:Color('markdownItalic'          , s:white231    , s:grey239   , 'NONE')
+    call s:Color('markdownUrl'              , ''            , s:grey145   , 'NONE')
+    call s:Color('markdownBold'             , ''            , s:orange94  , 'bold')
+    call s:Color('markdownItalic'           , ''            , s:orange94  , 'bold')
+    call s:Color('markdownCode'             , ''            , s:green71   , 'NONE')
+    call s:Color('markdownCodeBlock'        , ''            , s:orange166 , 'NONE')
+    call s:Color('markdownCodeDelimiter'    , ''            , s:green71   , 'NONE')
+    call s:Color('markdownHeadingDelimiter' , ''            , s:red160    , 'NONE')
+    call s:Color('markdownH1'               , ''            , s:orange166 , 'NONE')
+    call s:Color('markdownH2'               , ''            , s:orange166 , 'NONE')
+    call s:Color('markdownH3'               , ''            , s:orange166 , 'NONE')
+    call s:Color('markdownH3'               , ''            , s:orange166 , 'NONE')
+    call s:Color('markdownH4'               , ''            , s:orange166 , 'NONE')
+    call s:Color('markdownH5'               , ''            , s:orange166 , 'NONE')
+    call s:Color('markdownH6'               , ''            , s:orange166 , 'NONE')
+    call s:Color('markdownListMarker'       , ''            , s:orange166 , 'NONE')
+    " }}}
+
+    " Go {{{
+    call s:Color('goDeclaration'            , ''            , s:purple127 , 'NONE')
+    call s:Color('goDeclType'               , ''            , s:purple127 , 'NONE')
+    call s:Color('goDirective'              , ''            , s:purple127 , 'NONE')
+    call s:Color('goField'                  , ''            , s:orange166 , 'NONE')
+    call s:Color('goMethod'                 , ''            , s:blue31    , 'NONE')
+    call s:Color('goType'                   , ''            , s:purple127 , 'NONE')
+    call s:Color('goUnsignedInts'           , ''            , s:blue31    , 'NONE')
+    " }}}
+
+    " Haskell {{{
+    call s:Color('haskellDeclKeyword'       , ''            , s:blue33    , 'NONE')
+    call s:Color('haskellType'              , ''            , s:green71   , 'NONE')
+    call s:Color('haskellWhere'             , ''            , s:orange166 , 'NONE')
+    call s:Color('haskellImportKeywords'    , ''            , s:blue33    , 'NONE')
+    call s:Color('haskellOperators'         , ''            , s:orange166 , 'NONE')
+    call s:Color('haskellDelimiter'         , ''            , s:blue33    , 'NONE')
+    call s:Color('haskellIdentifier'        , ''            , s:orange94  , 'NONE')
+    call s:Color('haskellKeyword'           , ''            , s:orange166 , 'NONE')
+    call s:Color('haskellNumber'            , ''            , s:blue31    , 'NONE')
+    call s:Color('haskellString'            , ''            , s:blue31    , 'NONE')
+    " }}}
+
+    " html {{{
+    "call s:Color('htmlArg'               , ''              , s:orange94     , 'bold')
+    call s:Color('htmlArg'                  , ''            , s:blue61    , 'bold')
+    call s:Color('htmlTag'                  , s:white231    , s:purple60  , 'NONE')
+    call s:Color('htmlEndTag'               , s:white231    , s:purple60  , 'NONE')
+    call s:Color('htmlTagName'              , s:white231    , s:orange166 , 'NONE')
+    call s:Color('htmlTagN'                 , s:white231    , s:orange166 , 'NONE')
+    call s:Color('htmlSpecialTagName'       , ''            , s:orange166 , 'NONE')
+    call s:Color('htmlString'               , s:white231    , s:gold136   , 'NONE')
+    call s:Color('MatchTag'                 , s:grey254     , s:orange166 , 'underline,bold')
+    "call s:Color('htmlScriptTag'         , ''              , s:reddark       , 'NONE')
+    " }}}
+
+    " css {{{
+    call s:Color('cssAttrComma'             , ''            , s:purple127 , 'NONE')
+    call s:Color('cssAttributeSelector'     , ''            , s:green71   , 'NONE')
+    call s:Color('cssBraces'                , ''            , s:purple60  , 'NONE')
+    call s:Color('cssClassName'             , ''            , s:orange94  , 'NONE')
+    call s:Color('cssClassNameDot'          , ''            , s:orange94  , 'NONE')
+    call s:Color('cssDefinition'            , ''            , s:purple127 , 'NONE')
+    call s:Color('cssFontAttr'              , ''            , s:orange94  , 'NONE')
+    call s:Color('cssFontDescriptor'        , ''            , s:purple127 , 'NONE')
+    call s:Color('cssFunctionName'          , ''            , s:blue33    , 'NONE')
+    call s:Color('cssIdentifier'            , ''            , s:blue33    , 'NONE')
+    call s:Color('cssImportant'             , ''            , s:purple127 , 'NONE')
+    call s:Color('cssInclude'               , ''            , s:blue23    , 'NONE')
+    call s:Color('cssIncludeKeyword'        , ''            , s:purple127 , 'NONE')
+    call s:Color('cssMediaType'             , ''            , s:orange94  , 'NONE')
+    call s:Color('cssProp'                  , ''            , s:blue31    , 'NONE')
+    call s:Color('cssPseudoClassId'         , ''            , s:orange94  , 'NONE')
+    call s:Color('cssSelectorOp'            , ''            , s:purple127 , 'NONE')
+    call s:Color('cssSelectorOp2'           , ''            , s:purple127 , 'NONE')
+    call s:Color('cssStringQ'               , ''            , s:green71   , 'NONE')
+    call s:Color('cssStringQQ'              , ''            , s:green71   , 'NONE')
+    call s:Color('cssTagName'               , ''            , s:orange166 , 'NONE')
+    call s:Color('cssAttr'                  , ''            , s:red160    , 'NONE')
+    " }}}
+
+    " javascript {{{
+    call s:Color('javaScriptBraces'         , ''            , s:purple60  , 'NONE')
+    call s:Color('javaScriptFunction'       , ''            , s:purple127 , 'NONE')
+    call s:Color('javaScriptIdentifier'     , ''            , s:purple127 , 'NONE')
+    call s:Color('javaScriptStatement'      , ''            , s:purple127 , 'NONE')
+    call s:Color('javaScriptOperator'       , ''            , s:purple127 , 'NONE')
+    call s:Color('javaScriptNull'           , ''            , s:orange94  , 'NONE')
+    call s:Color('javaScriptNumber'         , ''            , s:orange94  , 'NONE')
+    call s:Color('javaScriptRequire'        , ''            , s:blue31    , 'NONE')
+    call s:Color('javaScriptReserved'       , ''            , s:purple127 , 'NONE')
+    " https://github.com/pangloss/vim-javascript
+    call s:Color('jsArrowFunction'          , ''            , s:purple127 , 'NONE')
+    call s:Color('jsBraces'                 , ''            , s:purple60  , 'NONE')
+    call s:Color('jsClassBraces'            , ''            , s:purple60  , 'NONE')
+    call s:Color('jsClassKeywords'          , ''            , s:purple127 , 'NONE')
+    call s:Color('jsDocParam'               , ''            , s:blue33    , 'NONE')
+    call s:Color('jsDocTags'                , ''            , s:purple127 , 'NONE')
+    call s:Color('jsFuncBraces'             , ''            , s:purple60  , 'NONE')
+    call s:Color('jsFuncCall'               , ''            , s:blue33    , 'NONE')
+    call s:Color('jsFuncParens'             , ''            , s:purple60  , 'NONE')
+    call s:Color('jsFunction'               , ''            , s:purple127 , 'NONE')
+    call s:Color('jsGlobalObjects'          , ''            , s:orange94  , 'NONE')
+    call s:Color('jsModuleWords'            , ''            , s:purple127 , 'NONE')
+    call s:Color('jsModules'                , ''            , s:purple127 , 'NONE')
+    call s:Color('jsNoise'                  , ''            , s:purple60  , 'NONE')
+    call s:Color('jsNull'                   , ''            , s:orange94  , 'NONE')
+    call s:Color('jsOperator'               , ''            , s:purple127 , 'NONE')
+    call s:Color('jsParens'                 , ''            , s:purple60  , 'NONE')
+    call s:Color('jsStorageClass'           , ''            , s:purple127 , 'NONE')
+    call s:Color('jsTemplateBraces'         , ''            , s:red160    , 'NONE')
+    call s:Color('jsTemplateVar'            , ''            , s:green71   , 'NONE')
+    call s:Color('jsThis'                   , ''            , s:orange166 , 'NONE')
+    call s:Color('jsUndefined'              , ''            , s:orange94  , 'NONE')
+    call s:Color('jsObjectValue'            , ''            , s:blue33    , 'NONE')
+    call s:Color('jsObjectKey'              , ''            , s:blue31    , 'NONE')
+    call s:Color('jsReturn'                 , ''            , s:purple127 , 'NONE')
+    " https://github.com/othree/yajs.vim
+    call s:Color('javascriptArrowFunc'      , ''            , s:purple127 , 'NONE')
+    call s:Color('javascriptClassExtends'   , ''            , s:purple127 , 'NONE')
+    call s:Color('javascriptClassKeyword'   , ''            , s:purple127 , 'NONE')
+    call s:Color('javascriptDocNotation'    , ''            , s:purple127 , 'NONE')
+    call s:Color('javascriptDocParamName'   , ''            , s:blue33    , 'NONE')
+    call s:Color('javascriptDocTags'        , ''            , s:purple127 , 'NONE')
+    call s:Color('javascriptEndColons'      , ''            , s:grey145   , 'NONE')
+    call s:Color('javascriptExport'         , ''            , s:purple127 , 'NONE')
+    call s:Color('javascriptFuncArg'        , ''            , s:blue23    , 'NONE')
+    call s:Color('javascriptFuncKeyword'    , ''            , s:purple127 , 'NONE')
+    call s:Color('javascriptImport'         , ''            , s:purple127 , 'NONE')
+    call s:Color('javascriptObjectLabel'    , ''            , s:blue23    , 'NONE')
+    call s:Color('javascriptOpSymbol'       , ''            , s:blue31    , 'NONE')
+    call s:Color('javascriptOpSymbols'      , ''            , s:blue31    , 'NONE')
+    call s:Color('javascriptPropertyName'   , ''            , s:green71   , 'NONE')
+    call s:Color('javascriptTemplateSB'     , ''            , s:red160    , 'NONE')
+    call s:Color('javascriptVariable'       , ''            , s:purple127 , 'NONE')
+    " }}}
+
+    " Perl {{{
+    call s:Color('perlFunction'             , ''            , s:purple127 , 'NONE')
+    call s:Color('perlMethod'               , ''            , s:blue23    , 'NONE')
+    call s:Color('perlPackageConst'         , ''            , s:purple127 , 'NONE')
+    call s:Color('perlPOD'                  , ''            , s:grey145   , 'NONE')
+    call s:Color('perlSubName'              , ''            , s:blue23    , 'NONE')
+    call s:Color('perlSharpBang'            , ''            , s:grey145   , 'NONE')
+    call s:Color('perlSpecialString'        , ''            , s:green71   , 'NONE')
+    call s:Color('perlVarPlain'             , ''            , s:blue33    , 'NONE')
+    call s:Color('podCommand'               , ''            , s:grey145   , 'NONE')
+    " }}}
+
+    " java
+    "call s:Color('javaAccessKeyword'     , ''              , s:purplemedium  , 'bold')
+    "call s:Color('javaStructure'         , ''              , s:purplemedium  , 'bold')
+    "call s:Color('javaBraces'            , ''              , s:purplemedium  , 'bold')
+    "call s:Color('javaParenT'            , ''              , s:purplemedium  , 'bold')
+    "call s:Color('javaInParen'           , ''              , s:purplemedium  , 'bold')
+    "call s:Color('javaIdentifier'        , ''              , s:greydark      , 'NONE')
+    "call s:Color('javaExternal'          , ''              , s:purplemedium  , 'bold')
+    "call s:Color('javaClassDecl'         , ''              , s:purplemedium  , 'bold')
+    "call s:Color('javaScopeDecl'         , ''              , s:purplemedium  , 'bold')
+    "call s:Color('javaStatement'         , ''              , s:reddark       , 'bold')
+    "call s:Color('javaFuncDef'           , ''              , s:pinkdark      , 'bold')
+    "call s:Color('javaFunction'          , ''              , s:pinkdark      , 'bold')
+    "call s:Color('javaStorageClass'      , ''              , s:purplemedium  , 'bold')
+    "call s:Color('javaC_JavaLang'        , ''              , s:steelbluedark , 'bold')
+    "call s:Color('javaType'              , ''              , s:steelbluedark , 'bold')
+    "call s:Color('javaString'            , ''              , s:green         , 'bold')
+    "call s:Link('javaCharacter'          , 'javaString')
+
+    " PHP {{{
+    call s:Color('phpClass'                 , ''            , s:gold136   , 'NONE')
+    call s:Color('phpFunction'              , ''            , s:blue33    , 'NONE')
+    call s:Color('phpFunctions'             , ''            , s:blue33    , 'NONE')
+    call s:Color('phpInclude'               , ''            , s:purple127 , 'NONE')
+    call s:Color('phpKeyword'               , ''            , s:purple127 , 'NONE')
+    call s:Color('phpParent'                , ''            , s:grey145   , 'NONE')
+    call s:Color('phpType'                  , ''            , s:purple127 , 'NONE')
+    call s:Color('phpSuperGlobals'          , ''            , s:orange166 , 'NONE')
+    " }}}
+
+    " XML {{{
+    call s:Color('xmlAttrib'                , ''            , s:gold136   , 'NONE')
+    call s:Color('xmlEndTag'                , ''            , s:orange166 , 'NONE')
+    call s:Color('xmlTag'                   , ''            , s:orange166 , 'NONE')
+    call s:Color('xmlTagName'               , ''            , s:orange166 , 'NONE')
+    " }}}
+
+    " ZSH {{{
+    call s:Color('zshCommands'              , ''            , s:blue23    , 'NONE')
+    call s:Color('zshDeref'                 , ''            , s:orange166 , 'NONE')
+    call s:Color('zshShortDeref'            , ''            , s:orange166 , 'NONE')
+    call s:Color('zshFunction'              , ''            , s:blue31    , 'NONE')
+    call s:Color('zshKeyword'               , ''            , s:purple127 , 'NONE')
+    call s:Color('zshSubst'                 , ''            , s:orange166 , 'NONE')
+    call s:Color('zshSubstDelim'            , ''            , s:grey145   , 'NONE')
+    call s:Color('zshTypes'                 , ''            , s:purple127 , 'NONE')
+    call s:Color('zshVariableDef'           , ''            , s:orange94  , 'NONE')
+    " }}}
+
+    " yaml {{{
+    call s:Color('yamlBlockMappingKey'      , ''            , s:orange166 , 'NONE')
+    " }}}
+
+    " Rust {{{
+    call s:Color('rustExternCrate'          , ''            , s:orange166 , 'bold')
+    call s:Color('rustIdentifier'           , ''            , s:blue33    , 'NONE')
+    call s:Color('rustDeriveTrait'          , ''            , s:green71   , 'NONE')
+    call s:Color('SpecialComment'           , ''            , s:grey145   , 'NONE')
+    call s:Color('rustCommentLine'          , ''            , s:grey145   , 'NONE')
+    call s:Color('rustCommentLineDoc'       , ''            , s:grey145   , 'NONE')
+    call s:Color('rustCommentLineDocError'  , ''            , s:grey145   , 'NONE')
+    call s:Color('rustCommentBlock'         , ''            , s:grey145   , 'NONE')
+    call s:Color('rustCommentBlockDoc'      , ''            , s:grey145   , 'NONE')
+    call s:Color('rustCommentBlockDocError' , ''            , s:grey145   , 'NONE')
+    " }}}
+
+    " ALE {{{
+    call s:Color('ALEWarningSign'           , ''            , s:gold136   , 'NONE')
+    call s:Color('ALEErrorSign'             , ''            , s:orange166 , 'NONE')
+    " }}}
+
+    " Vim {{{
+    call s:Color('vimCommand'               , ''            , s:purple127 , 'NONE')
+    call s:Color('vimCommentTitle'          , ''            , s:grey145   , 'bold')
+    call s:Color('vimFunction'              , ''            , s:blue31    , 'NONE')
+    call s:Color('vimFuncName'              , ''            , s:purple127 , 'NONE')
+    call s:Color('vimHighlight'             , ''            , s:blue33    , 'NONE')
+    call s:Color('vimLineComment'           , ''            , s:grey145   , 'NONE')
+    call s:Color('vimParenSep'              , ''            , s:purple60  , 'NONE')
+    call s:Color('vimSep'                   , ''            , s:purple60  , 'NONE')
+    call s:Color('vimUserFunc'              , ''            , s:blue31    , 'NONE')
+    call s:Color('vimVar'                   , ''            , s:orange166 , 'NONE')
+    " }}}
+
+    " Python {{{
+    call s:Color('pythonImport'             , ''            , s:purple127 , 'NONE')
+    call s:Color('pythonBuiltin'            , ''            , s:blue31    , 'NONE')
+    call s:Color('pythonStatement'          , ''            , s:purple127 , 'NONE')
+    call s:Color('pythonParam'              , ''            , s:orange94  , 'NONE')
+    call s:Color('pythonEscape'             , ''            , s:orange166 , 'NONE')
+    call s:Color('pythonSelf'               , ''            , s:purple60  , 'NONE')
+    call s:Color('pythonClass'              , ''            , s:blue33    , 'NONE')
+    call s:Color('pythonOperator'           , ''            , s:purple127 , 'NONE')
+    call s:Color('pythonEscape'             , ''            , s:orange166 , 'NONE')
+    call s:Color('pythonFunction'           , ''            , s:blue33    , 'NONE')
+    call s:Color('pythonKeyword'            , ''            , s:blue33    , 'NONE')
+    call s:Color('pythonModule'             , ''            , s:purple127 , 'NONE')
+    call s:Color('pythonStringDelimiter'    , ''            , s:green71   , 'NONE')
+    call s:Color('pythonSymbol'             , ''            , s:blue31    , 'NONE')
+    " }}}
+
+    " PureScript {{{
+    call s:Color('purescriptKeyword'        , ''            , s:purple127 , 'NONE')
+    call s:Color('purescriptModuleName'     , ''            , s:blue23    , 'NONE')
+    call s:Color('purescriptIdentifier'     , ''            , s:blue23    , 'NONE')
+    call s:Color('purescriptType'           , ''            , s:gold136   , 'NONE')
+    call s:Color('purescriptTypeVar'        , ''            , s:orange166 , 'NONE')
+    call s:Color('purescriptConstructor'    , ''            , s:orange166 , 'NONE')
+    call s:Color('purescriptOperator'       , ''            , s:blue23    , 'NONE')
+    " }}}
+
+    " Pug {{{
+    call s:Color('pugAttributesDelimiter'   , s:orange94    , ''          , 'NONE')
+    call s:Color('pugClass'                 , s:orange94    , ''          , 'NONE')
+    call s:Color('pugDocType'               , s:grey145     , ''          , 'NONE')
+    call s:Color('pugTag'                   , s:orange166   , ''          , 'NONE')
+    " }}}
+
+    " JSON {{{
+    call s:Color('jsonCommentError'         , ''            , s:blue23    , 'NONE')
+    call s:Color('jsonKeyword'              , ''            , s:orange166 , 'NONE')
+    call s:Color('jsonQuote'                , ''            , s:grey145   , 'NONE')
+    call s:Color('jsonTrailingCommaError'   , ''            , s:orange166 , 'reverse')
+    call s:Color('jsonMissingCommaError'    , ''            , s:orange166 , 'reverse')
+    call s:Color('jsonNoQuotesError'        , ''            , s:orange166 , 'reverse')
+    call s:Color('jsonNumError'             , ''            , s:orange166 , 'reverse')
+    call s:Color('jsonString'               , ''            , s:green71   , 'NONE')
+    call s:Color('jsonBoolean'              , ''            , s:purple127 , 'NONE')
+    call s:Color('jsonNumber'               , ''            , s:orange94  , 'NONE')
+    call s:Color('jsonStringSQError'        , ''            , s:orange166 , 'reverse')
+    call s:Color('jsonSemicolonError'       , ''            , s:orange166 , 'reverse')
+    " }}}
+
+    " }}}
+
+  elseif g:bgcl ==# 'dark'
+    set background =dark
+
+    " dark {{{
+    "call s:Color('Normal'                   , s:black237 , s:grey145   , 'NONE')
+    call s:Color('Normal'                   , s:black237    , s:grey252   , 'NONE')
+
+    call s:Color('Comment'                  , ''            , s:grey102   , 'NONE')
+
+    "call s:Color('Constant'       , ''           , s:green37   , 'NONE')
+    call s:Color('Constant'                 , ''            , s:green149  , 'NONE')
+    call s:Color('String'                   , ''            , s:green149  , 'NONE')
+    call s:Color('Character'                , ''            , s:green149  , 'NONE')
+    call s:Color('Number'                   , ''            , s:gold222   , 'NONE')
+    call s:Color('Boolean'                  , ''            , s:gold222   , 'NONE')
+    call s:Color('Float'                    , ''            , s:gold222   , 'NONE')
+
+    call s:Color('Identifier'               , ''            , s:purple96  , 'NONE')
+    call s:Color('Function'                 , ''            , s:orange130 , 'NONE')
+
+    "call s:Color('Statement'      , ''           , s:green106 , 'NONE')
+    call s:Color('Statement'                , ''            , s:blue75    , 'NONE')
+    call s:Color('Conditional'              , ''            , s:blue110   , 'NONE')
+    call s:Color('Repeat'                   , ''            , s:blue110   , 'NONE')
+    call s:Color('Label'                    , ''            , s:blue110   , 'NONE')
+    call s:Color('Operator'                 , ''            , s:blue69    , 'NONE')
+    call s:Color('Keyword'                  , ''            , s:pink168   , 'NONE')
+    call s:Color('Exception'                , ''            , s:blue75    , 'NONE')
+
+    call s:Color('PreProc'                  , ''            , s:gold180   , 'NONE')
+    call s:Color('Include'                  , ''            , s:pink173   , 'NONE')
+    call s:Color('Define'                   , ''            , s:pink173   , 'NONE')
+    call s:Color('Macro'                    , ''            , s:pink173   , 'NONE')
+    call s:Color('PreCondit'                , ''            , s:pink173   , 'NONE')
+
+    call s:Color('Type'                     , ''            , s:gold180   , 'NONE')
+    call s:Color('StorageClass'             , ''            , s:gold180   , 'NONE')
+    call s:Color('Structure'                , ''            , s:gold180   , 'NONE')
+    call s:Color('Typedef'                  , ''            , s:gold180   , 'NONE')
+
+    call s:Color('Special'                  , ''            , ''          , 'NONE')
+    call s:Color('SpecialChar'              , ''            , ''          , 'NONE')
+    call s:Color('Tag'                      , ''            , ''          , 'NONE')
+    call s:Color('Delimiter'                , ''            , ''          , 'NONE')
+    call s:Color('SpecialComment'           , ''            , ''          , 'NONE')
+    call s:Color('Debug'                    , ''            , ''          , 'NONE')
+
+    call s:Color('Underlined'               , ''            , ''          , 'underline')
+
+    call s:Color('Ignore'                   , ''            , ''          , 'NONE')
+
+    call s:Color('Todo'                     , s:black237    , s:green192  , 'bold')
+
+    call s:Color('Error'                    , s:black16     , s:pink168   , 'bold')
+
+    call s:Color('StatusLine'               , s:yellow187   , s:red95     , 'bold,reverse')
+    call s:Color('StatusLineNC'             , ''            , s:grey59    , 'bold,reverse')
+    "call s:Color('StatusLineTerm', s:, s:, '')
+    "call s:Color('StatusLineTermNC', s:, s:, '')
+
+    call s:Color('TabLine'                  , s:grey251     , s:grey102   , 'NONE')
+    call s:Color('TabLineSel'               , s:green66     , s:yellow187 , 'bold')
+    call s:Color('TabLineFill'              , s:grey251     , s:grey59    , 'NONE')
+
+    call s:Color('VertSplit'                , s:black16     , s:black16   , 'NONE')
+
+    call s:Color('Pmenu'                    , ''            , s:black16   , 'NONE')
+    call s:Color('PmenuSel'                 , ''            , s:grey59    , 'NONE')
+    call s:Color('PmenuSbar'                , ''            , s:black16   , 'NONE')
+    call s:Color('PmenuThumb'               , ''            , s:grey145   , 'NONE')
+    call s:Color('WildMenu'                 , s:yellow184   , s:red95     , 'bold')
+
+    call s:Color('Visual'                   , s:gold220     , s:black235  , 'bold')
+    call s:Color('VisualNOS'                , s:gold220     , s:black235  , 'bold')
+
+    "call s:Color('ErrorMsg'          , ''            , s:pink197   , 'NONE')
+    call s:Color('WarningMsg'               , ''            , s:pink168   , 'NONE')
+    call s:Color('MoreMsg'                  , ''            , s:grey145   , 'NONE')
+    call s:Color('ModeMsg'                  , ''            , s:grey145   , 'NONE')
+    call s:Color('Question'                 , ''            , s:blue75    , 'NONE')
+
+    call s:Color('Folded'                   , s:black16     , s:grey145   , 'NONE')
+    call s:Color('FoldColumn'               , s:black16     , s:grey59    , 'NONE')
+    call s:Color('SignColumn'               , s:black237    , ''          , 'NONE')
+    call s:Color('ColorColumn'              , s:grey238     , ''          , 'NONE')
+    call s:Color('LineNr'                   , s:black237    , s:grey246   , 'NONE')
+    call s:Color('MatchParen'               , s:black237    , s:pink168   , 'NONE')
+
+    call s:Color('Cursor'                   , s:blue69      , ''          , 'NONE')
+    call s:Color('CursorLine'               , s:grey239     , ''          , 'bold')
+    call s:Color('CursorLineNr'             , s:grey239     , s:white231  , 'bold')
+
+    call s:Color('Search'                   , s:yellow11    , s:black235  , 'bold')
+    "call s:Color('Search'         , s:gold136     , s:white231  , 'bold')
+    call s:Color('IncSearch'                , s:red204      , s:white231  , 'bold')
+
+    "call s:Color('DiffAdd'        , s:green113    , s:black235   , 'NONE')
+    call s:Color('DiffAdd'                  , s:blue17      , s:green114  , 'NONE')
+    call s:Color('DiffChange'               , s:blue17      , s:pink173   , 'NONE')
+    call s:Color('DiffDelete'               , s:blue17      , s:pink168   , 'NONE')
+    call s:Color('DiffText'                 , s:blue17      , s:blue75    , 'NONE')
+    call s:Color('DiffFile'                 , s:blue17      , s:pink168   , 'NONE')
+    call s:Color('DiffNewFile'              , s:blue17      , s:green114  , 'NONE')
+    call s:Color('DiffLine'                 , s:blue17      , s:blue75    , 'NONE')
+    call s:Color('DiffRemoved'              , s:blue17      , s:pink168   , 'NONE')
+
+    "call s:Color('SpellBad'                , s:white231    , s:pink197   , 'undercurl')
+    "call s:Color('SpellCap'                , s:white231    , s:red167    , 'undercurl')
+    "call s:Color('SpellRare'               , s:white231    , s:red95     , 'undercurl')
+    "call s:Color('SpellLocal'              , s:white231    , s:orange94  , 'undercurl')
+
+    call s:Color('SpellBad'                 , s:white231    , ''          , 'undercurl')
+    call s:Color('SpellCap'                 , s:white231    , ''          , 'undercurl')
+    call s:Color('SpellRare'                , s:white231    , ''          , 'undercurl')
+    call s:Color('SpellLocal'               , s:white231    , ''          , 'undercurl')
+
+    call s:Color('SpecialKey'               , ''            , s:red131    , 'NONE')
+    "call s:Color('NonText'                  , ''            , s:grey145  , 'NONE')
+    call s:Color('NonText'                  , ''            , s:grey59    , 'NONE')
+    call s:Color('Directory'                , ''            , s:blue75    , 'NONE')
+    call s:Color('Title'                    , ''            , s:grey252   , 'NONE')
+    call s:Color('Conceal'                  , s:black16     , s:green114  , 'NONE')
+    call s:Color('Noise'                    , ''            , s:grey102   , 'NONE')
+    call s:Color('helpHyperTextJump'        , s:white231    , s:blue31    , 'NONE')
+
+    call s:Color('vimFold'                  , s:white231    , s:grey246   , 'NONE')
+    call s:Color('vimCommentTitle'          , s:white231    , s:grey241   , 'NONE')
+
+    call s:Color('diffFile'                 , s:white231    , s:grey246   , 'NONE')
+    call s:Color('diffLine'                 , s:white231    , s:grey241   , 'NONE')
+    call s:Color('diffAdded'                , s:white231    , s:green28   , 'NONE')
+    call s:Color('diffRemoved'              , s:white231    , s:pink169   , 'NONE')
+    call s:Color('diffChanged'              , s:white231    , s:gold136   , 'NONE')
+    call s:Color('diffSubname'              , s:white231    , s:grey139   , 'NONE')
+    call s:Color('diffOldLine'              , s:white231    , s:blue69    , 'NONE')
+
+    call s:Color('mailSubject'              , s:white231    , s:green30   , 'NONE')
+    call s:Color('diffOldLine'              , s:white231    , s:grey246   , 'NONE')
+
+    " man {{{
+    call s:Color('manTitle'                 , ''            , s:gold136   , 'NONE')
+    call s:Color('manFooter'                , ''            , s:grey59    , 'NONE')
+    " }}}
+
+    " Markdown {{{
+    "call s:Color('markdownCode'            , s:white231    , s:grey246   , 'NONE')
+    "call s:Color('markdownCodeBlock'       , s:white231    , s:grey246   , 'NONE')
+    "call s:Color('markdownItalic'          , s:white231    , s:grey239   , 'NONE')
+    call s:Color('markdownUrl'              , ''            , s:grey59    , 'NONE')
+    call s:Color('markdownBold'             , ''            , s:pink173   , 'bold')
+    call s:Color('markdownItalic'           , ''            , s:pink173   , 'bold')
+    call s:Color('markdownCode'             , ''            , s:green114  , 'NONE')
+    call s:Color('markdownCodeBlock'        , ''            , s:pink168   , 'NONE')
+    call s:Color('markdownCodeDelimiter'    , ''            , s:green114  , 'NONE')
+    call s:Color('markdownHeadingDelimiter' , ''            , s:orange130 , 'NONE')
+    call s:Color('markdownH1'               , ''            , s:pink168   , 'NONE')
+    call s:Color('markdownH2'               , ''            , s:pink168   , 'NONE')
+    call s:Color('markdownH3'               , ''            , s:pink168   , 'NONE')
+    call s:Color('markdownH3'               , ''            , s:pink168   , 'NONE')
+    call s:Color('markdownH4'               , ''            , s:pink168   , 'NONE')
+    call s:Color('markdownH5'               , ''            , s:pink168   , 'NONE')
+    call s:Color('markdownH6'               , ''            , s:pink168   , 'NONE')
+    call s:Color('markdownListMarker'       , ''            , s:pink168   , 'NONE')
+    " }}}
+
+    " Go {{{
+    call s:Color('goDeclaration'            , ''            , s:pink168   , 'NONE')
+    call s:Color('goField'                  , ''            , s:pink168   , 'NONE')
+    call s:Color('goMethod'                 , ''            , s:grey145   , 'NONE')
+    call s:Color('goType'                   , ''            , s:gold180   , 'NONE')
+    call s:Color('goUnsignedInts'           , ''            , s:grey145   , 'NONE')
+    " }}}
+
+    " Haskell {{{
+    call s:Color('haskellDeclKeyword'       , ''            , s:blue75    , 'NONE')
+    call s:Color('haskellType'              , ''            , s:green114  , 'NONE')
+    call s:Color('haskellWhere'             , ''            , s:pink168   , 'NONE')
+    call s:Color('haskellImportKeywords'    , ''            , s:blue75    , 'NONE')
+    call s:Color('haskellOperators'         , ''            , s:pink168   , 'NONE')
+    call s:Color('haskellDelimiter'         , ''            , s:blue75    , 'NONE')
+    call s:Color('haskellIdentifier'        , ''            , s:pink173   , 'NONE')
+    call s:Color('haskellKeyword'           , ''            , s:pink168   , 'NONE')
+    call s:Color('haskellNumber'            , ''            , s:green73   , 'NONE')
+    call s:Color('haskellString'            , ''            , s:green73   , 'NONE')
+    " }}}
+
+    " html {{{
+    "call s:Color('htmlArg'               , ''              , s:orange94     , 'bold')
+    call s:Color('htmlArg'                  , ''            , s:pink173   , 'bold')
+    call s:Color('htmlTag'                  , ''            , s:grey102   , 'NONE')
+    call s:Color('htmlEndTag'               , ''            , s:grey102   , 'NONE')
+    call s:Color('htmlTagName'              , ''            , s:pink168   , 'NONE')
+    call s:Color('htmlTagN'                 , ''            , s:pink168   , 'NONE')
+    call s:Color('htmlSpecialTagName'       , ''            , s:pink168   , 'NONE')
+    "call s:Color('htmlString'               , ''    , s:gold136   , 'NONE')
+    call s:Color('MatchTag'                 , ''            , s:pink168   , 'underline,bold')
+    "call s:Color('htmlScriptTag'         , ''              , s:reddark       , 'NONE')
+    " }}}
+
+    " css {{{
+    call s:Color('cssAttrComma'             , ''            , s:purple176 , 'NONE')
+    call s:Color('cssAttributeSelector'     , ''            , s:green114  , 'NONE')
+    call s:Color('cssBraces'                , ''            , s:grey102   , 'NONE')
+    call s:Color('cssClassName'             , ''            , s:pink173   , 'NONE')
+    call s:Color('cssClassNameDot'          , ''            , s:pink173   , 'NONE')
+    call s:Color('cssDefinition'            , ''            , s:purple176 , 'NONE')
+    call s:Color('cssFontAttr'              , ''            , s:pink173   , 'NONE')
+    call s:Color('cssFontDescriptor'        , ''            , s:pink168   , 'NONE')
+    call s:Color('cssFunctionName'          , ''            , s:blue75    , 'NONE')
+    call s:Color('cssIdentifier'            , ''            , s:blue75    , 'NONE')
+    call s:Color('cssImportant'             , ''            , s:purple176 , 'NONE')
+    call s:Color('cssInclude'               , ''            , s:grey145   , 'NONE')
+    call s:Color('cssIncludeKeyword'        , ''            , s:purple176 , 'NONE')
+    call s:Color('cssMediaType'             , ''            , s:pink173   , 'NONE')
+    call s:Color('cssProp'                  , ''            , s:green73   , 'NONE')
+    call s:Color('cssPseudoClassId'         , ''            , s:pink173   , 'NONE')
+    call s:Color('cssSelectorOp'            , ''            , s:purple176 , 'NONE')
+    call s:Color('cssSelectorOp2'           , ''            , s:purple176 , 'NONE')
+    call s:Color('cssStringQ'               , ''            , s:green114  , 'NONE')
+    call s:Color('cssStringQQ'              , ''            , s:green114  , 'NONE')
+    call s:Color('cssTagName'               , ''            , s:pink168   , 'NONE')
+    call s:Color('cssAttr'                  , ''            , s:pink173   , 'NONE')
+    " }}}
+
+    " javascript {{{
+    call s:Color('javaScriptBraces'         , ''            , s:grey252   , 'NONE')
+    call s:Color('javaScriptFunction'       , ''            , s:pink168   , 'NONE')
+    call s:Color('javaScriptIdentifier'     , ''            , s:pink168   , 'NONE')
+    call s:Color('javaScriptStatement'      , ''            , s:pink168   , 'NONE')
+    call s:Color('javaScriptOperator'       , ''            , s:pink168   , 'NONE')
+    call s:Color('javaScriptNull'           , ''            , s:gold222   , 'NONE')
+    call s:Color('javaScriptNumber'         , ''            , s:gold222   , 'NONE')
+    call s:Color('javaScriptRequire'        , ''            , s:green73   , 'NONE')
+    call s:Color('javaScriptReserved'       , ''            , s:pink168   , 'NONE')
+    " https://github.com/pangloss/vim-javascript
+    call s:Color('jsArrowFunction'          , ''            , s:pink168   , 'NONE')
+    call s:Color('jsBraces'                 , ''            , s:grey252   , 'NONE')
+    call s:Color('jsClassBraces'            , ''            , s:grey252   , 'NONE')
+    call s:Color('jsClassKeywords'          , ''            , s:pink168   , 'NONE')
+    call s:Color('jsDocParam'               , ''            , s:blue33    , 'NONE')
+    call s:Color('jsDocTags'                , ''            , s:pink168   , 'NONE')
+    call s:Color('jsFuncBraces'             , ''            , s:grey252   , 'NONE')
+    call s:Color('jsFuncCall'               , ''            , s:blue75    , 'NONE')
+    call s:Color('jsFuncParens'             , ''            , s:grey252   , 'NONE')
+    call s:Color('jsFunction'               , ''            , s:pink168   , 'NONE')
+    call s:Color('jsGlobalObjects'          , ''            , s:gold180   , 'NONE')
+    call s:Color('jsModuleWords'            , ''            , s:pink168   , 'NONE')
+    call s:Color('jsModules'                , ''            , s:pink168   , 'NONE')
+    call s:Color('jsNoise'                  , ''            , s:grey252   , 'NONE')
+    call s:Color('jsNull'                   , ''            , s:orange94  , 'NONE')
+    call s:Color('jsOperator'               , ''            , s:pink168   , 'NONE')
+    call s:Color('jsParens'                 , ''            , s:grey252   , 'NONE')
+    call s:Color('jsStorageClass'           , ''            , s:pink168   , 'NONE')
+    call s:Color('jsTemplateBraces'         , ''            , s:red160    , 'NONE')
+    call s:Color('jsTemplateVar'            , ''            , s:green71   , 'NONE')
+    call s:Color('jsThis'                   , ''            , s:pink168   , 'NONE')
+    call s:Color('jsUndefined'              , ''            , s:pink173   , 'NONE')
+    call s:Color('jsObjectValue'            , ''            , s:blue75    , 'NONE')
+    call s:Color('jsObjectKey'              , ''            , s:green73   , 'NONE')
+    call s:Color('jsReturn'                 , ''            , s:pink168   , 'NONE')
+    " https://github.com/othree/yajs.vim
+    call s:Color('javascriptArrowFunc'      , ''            , s:pink168   , 'NONE')
+    call s:Color('javascriptClassExtends'   , ''            , s:pink168   , 'NONE')
+    call s:Color('javascriptClassKeyword'   , ''            , s:pink168   , 'NONE')
+    call s:Color('javascriptDocNotation'    , ''            , s:pink168   , 'NONE')
+    call s:Color('javascriptDocParamName'   , ''            , s:blue75    , 'NONE')
+    call s:Color('javascriptDocTags'        , ''            , s:pink168   , 'NONE')
+    call s:Color('javascriptEndColons'      , ''            , s:grey59    , 'NONE')
+    call s:Color('javascriptExport'         , ''            , s:pink168   , 'NONE')
+    call s:Color('javascriptFuncArg'        , ''            , s:grey145   , 'NONE')
+    call s:Color('javascriptFuncKeyword'    , ''            , s:pink168   , 'NONE')
+    call s:Color('javascriptImport'         , ''            , s:pink168   , 'NONE')
+    call s:Color('javascriptObjectLabel'    , ''            , s:grey145   , 'NONE')
+    call s:Color('javascriptOpSymbol'       , ''            , s:green73   , 'NONE')
+    call s:Color('javascriptOpSymbols'      , ''            , s:green73   , 'NONE')
+    call s:Color('javascriptPropertyName'   , ''            , s:green114  , 'NONE')
+    call s:Color('javascriptTemplateSB'     , ''            , s:orange130 , 'NONE')
+    call s:Color('javascriptVariable'       , ''            , s:pink168   , 'NONE')
+    " }}}
+
+    " Perl {{{
+    call s:Color('perlFunction'             , ''            , s:purple176 , 'NONE')
+    call s:Color('perlMethod'               , ''            , s:grey145   , 'NONE')
+    call s:Color('perlPackageConst'         , ''            , s:purple176 , 'NONE')
+    call s:Color('perlPOD'                  , ''            , s:grey59    , 'NONE')
+    call s:Color('perlSubName'              , ''            , s:grey145   , 'NONE')
+    call s:Color('perlSharpBang'            , ''            , s:grey59    , 'NONE')
+    call s:Color('perlSpecialString'        , ''            , s:green114  , 'NONE')
+    call s:Color('perlVarPlain'             , ''            , s:blue75    , 'NONE')
+    call s:Color('podCommand'               , ''            , s:grey59    , 'NONE')
+    " }}}
+
+    " java
+    "call s:Color('javaAccessKeyword'     , ''              , s:purplemedium  , 'NONE')
+    "call s:Color('javaStructure'         , ''              , s:purplemedium  , 'NONE')
+    "call s:Color('javaBraces'            , ''              , s:purplemedium  , 'NONE')
+    "call s:Color('javaParenT'            , ''              , s:purplemedium  , 'NONE')
+    "call s:Color('javaInParen'           , ''              , s:purplemedium  , 'NONE')
+    "call s:Color('javaIdentifier'        , ''              , s:greydark      , 'NONE')
+    "call s:Color('javaExternal'          , ''              , s:purplemedium  , 'NONE')
+    "call s:Color('javaClassDecl'         , ''              , s:purplemedium  , 'NONE')
+    "call s:Color('javaScopeDecl'         , ''              , s:purplemedium  , 'NONE')
+    "call s:Color('javaStatement'         , ''              , s:reddark       , 'NONE')
+    "call s:Color('javaFuncDef'           , ''              , s:pinkdark      , 'NONE')
+    "call s:Color('javaFunction'          , ''              , s:pinkdark      , 'NONE')
+    "call s:Color('javaStorageClass'      , ''              , s:purplemedium  , 'NONE')
+    "call s:Color('javaC_JavaLang'        , ''              , s:steelbluedark , 'NONE')
+    "call s:Color('javaType'              , ''              , s:steelbluedark , 'NONE')
+    "call s:Color('javaString'            , ''              , s:green         , 'NONE')
+    "call s:Link('javaCharacter'          , 'javaString')
+
+    " PHP {{{
+    call s:Color('phpClass'                 , ''            , s:gold180   , 'NONE')
+    call s:Color('phpFunction'              , ''            , s:blue75    , 'NONE')
+    call s:Color('phpFunctions'             , ''            , s:blue75    , 'NONE')
+    call s:Color('phpInclude'               , ''            , s:purple176 , 'NONE')
+    call s:Color('phpKeyword'               , ''            , s:purple176 , 'NONE')
+    call s:Color('phpParent'                , ''            , s:grey59    , 'NONE')
+    call s:Color('phpType'                  , ''            , s:purple176 , 'NONE')
+    call s:Color('phpSuperGlobals'          , ''            , s:pink168   , 'NONE')
+    " }}}
+
+    " XML {{{
+    call s:Color('xmlAttrib'                , ''            , s:gold180   , 'NONE')
+    call s:Color('xmlEndTag'                , ''            , s:pink168   , 'NONE')
+    call s:Color('xmlTag'                   , ''            , s:pink168   , 'NONE')
+    call s:Color('xmlTagName'               , ''            , s:pink168   , 'NONE')
+    " }}}
+
+    " ZSH {{{
+    call s:Color('zshCommands'              , ''            , s:grey145   , 'NONE')
+    call s:Color('zshDeref'                 , ''            , s:pink168   , 'NONE')
+    call s:Color('zshShortDeref'            , ''            , s:pink168   , 'NONE')
+    call s:Color('zshFunction'              , ''            , s:green73   , 'NONE')
+    call s:Color('zshKeyword'               , ''            , s:purple176 , 'NONE')
+    call s:Color('zshSubst'                 , ''            , s:pink168   , 'NONE')
+    call s:Color('zshSubstDelim'            , ''            , s:grey59    , 'NONE')
+    call s:Color('zshTypes'                 , ''            , s:purple176 , 'NONE')
+    call s:Color('zshVariableDef'           , ''            , s:pink173   , 'NONE')
+    " }}}
+
+    " yaml {{{
+    call s:Color('yamlBlockMappingKey'      , ''            , s:orange210 , 'NONE')
+    " }}}
+
+    " Rust {{{
+    call s:Color('rustExternCrate'          , ''            , s:pink168   , 'bold')
+    call s:Color('rustIdentifier'           , ''            , s:blue75    , 'NONE')
+    call s:Color('rustDeriveTrait'          , ''            , s:green114  , 'NONE')
+    call s:Color('SpecialComment'           , ''            , s:grey59    , 'NONE')
+    call s:Color('rustCommentLine'          , ''            , s:grey59    , 'NONE')
+    call s:Color('rustCommentLineDoc'       , ''            , s:grey59    , 'NONE')
+    call s:Color('rustCommentLineDocError'  , ''            , s:grey59    , 'NONE')
+    call s:Color('rustCommentBlock'         , ''            , s:grey59    , 'NONE')
+    call s:Color('rustCommentBlockDoc'      , ''            , s:grey59    , 'NONE')
+    call s:Color('rustCommentBlockDocError' , ''            , s:grey59    , 'NONE')
+    " }}}
+
+    " ALE {{{
+    call s:Color('ALEWarningSign'           , ''            , s:gold180   , 'NONE')
+    call s:Color('ALEErrorSign'             , ''            , s:pink168   , 'NONE')
+    " }}}
+
+    " Vim {{{
+    call s:Color('vimCommand'               , ''            , s:purple176 , 'NONE')
+    call s:Color('vimCommentTitle'          , ''            , s:grey59    , 'bold')
+    call s:Color('vimFunction'              , ''            , s:green73   , 'NONE')
+    call s:Color('vimFuncName'              , ''            , s:purple176 , 'NONE')
+    call s:Color('vimHighlight'             , ''            , s:blue75    , 'NONE')
+    call s:Color('vimLineComment'           , ''            , s:grey59    , 'NONE')
+    call s:Color('vimParenSep'              , ''            , s:grey102   , 'NONE')
+    call s:Color('vimSep'                   , ''            , s:grey102   , 'NONE')
+    call s:Color('vimUserFunc'              , ''            , s:green73   , 'NONE')
+    call s:Color('vimVar'                   , ''            , s:pink168   , 'NONE')
+    " }}}
+
+    " Python {{{
+    call s:Color('pythonImport'             , ''            , s:purple176 , 'NONE')
+    call s:Color('pythonBuiltin'            , ''            , s:green73   , 'NONE')
+    call s:Color('pythonStatement'          , ''            , s:purple176 , 'NONE')
+    call s:Color('pythonParam'              , ''            , s:pink173   , 'NONE')
+    call s:Color('pythonEscape'             , ''            , s:pink168   , 'NONE')
+    call s:Color('pythonSelf'               , ''            , s:grey102   , 'NONE')
+    call s:Color('pythonClass'              , ''            , s:blue75    , 'NONE')
+    call s:Color('pythonOperator'           , ''            , s:purple176 , 'NONE')
+    call s:Color('pythonEscape'             , ''            , s:pink168   , 'NONE')
+    call s:Color('pythonFunction'           , ''            , s:blue75    , 'NONE')
+    call s:Color('pythonKeyword'            , ''            , s:blue75    , 'NONE')
+    call s:Color('pythonModule'             , ''            , s:purple176 , 'NONE')
+    call s:Color('pythonStringDelimiter'    , ''            , s:green114  , 'NONE')
+    call s:Color('pythonSymbol'             , ''            , s:green73   , 'NONE')
+    " }}}
+
+    " PureScript {{{
+    call s:Color('purescriptKeyword'        , ''            , s:purple176 , 'NONE')
+    call s:Color('purescriptModuleName'     , ''            , s:grey145   , 'NONE')
+    call s:Color('purescriptIdentifier'     , ''            , s:grey145   , 'NONE')
+    call s:Color('purescriptType'           , ''            , s:gold180   , 'NONE')
+    call s:Color('purescriptTypeVar'        , ''            , s:pink168   , 'NONE')
+    call s:Color('purescriptConstructor'    , ''            , s:pink168   , 'NONE')
+    call s:Color('purescriptOperator'       , ''            , s:grey145   , 'NONE')
+    " }}}
+
+    " Pug {{{
+    call s:Color('pugAttributesDelimiter'   , ''            , s:pink173   , 'NONE')
+    call s:Color('pugClass'                 , ''            , s:pink173   , 'NONE')
+    call s:Color('pugDocType'               , ''            , s:grey59    , 'NONE')
+    call s:Color('pugTag'                   , ''            , s:pink168   , 'NONE')
+    " }}}
+
+    " JSON {{{
+    call s:Color('jsonCommentError'         , ''            , s:grey145   , 'NONE')
+    call s:Color('jsonKeyword'              , ''            , s:pink168   , 'NONE')
+    call s:Color('jsonQuote'                , ''            , s:grey59    , 'NONE')
+    call s:Color('jsonTrailingCommaError'   , ''            , s:pink168   , 'reverse')
+    call s:Color('jsonMissingCommaError'    , ''            , s:pink168   , 'reverse')
+    call s:Color('jsonNoQuotesError'        , ''            , s:pink168   , 'reverse')
+    call s:Color('jsonNumError'             , ''            , s:pink168   , 'reverse')
+    call s:Color('jsonString'               , ''            , s:green114  , 'NONE')
+    call s:Color('jsonBoolean'              , ''            , s:purple176 , 'NONE')
+    call s:Color('jsonNumber'               , ''            , s:orange94  , 'NONE')
+    call s:Color('jsonStringSQError'        , ''            , s:pink168   , 'reverse')
+    call s:Color('jsonSemicolonError'       , ''            , s:pink168   , 'reverse')
+    " }}}
+
+    " }}}
+  endif
+
+else
+
+  set background=light
+  colorscheme peachpuff
+
+endif
+
+" http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
+" https://vim.fandom.com/wiki/Xterm256_color_names_for_console_Vim
+
+"let s:black             = ['#000000', '0']
+"let s:maroon            = ['#800000', '1']
+"let s:green             = ['#008000', '2']
+"let s:olive             = ['#808000', '3']
+"let s:navy              = ['#000080', '4']
+"let s:purple            = ['#800080', '5']
+"let s:teal              = ['#008080', '6']
+"let s:silver            = ['#c0c0c0', '7']
+"let s:grey              = ['#808080', '8']
+"let s:red               = ['#ff0000', '9']
+"let s:lime              = ['#00ff00', '10']
+"let s:yellow            = ['#ffff00', '11']
+"let s:blue              = ['#0000ff', '12']
+"let s:fuchsia           = ['#ff00ff', '13']
+"let s:aqua              = ['#00ffff', '14']
+"let s:white             = ['#ffffff', '15']
+
+"let s:grey0             = ['#000000', '16']
+"let s:navyBlue          = ['#00005f', '17']
+"let s:darkBlue          = ['#000087', '18']
+"let s:blue3             = ['#0000af', '19']
+"let s:blue3             = ['#0000d7', '20']
+"let s:blue1             = ['#0000ff', '21']
+"let s:darkGreen         = ['#005f00', '22']
+"let s:deepSkyBlue4      = ['#005f5f', '23']
+"let s:deepSkyBlue4      = ['#005f87', '24']
+"let s:deepSkyBlue4      = ['#005faf', '25']
+"let s:dodgerBlue3       = ['#005fd7', '26']
+"let s:dodgerBlue2       = ['#005fff', '27']
+"let s:green4            = ['#008700', '28']
+"let s:springGreen4      = ['#00875f', '29']
+"let s:turquoise4        = ['#008787', '30']
+"let s:deepSkyBlue3      = ['#0087af', '31']
+"let s:deepSkyBlue3      = ['#0087d7', '32']
+"let s:dodgerBlue1       = ['#0087ff', '33']
+"let s:green3            = ['#00af00', '34']
+"let s:springGreen3      = ['#00af5f', '35']
+"let s:darkCyan          = ['#00af87', '36']
+"let s:lightSeaGreen     = ['#00afaf', '37']
+"let s:deepSkyBlue2      = ['#00afd7', '38']
+"let s:deepSkyBlue1      = ['#00afff', '39']
+"let s:green3            = ['#00d700', '40']
+"let s:springGreen3      = ['#00d75f', '41']
+"let s:springGreen2      = ['#00d787', '42']
+"let s:cyan3             = ['#00d7af', '43']
+"let s:darkTurquoise     = ['#00d7d7', '44']
+"let s:turquoise2        = ['#00d7ff', '45']
+"let s:green1            = ['#00ff00', '46']
+"let s:springGreen2      = ['#00ff5f', '47']
+"let s:springGreen1      = ['#00ff87', '48']
+"let s:mediumSpringGreen = ['#00ffaf', '49']
+"let s:cyan2             = ['#00ffd7', '50']
+"let s:cyan1             = ['#00ffff', '51']
+"let s:darkRed           = ['#5f0000', '52']
+"let s:deepPink4         = ['#5f005f', '53']
+"let s:purple4           = ['#5f0087', '54']
+"let s:purple4           = ['#5f00af', '55']
+"let s:purple3           = ['#5f00d7', '56']
+"let s:blueViolet        = ['#5f00ff', '57']
+"let s:orange4           = ['#5f5f00', '58']
+"let s:grey37            = ['#5f5f5f', '59']
+"let s:mediumPurple4     = ['#5f5f87', '60']
+"let s:slateBlue3        = ['#5f5faf', '61']
+"let s:slateBlue3        = ['#5f5fd7', '62']
+"let s:royalBlue1        = ['#5f5fff', '63']
+"let s:chartreuse4       = ['#5f8700', '64']
+"let s:darkSeaGreen4     = ['#5f875f', '65']
+"let s:paleTurquoise4    = ['#5f8787', '66']
+"let s:steelBlue         = ['#5f87af', '67']
+"let s:steelBlue3        = ['#5f87d7', '68']
+"let s:cornflowerBlue    = ['#5f87ff', '69']
+"let s:chartreuse3       = ['#5faf00', '70']
+"let s:darkSeaGreen4     = ['#5faf5f', '71']
+"let s:cadetBlue         = ['#5faf87', '72']
+"let s:cadetBlue         = ['#5fafaf', '73']
+"let s:skyBlue3          = ['#5fafd7', '74']
+"let s:steelBlue1        = ['#5fafff', '75']
+"let s:chartreuse3       = ['#5fd700', '76']
+"let s:paleGreen3        = ['#5fd75f', '77']
+"let s:seaGreen3         = ['#5fd787', '78']
+"let s:aquamarine3       = ['#5fd7af', '79']
+"let s:mediumTurquoise   = ['#5fd7d7', '80']
+"let s:steelBlue1        = ['#5fd7ff', '81']
+"let s:chartreuse2       = ['#5fff00', '82']
+"let s:seaGreen2         = ['#5fff5f', '83']
+"let s:seaGreen1         = ['#5fff87', '84']
+"let s:seaGreen1         = ['#5fffaf', '85']
+"let s:aquamarine1       = ['#5fffd7', '86']
+"let s:darkSlateGray2    = ['#5fffff', '87']
+"let s:darkRed           = ['#870000', '88']
+"let s:deepPink4         = ['#87005f', '89']
+"let s:darkMagenta       = ['#870087', '90']
+"let s:darkMagenta       = ['#8700af', '91']
+"let s:darkViolet        = ['#8700d7', '92']
+"let s:purple            = ['#8700ff', '93']
+"let s:orange4           = ['#875f00', '94']
+"let s:lightPink4        = ['#875f5f', '95']
+"let s:plum4             = ['#875f87', '96']
+"let s:mediumPurple3     = ['#875faf', '97']
+"let s:mediumPurple3     = ['#875fd7', '98']
+"let s:slateBlue1        = ['#875fff', '99']
+"let s:yellow4           = ['#878700', '100']
+"let s:wheat4            = ['#87875f', '101']
+"let s:grey53            = ['#878787', '102']
+"let s:lightSlateGrey    = ['#8787af', '103']
+"let s:mediumPurple      = ['#8787d7', '104']
+"let s:lightSlateBlue    = ['#8787ff', '105']
+"let s:yellow4           = ['#87af00', '106']
+"let s:darkOliveGreen3   = ['#87af5f', '107']
+"let s:darkSeaGreen      = ['#87af87', '108']
+"let s:lightSkyBlue3     = ['#87afaf', '109']
+"let s:lightSkyBlue3     = ['#87afd7', '110']
+"let s:skyBlue2          = ['#87afff', '111']
+"let s:chartreuse2       = ['#87d700', '112']
+"let s:darkOliveGreen3   = ['#87d75f', '113']
+"let s:paleGreen3        = ['#87d787', '114']
+"let s:darkSeaGreen3     = ['#87d7af', '115']
+"let s:darkSlateGray3    = ['#87d7d7', '116']
+"let s:skyBlue1          = ['#87d7ff', '117']
+"let s:chartreuse1       = ['#87ff00', '118']
+"let s:lightGreen        = ['#87ff5f', '119']
+"let s:lightGreen        = ['#87ff87', '120']
+"let s:paleGreen1        = ['#87ffaf', '121']
+"let s:aquamarine1       = ['#87ffd7', '122']
+"let s:darkSlateGray1    = ['#87ffff', '123']
+"let s:red3              = ['#af0000', '124']
+"let s:deepPink4         = ['#af005f', '125']
+"let s:mediumVioletRed   = ['#af0087', '126']
+"let s:magenta3          = ['#af00af', '127']
+"let s:darkViolet        = ['#af00d7', '128']
+"let s:purple            = ['#af00ff', '129']
+"let s:darkOrange3       = ['#af5f00', '130']
+"let s:indianRed         = ['#af5f5f', '131']
+"let s:hotPink3          = ['#af5f87', '132']
+"let s:mediumOrchid3     = ['#af5faf', '133']
+"let s:mediumOrchid      = ['#af5fd7', '134']
+"let s:mediumPurple2     = ['#af5fff', '135']
+"let s:darkGoldenrod     = ['#af8700', '136']
+"let s:lightSalmon3      = ['#af875f', '137']
+"let s:rosyBrown         = ['#af8787', '138']
+"let s:grey63            = ['#af87af', '139']
+"let s:mediumPurple2     = ['#af87d7', '140']
+"let s:mediumPurple1     = ['#af87ff', '141']
+"let s:gold3             = ['#afaf00', '142']
+"let s:darkKhaki         = ['#afaf5f', '143']
+"let s:navajoWhite3      = ['#afaf87', '144']
+"let s:grey69            = ['#afafaf', '145']
+"let s:lightSteelBlue3   = ['#afafd7', '146']
+"let s:lightSteelBlue    = ['#afafff', '147']
+"let s:yellow3           = ['#afd700', '148']
+"let s:darkOliveGreen3   = ['#afd75f', '149']
+"let s:darkSeaGreen3     = ['#afd787', '150']
+"let s:darkSeaGreen2     = ['#afd7af', '151']
+"let s:lightCyan3        = ['#afd7d7', '152']
+"let s:lightSkyBlue1     = ['#afd7ff', '153']
+"let s:greenYellow       = ['#afff00', '154']
+"let s:darkOliveGreen2   = ['#afff5f', '155']
+"let s:paleGreen1        = ['#afff87', '156']
+"let s:darkSeaGreen2     = ['#afffaf', '157']
+"let s:darkSeaGreen1     = ['#afffd7', '158']
+"let s:paleTurquoise1    = ['#afffff', '159']
+"let s:red3              = ['#d70000', '160']
+"let s:deepPink3         = ['#d7005f', '161']
+"let s:deepPink3         = ['#d70087', '162']
+"let s:magenta3          = ['#d700af', '163']
+"let s:magenta3          = ['#d700d7', '164']
+"let s:magenta2          = ['#d700ff', '165']
+"let s:darkOrange3       = ['#d75f00', '166']
+"let s:indianRed         = ['#d75f5f', '167']
+"let s:hotPink3          = ['#d75f87', '168']
+"let s:hotPink2          = ['#d75faf', '169']
+"let s:orchid            = ['#d75fd7', '170']
+"let s:mediumOrchid1     = ['#d75fff', '171']
+"let s:orange3           = ['#d78700', '172']
+"let s:lightSalmon3      = ['#d7875f', '173']
+"let s:lightPink3        = ['#d78787', '174']
+"let s:pink3             = ['#d787af', '175']
+"let s:plum3             = ['#d787d7', '176']
+"let s:violet            = ['#d787ff', '177']
+"let s:gold3             = ['#d7af00', '178']
+"let s:lightGoldenrod3   = ['#d7af5f', '179']
+"let s:tan               = ['#d7af87', '180']
+"let s:mistyRose3        = ['#d7afaf', '181']
+"let s:thistle3          = ['#d7afd7', '182']
+"let s:plum2             = ['#d7afff', '183']
+"let s:yellow3           = ['#d7d700', '184']
+"let s:khaki3            = ['#d7d75f', '185']
+"let s:lightGoldenrod2   = ['#d7d787', '186']
+"let s:lightYellow3      = ['#d7d7af', '187']
+"let s:grey84            = ['#d7d7d7', '188']
+"let s:lightSteelBlue1   = ['#d7d7ff', '189']
+"let s:yellow2           = ['#d7ff00', '190']
+"let s:darkOliveGreen1   = ['#d7ff5f', '191']
+"let s:darkOliveGreen1   = ['#d7ff87', '192']
+"let s:darkSeaGreen1     = ['#d7ffaf', '193']
+"let s:honeydew2         = ['#d7ffd7', '194']
+"let s:lightCyan1        = ['#d7ffff', '195']
+"let s:red1              = ['#ff0000', '196']
+"let s:deepPink2         = ['#ff005f', '197']
+"let s:deepPink1         = ['#ff0087', '198']
+"let s:deepPink1         = ['#ff00af', '199']
+"let s:magenta2          = ['#ff00d7', '200']
+"let s:magenta1          = ['#ff00ff', '201']
+"let s:orangeRed1        = ['#ff5f00', '202']
+"let s:indianRed1        = ['#ff5f5f', '203']
+"let s:indianRed1        = ['#ff5f87', '204']
+"let s:hotPink           = ['#ff5faf', '205']
+"let s:hotPink           = ['#ff5fd7', '206']
+"let s:mediumOrchid1     = ['#ff5fff', '207']
+"let s:darkOrange        = ['#ff8700', '208']
+"let s:salmon1           = ['#ff875f', '209']
+"let s:lightCoral        = ['#ff8787', '210']
+"let s:paleVioletRed1    = ['#ff87af', '211']
+"let s:orchid2           = ['#ff87d7', '212']
+"let s:orchid1           = ['#ff87ff', '213']
+"let s:orange1           = ['#ffaf00', '214']
+"let s:sandyBrown        = ['#ffaf5f', '215']
+"let s:lightSalmon1      = ['#ffaf87', '216']
+"let s:lightPink1        = ['#ffafaf', '217']
+"let s:pink1             = ['#ffafd7', '218']
+"let s:plum1             = ['#ffafff', '219']
+"let s:gold1             = ['#ffd700', '220']
+"let s:lightGoldenrod2   = ['#ffd75f', '221']
+"let s:lightGoldenrod2   = ['#ffd787', '222']
+"let s:navajoWhite1      = ['#ffd7af', '223']
+"let s:mistyRose1        = ['#ffd7d7', '224']
+"let s:thistle1          = ['#ffd7ff', '225']
+"let s:yellow1           = ['#ffff00', '226']
+"let s:lightGoldenrod1   = ['#ffff5f', '227']
+"let s:khaki1            = ['#ffff87', '228']
+"let s:wheat1            = ['#ffffaf', '229']
+"let s:cornsilk1         = ['#ffffd7', '230']
+"let s:grey100           = ['#ffffff', '231']
+"let s:grey3             = ['#080808', '232']
+"let s:grey7             = ['#121212', '233']
+"let s:grey11            = ['#1c1c1c', '234']
+"let s:grey15            = ['#262626', '235']
+"let s:grey19            = ['#303030', '236']
+"let s:grey23            = ['#3a3a3a', '237']
+"let s:grey27            = ['#444444', '238']
+"let s:grey30            = ['#4e4e4e', '239']
+"let s:grey35            = ['#585858', '240']
+"let s:grey39            = ['#626262', '241']
+"let s:grey42            = ['#6c6c6c', '242']
+"let s:grey46            = ['#767676', '243']
+"let s:grey50            = ['#808080', '244']
+"let s:grey54            = ['#8a8a8a', '245']
+"let s:grey58            = ['#949494', '246']
+"let s:grey62            = ['#9e9e9e', '247']
+"let s:grey66            = ['#a8a8a8', '248']
+"let s:grey70            = ['#b2b2b2', '249']
+"let s:grey74            = ['#bcbcbc', '250']
+"let s:grey78            = ['#c6c6c6', '251']
+"let s:grey82            = ['#d0d0d0', '252']
+"let s:grey85            = ['#dadada', '253']
+"let s:grey89            = ['#e4e4e4', '254']
+"let s:grey93            = ['#eeeeee', '255']
+" }}}
+
+" style {{{
+
+" show 256 colors
+function! ColorDemo() abort
+  10 vnew
+  setlocal nonumber buftype=nofile bufhidden=hide noswapfile statusline=\ Color\ demo
+  let num = 255
+  while num >= 0
+    execute 'hi col_'.num.' ctermbg='.num.' ctermfg='.num
+    execute 'syn match col_'.num.' "='.printf("%3d", num).'" containedIn=ALL'
+    call append(0, ' '.printf("%3d", num).'  ='.printf("%3d", num))
+    let num -= 1
+  endwhile
+endfunction
+
+" get style
+function! <sid>Synstack()
+  echo map(synstack(line('.'), col('.')),'synIDattr(v:val, "name")')
+endfunc
+nnoremap <leader>c1 :call <sid>Synstack()<CR>
+
+" get style in current and parent
+function! Syngroup()
+  let l:s = synID(line('.'), col('.'), 1)
+  echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun
+nnoremap <leader>c2 :call Syngroup()<CR>
+
+" get style in current and parent
+function! Synstackn()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+nnoremap <leader>c3 :call Synstackn()<CR>
+
+nnoremap <leader>c4 :echo synIDattr(synID(line('.'), col('.'), 0), 'name')<CR>
+nnoremap <leader>c5 :echo
+      \ ("hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+      \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+      \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">")<CR>
+nnoremap <leader>c6 :echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')<CR>
+nnoremap <leader>c7 :exec 'syn list '.synIDattr(synID(line('.'), col('.'), 0), 'name')<CR>
+
+map <leader>c8 :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+      \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+      \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+map <leader>c9 :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") .
+      \ "> trans<" . synIDattr(synID(line("."),col("."),0),"name") .
+      \ "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") .
+      \ "> fg:" .synIDattr(synIDtrans(synID(line("."),col("."),1)),"fg#")<CR>
+" }}} style
