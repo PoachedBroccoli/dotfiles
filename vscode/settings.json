@@ -41,21 +41,10 @@
     "**/tmp/cache": true
   },
 
-  "debug.inlineValues": true,
+  "debug.inlineValues": "on",
   "debug.internalConsoleOptions": "openOnSessionStart",
   "debug.openDebug": "openOnSessionStart",
   "debug.toolBarLocation": "docked",
-
-  "xml.codeLens.enabled": true,
-  "xml.format.preserveAttributeLineBreaks": true,
-
-  "emmet.showSuggestionsAsSnippets": true,
-  "emmet.triggerExpansionOnTab": true,
-  "emmet.showExpandedAbbreviation": "always",
-  "emmet.showAbbreviationSuggestions": true,
-  "emmet.excludeLanguages": ["markdown", "json"],
-
-  "git-graph.openNewTabEditorGroup": "Beside",
 
   "vim.easymotion": true,
   "vim.surround": true,
@@ -102,6 +91,10 @@
     // }
   ],
   "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": ["<space>", "a", "c"],
+      "commands": ["editor.action.insertCursorBelow"]
+    },
     {
       "before": ["<space>", "f", "s"],
       // "commands": ["workbench.action.focusSideBar"]
@@ -418,6 +411,10 @@
     "<C-f>": true
   },
 
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
   "settingsSync.keybindingsPerPlatform": false,
 
   "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -javaagent:\"/Users/veg/.vscode/extensions/gabrielbb.vscode-lombok-1.0.1/server/lombok.jar\"",
@@ -426,9 +423,23 @@
 
   "security.workspace.trust.untrustedFiles": "open",
 
-  "[jsonc]": {
+  "xml.codeLens.enabled": true,
+  "xml.format.preserveAttributeLineBreaks": true,
+
+  "emmet.showSuggestionsAsSnippets": true,
+  "emmet.triggerExpansionOnTab": true,
+  "emmet.showExpandedAbbreviation": "always",
+  "emmet.showAbbreviationSuggestions": true,
+  "emmet.excludeLanguages": ["markdown", "json"],
+
+  "git-graph.openNewTabEditorGroup": "Beside",
+  "java.inlayHints.parameterNames.enabled": "all",
+  "javascript.inlayHints.parameterNames.enabled": "all",
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "Lua.telemetry.enable": false,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "prettier.printWidth": 120
 }
-
-
