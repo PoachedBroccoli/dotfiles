@@ -1,18 +1,31 @@
 {
   "window.title": "${dirty}${activeEditorMedium}${separator}${rootName}",
-
-  "workbench.editor.enablePreview": false,
   "workbench.editor.showTabs": true,
   "workbench.editor.wrapTabs": true,
+  "workbench.editor.enablePreview": false,
   "workbench.tree.indent": 10,
-  "workbench.colorTheme": "GitHub Light",
+  "workbench.colorTheme": "Default Light+",
+  // https://code.visualstudio.com/api/references/theme-color
   "workbench.colorCustomizations": {
     "editor.selectionBackground": "#ffd700",
+    "editorLineNumber.activeForeground": "#ff0000",
+
     "statusBar.background": "#B48EAD",
     "statusBar.noFolderBackground": "#B48EAD",
     "statusBar.debuggingBackground": "#B48EAD",
     "statusBar.foreground": "#434C5E",
-    "statusBar.debuggingForeground": "#434C5E"
+    "statusBar.debuggingForeground": "#434C5E",
+
+    // "tab.activeBackground": "#5EBA7D"
+    "tab.activeBackground": "#80EA6F",
+    "tab.activeForeground": "#000000",
+
+    // https://stackoverflow.com/questions/36942037/vs-code-customize-file-explorer-window-color-theme
+    // "list.activeSelectionBackground": "#6f83ab",
+    "list.hoverBackground": "#cac8c8",
+    "list.inactiveSelectionBackground": "#cac8c8",
+
+    "tree.indentGuidesStroke": "#8fa31f"
   },
 
   // "editor.fontFamily": "'Fira Code','JetBrains Mono', Menlo, Monaco, 'Courier New', monospace",
@@ -408,11 +421,8 @@
   "vim.leader": ",",
   "vim.handleKeys": {
     // "<C-a>": false,
-    "<C-f>": true
-  },
-
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "<C-f>": true,
+    "<C-w>": false
   },
 
   "settingsSync.keybindingsPerPlatform": false,
@@ -431,15 +441,62 @@
   "emmet.showExpandedAbbreviation": "always",
   "emmet.showAbbreviationSuggestions": true,
   "emmet.excludeLanguages": ["markdown", "json"],
+  "emmet.syntaxProfiles": {
+    "html": {
+      "inlineBreak": 2
+    }
+  },
 
+  "git.autofetch": true,
   "git-graph.openNewTabEditorGroup": "Beside",
+
   "java.inlayHints.parameterNames.enabled": "all",
   "javascript.inlayHints.parameterNames.enabled": "all",
   "java.configuration.updateBuildConfiguration": "automatic",
   "Lua.telemetry.enable": false,
   "liveServer.settings.donotShowInfoMsg": true,
-  "[html]": {
+
+  "prettier.printWidth": 120,
+
+  "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "prettier.printWidth": 120
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    // "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  // https://qiita.com/rubytomato@github/items/d4716c41a2d15c64f791#htmlformatindenthandlebars
+  "html.format.indentInnerHtml": false,
+  "html.format.extraLiners": "null",
+  "[css]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
+  },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "editor.tabSize": 2
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features",
+    "editor.tabSize": 2
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "Vue.volar"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  }
 }
+
